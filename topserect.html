@@ -140,14 +140,22 @@
             height: 100%;
             background-color: var(--ts-gray-800);
             border-left: 5px solid var(--ts-gold);
-            background-position: center;
-            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+        .split-image .img-placeholder > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%; /* FIX: โฟกัสช่วงบนของภาพเสมอ ป้องกันคนหัวขาด */
+            display: block;
         }
         .split-image .img-placeholder::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, transparent 30%);
+            pointer-events: none;
         }
         .split-image.left-side .img-placeholder {
             border-left: none;
@@ -173,9 +181,15 @@
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background-color: var(--ts-gray-900);
-            background-position: center;
-            background-size: cover;
             z-index: -1;
+            overflow: hidden;
+        }
+        .layout-full .bg-placeholder > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%; /* FIX: โฟกัสช่วงบนของภาพเสมอ ป้องกันคนหัวขาด */
+            display: block;
         }
         .layout-full .overlay {
             position: absolute;
@@ -339,7 +353,9 @@
                     </div>
                 </div>
                 <div class="split-image">
-                    <div class="img-placeholder" style="background-image: url('img_slide1_cover.png');"></div>
+                    <div class="img-placeholder">
+                        <img src="./img_slide1_cover.png" alt="Cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1024&auto=format&fit=crop'">
+                    </div>
                 </div>
             </div>
         </div>
@@ -348,8 +364,9 @@
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="huge-text">THE VISION</div>
-                <!-- อย่าลืมเจนภาพ img_slide2_vision.png และอัพโหลดด้วยนะครับ -->
-                <div class="bg-placeholder" style="background-image: url('img_slide2_vision.png');"></div>
+                <div class="bg-placeholder">
+                    <img src="./img_slide2_vision.png" alt="Vision" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1920&auto=format&fit=crop'">
+                </div>
                 <div class="overlay"></div>
                 <div class="content">
                     <h2 style="font-size: 3rem; margin-bottom: 15px;"><span class="highlight-gold">ตำนาน</span> มีอยู่จริง... <br>แต่ทำยังไงให้วัยรุ่น <span class="highlight-red">อินไปกับมัน?</span></h2>
@@ -384,7 +401,9 @@
                     </div>
                 </div>
                 <div class="split-image">
-                    <div class="img-placeholder" style="border-color: var(--ts-red); background-image: url('img_slide3_synergy.png');"></div>
+                    <div class="img-placeholder" style="border-color: var(--ts-red);">
+                        <img src="./img_slide3_synergy.png" alt="Synergy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611821064430-0d402209bb54?q=80&w=1024&auto=format&fit=crop'">
+                    </div>
                 </div>
             </div>
         </div>
@@ -392,8 +411,9 @@
         <!-- SLIDE 4: PONDTECH DEEP DIVE (THE MASTER) -->
         <div class="slide">
             <div class="slide-inner layout-full">
-                <!-- อย่าลืมเจนภาพ img_slide4_pondtech.png และอัพโหลดด้วยนะครับ -->
-                <div class="bg-placeholder" style="background-image: url('img_slide4_pondtech.png');"></div>
+                <div class="bg-placeholder">
+                    <img src="./img_slide4_pondtech.png" alt="Master Mechanic" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1920&auto=format&fit=crop'">
+                </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
                 <div class="content" style="display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
                     <div class="badge" style="background: var(--ts-red); color: white;">The Master Mechanic</div>
@@ -420,8 +440,9 @@
         <!-- SLIDE 5: NOKIA DEEP DIVE (THE HYPE) -->
         <div class="slide">
             <div class="slide-inner layout-full">
-                <!-- อย่าลืมเจนภาพ img_slide5_nokia.png และอัพโหลดด้วยนะครับ -->
-                <div class="bg-placeholder" style="background-image: url('img_slide5_nokia.png');"></div>
+                <div class="bg-placeholder">
+                    <img src="./img_slide5_nokia.png" alt="Hype Creator" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529362266718-c2b6f199859b?q=80&w=1920&auto=format&fit=crop'">
+                </div>
                 <div class="overlay" style="background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);"></div>
                 <div class="content" style="text-align: left;">
                     <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">The Hype Creator</div>
@@ -469,7 +490,9 @@
                     </div>
                 </div>
                 <div class="split-image">
-                    <div class="img-placeholder" style="background-image: url('img_slide6_altis.png');"></div>
+                    <div class="img-placeholder">
+                        <img src="./img_slide6_altis.png" alt="Altis OMR" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1024&auto=format&fit=crop'">
+                    </div>
                 </div>
             </div>
         </div>
@@ -478,7 +501,9 @@
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
-                    <div class="img-placeholder" style="border-color: var(--ts-gold); background-image: url('img_slide7_yaris.png');"></div>
+                    <div class="img-placeholder" style="border-color: var(--ts-gold);">
+                        <img src="./img_slide7_yaris.png" alt="Yaris ATIV" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1024&auto=format&fit=crop'">
+                    </div>
                 </div>
                 <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
                     <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">The Street Icon</div>
@@ -527,7 +552,9 @@
                     </ul>
                 </div>
                 <div class="split-image">
-                    <div class="img-placeholder" style="background-image: url('img_slide8_merch.png');"></div>
+                    <div class="img-placeholder">
+                        <img src="./img_slide8_merch.png" alt="Lifestyle" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1024&auto=format&fit=crop'">
+                    </div>
                 </div>
             </div>
         </div>
@@ -547,7 +574,9 @@
                     </p>
                 </div>
                 <div class="split-image">
-                    <div class="img-placeholder" style="background-image: url('img_slide9_legacy.png');"></div>
+                    <div class="img-placeholder">
+                        <img src="./img_slide9_legacy.png" alt="Legacy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517026575980-3e1e2dedeab4?q=80&w=1024&auto=format&fit=crop'">
+                    </div>
                 </div>
             </div>
         </div>
@@ -555,7 +584,9 @@
         <!-- SLIDE 10: EXTREME PROVING GROUND (THE CHALLENGE) -->
         <div class="slide">
             <div class="slide-inner layout-full">
-                <div class="bg-placeholder" style="background-image: url('img_slide10_proving.png');"></div>
+                <div class="bg-placeholder">
+                    <img src="./img_slide10_proving.png" alt="Proving Ground" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1504215680853-026ed2a45def?q=80&w=1920&auto=format&fit=crop'">
+                </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
                 <div class="content" style="max-width: 900px;">
                     <div class="badge" style="background: var(--ts-red); color: white;">The True Test</div>
@@ -580,8 +611,9 @@
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
-                    <!-- อย่าลืมเจนภาพ img_slide11_crowd.png และอัพโหลดด้วยนะครับ -->
-                    <div class="img-placeholder" style="border-color: var(--ts-red); background-image: url('img_slide11_crowd.png');"></div>
+                    <div class="img-placeholder" style="border-color: var(--ts-red);">
+                        <img src="./img_slide11_crowd.png" alt="Crowd" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=1024&auto=format&fit=crop'">
+                    </div>
                 </div>
                 <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
                     <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">The Crowd</div>
@@ -607,7 +639,9 @@
         <!-- SLIDE 12: THE STAGE (TGR 2026 CALENDAR) -->
         <div class="slide">
             <div class="slide-inner layout-full">
-                <div class="bg-placeholder" style="background-image: url('img_slide12_calendar.png');"></div>
+                <div class="bg-placeholder">
+                    <img src="./img_slide12_calendar.png" alt="Calendar" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1920&auto=format&fit=crop'">
+                </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.8);"></div>
                 <div class="content">
                     <div class="badge" style="background: transparent; border: 1px solid var(--ts-gold); color: var(--ts-gold);">The Master Plan</div>
@@ -687,7 +721,9 @@
         <!-- SLIDE 14: THE CLOSING -->
         <div class="slide">
             <div class="slide-inner layout-full">
-                <div class="bg-placeholder" style="background-image: url('img_slide14_closing.png');"></div>
+                <div class="bg-placeholder">
+                    <img src="./img_slide14_closing.png" alt="Closing" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511407397940-d57f68e81203?q=80&w=1920&auto=format&fit=crop'">
+                </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
                 <div class="content" style="text-align: center;">
                     <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 15px;">WE BUILD CARS.<br><span class="highlight-gold">WE BUILD HYPE.</span></h2>
