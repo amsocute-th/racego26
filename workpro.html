@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Ultimate Performance: PONDTECH x WORKPRO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* โทนสี Workpro: น้ำเงิน - แดง - ดำ */
+            --ts-gold: #0056b3; 
+            --ts-gold-light: #3385ff;
+            --ts-gold-dark: #003d82;
+            --ts-red: #e60000;
+            --ts-red-dark: #990000;
+            --ts-black: #0a0a0a;
+            --ts-gray-900: #111111;
+            --ts-gray-800: #1a1a1a;
+            --ts-gray-400: #9ca3af;
+            --ts-white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            background-color: var(--ts-black);
+            font-family: 'Prompt', sans-serif;
+            overflow: hidden;
+            color: var(--ts-white);
+        }
+
+        /* --- Horizontal Scroll Container --- */
+        .slider-container {
+            display: flex;
+            flex-direction: row;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slider-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .slide {
+            flex: 0 0 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--ts-gray-900);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .slide-inner {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Teko', 'Prompt', sans-serif; text-transform: uppercase; line-height: 1.1; }
+        
+        .huge-text {
+            font-size: 8rem;
+            font-weight: 700;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(0, 86, 179, 0.3); 
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            z-index: 0;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .highlight-gold { color: var(--ts-gold-light); }
+        .highlight-red { color: var(--ts-red); }
+
+        /* --- Placeholder System --- */
+        .placeholder-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            text-align: center;
+            z-index: 0;
+            width: 100%;
+        }
+        .placeholder-text i { font-size: 4rem; margin-bottom: 10px; display: block; }
+        .placeholder-text span { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; display: block; font-family: 'Teko', sans-serif; }
+
+        .car-label {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.75);
+            color: var(--ts-white);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 1px;
+            border: 1px solid var(--ts-gold);
+            z-index: 10;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            text-transform: uppercase;
+        }
+
+        /* --- Layout Types --- */
+        .layout-split { display: flex; width: 100%; height: 100%; }
+        .split-content {
+            flex: 1.1;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%);
+            z-index: 3;
+            overflow-y: auto; 
+        }
+        .split-content::-webkit-scrollbar, .layout-full .content::-webkit-scrollbar { width: 4px; }
+        .split-content::-webkit-scrollbar-thumb, .layout-full .content::-webkit-scrollbar-thumb { background: var(--ts-gold); border-radius: 4px; }
+
+        .split-image { flex: 0.9; position: relative; background-color: var(--ts-gray-800); }
+        .split-image .img-placeholder {
+            width: 100%; height: 100%;
+            background-color: var(--ts-gray-800);
+            border-left: 5px solid var(--ts-gold);
+            position: relative;
+            background-size: cover; background-position: center 15%; background-repeat: no-repeat;
+        }
+        .split-image .img-placeholder > img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center 15%; 
+            display: block; position: relative; z-index: 1;
+        }
+        .split-image .img-placeholder::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, transparent 30%);
+            pointer-events: none; z-index: 2;
+        }
+        .split-image.left-side .img-placeholder { border-left: none; border-right: 5px solid var(--ts-gold); }
+        .split-image.left-side .img-placeholder::after { background: linear-gradient(-90deg, rgba(10,10,10,0.95) 0%, transparent 30%); }
+
+        .layout-full {
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 40px; position: relative;
+        }
+        .layout-full .bg-placeholder {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--ts-gray-900);
+            background-size: cover; background-position: center 15%; background-repeat: no-repeat;
+            z-index: -1; overflow: hidden;
+        }
+        .layout-full .bg-placeholder > img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center 15%;
+            display: block; position: relative; z-index: 1;
+        }
+        .layout-full .overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75); z-index: 0;
+        }
+        .layout-full .content {
+            z-index: 2; max-width: 1100px; width: 100%; max-height: 95vh; overflow-y: auto; padding: 10px;
+        }
+
+        .badge {
+            background: var(--ts-gold); color: var(--ts-white);
+            padding: 5px 15px; font-weight: 700; font-size: 0.9rem;
+            border-radius: 4px; display: inline-block; margin-bottom: 15px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .badge.red-badge { background: var(--ts-red); }
+
+        .quote-box {
+            border-left: 4px solid var(--ts-red);
+            padding-left: 20px; margin: 20px 0; font-size: 1.2rem;
+            font-style: italic; color: var(--ts-gray-400); line-height: 1.5;
+        }
+
+        .package-box {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 1px solid var(--ts-gold); border-radius: 12px;
+            padding: 30px; width: 100%; margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 86, 179, 0.2);
+        }
+        .pkg-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        .pkg-price { font-size: 2.5rem; color: var(--ts-white); font-family: 'Teko'; line-height: 1;}
+        .pkg-list li { margin-bottom: 10px; font-size: 1rem; display: flex; align-items: flex-start; gap: 10px; text-align: left;}
+        .pkg-list li i { color: var(--ts-gold-light); margin-top: 5px; font-size: 1rem;}
+
+        .swipe-hint {
+            position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.6); font-size: 0.8rem; z-index: 100;
+            display: flex; align-items: center; gap: 10px; pointer-events: none;
+            animation: pulse 2s infinite; background: rgba(0,0,0,0.5);
+            padding: 5px 15px; border-radius: 20px;
+        }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+        /* --- FORCE PORTRAIT WARNING --- */
+        .portrait-warning {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--ts-black);
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+        @media (orientation: portrait) {
+            .portrait-warning { display: flex; }
+            .slider-container, .swipe-hint { display: none !important; }
+        }
+
+        /* --- MOBILE LANDSCAPE OPTIMIZATION --- */
+        @media (max-height: 600px) {
+            .split-content { padding: 15px 25px; }
+            .layout-full { padding: 15px; }
+            .huge-text { font-size: 5rem; top: -10px; left: -10px; }
+            h1 { font-size: 2.8rem !important; margin-bottom: 5px !important; }
+            h2 { font-size: 2.2rem !important; margin-bottom: 10px !important; }
+            h3 { font-size: 1.2rem !important; margin-bottom: 10px !important; }
+            h4 { font-size: 1.1rem !important; margin-bottom: 5px !important; }
+            p { font-size: 0.9rem !important; margin-bottom: 8px !important; line-height: 1.4 !important; }
+            .badge { padding: 3px 10px; font-size: 0.75rem; margin-bottom: 8px; }
+            .quote-box { margin: 8px 0; font-size: 0.95rem; padding-left: 10px; }
+            .car-label { font-size: 0.7rem; bottom: 10px; right: 10px; padding: 4px 8px;}
+            
+            .synergy-boxes { flex-direction: row !important; gap: 10px !important; margin-top: 10px !important;}
+            .synergy-boxes > div { padding: 10px !important; }
+            .synergy-boxes h3 { font-size: 1.3rem !important; }
+            
+            .package-box { padding: 15px; }
+            .pkg-header { margin-bottom: 10px; padding-bottom: 8px; flex-direction: column; align-items: flex-start; gap: 5px;}
+            .pkg-price { font-size: 1.8rem; }
+            .pkg-list li { font-size: 0.85rem !important; margin-bottom: 5px !important;}
+            
+            .calendar-grid { gap: 10px !important; margin-bottom: 15px !important; }
+            .calendar-grid > div { padding: 10px !important; width: 120px !important; }
+            
+            .stat-box-mobile { flex-direction: row !important; gap: 10px !important; }
+            .stat-box-mobile > div { padding: 10px !important; min-width: 120px !important; }
+            .stat-box-mobile h3 { font-size: 1.8rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PORTRAIT WARNING (FORCES LANDSCAPE ONLY) -->
+    <div class="portrait-warning">
+        <i class="fa-solid fa-mobile-screen-button" style="font-size: 4rem; color: var(--ts-gold-light); margin-bottom: 20px; transform: rotate(-90deg);"></i>
+        <h2 style="color: var(--ts-white); font-size: 1.8rem; margin-bottom: 10px;">กรุณาหมุนหน้าจอเป็นแนวนอน</h2>
+        <p style="color: var(--ts-gray-400); font-size: 1rem;">เพื่ออรรถรสสูงสุดในการรับชม</p>
+    </div>
+
+    <div class="swipe-hint" id="swipeHint">
+        <i class="fa-solid fa-arrows-left-right"></i> ปัดหน้าจอซ้าย-ขวาเพื่อรับชม
+    </div>
+
+    <div class="slider-container" id="slider">
+
+        <!-- SLIDE 1: THE COVER -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge">Official Partner Proposal</div>
+                    <h1 style="font-size: 4.5rem; margin-bottom: 10px;">ENGINEERED FOR <br><span class="highlight-gold">CHAMPIONS</span></h1>
+                    <p style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 20px; max-width: 90%;">
+                        นำเสนอความร่วมมือเบื้องหลังสถิติอันดับ 1 ของเอเชีย สู่การต่อยอดแบรนด์เครื่องมือช่างที่แข็งแกร่งที่สุด
+                    </p>
+                    <div style="border-left: 3px solid var(--ts-red); padding-left: 15px;">
+                        <p style="color: var(--ts-white); font-size: 1rem; margin: 0; font-weight: 500;">นำเสนอ ทีมผู้บริหาร</p>
+                        <p style="color: var(--ts-gold-light); font-size: 0.9rem; margin: 0;">WORKPRO TOOLS THAILAND</p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <div class="placeholder-text"><i class="fa-solid fa-toolbox"></i><span>[ รอใส่รูปภาพ: img_wp_cover.png ]</span></div>
+                        <div class="car-label"><i class="fa-solid fa-wrench"></i> BUILT WITH WORKPRO</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: THE VISION / THE WHY -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="huge-text">THE VISION</div>
+                <div class="bg-placeholder">
+                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-gears"></i><span>[ รอใส่รูปภาพ: img_wp_vision.png ]</span></div>
+                    <div class="car-label"><i class="fa-solid fa-warehouse"></i> THE PROFESSIONAL GARAGE</div>
+                </div>
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2 style="font-size: 3rem; margin-bottom: 15px;"><span class="highlight-gold">เครื่องมือช่าง</span> ไม่ใช่แค่ของใช้... <br>แต่คือ <span class="highlight-red">อาวุธของผู้ชนะ</span></h2>
+                    <div class="quote-box">
+                        "WORKPRO คือเครื่องมือคุณภาพระดับโลกอยู่แล้ว <br>แต่เป้าหมายของเราคือการทำให้ 'วัยรุ่นสายคัสตอมและช่างรุ่นใหม่' <br>รู้สึกว่าแบรนด์นี้คือ <strong>ความเท่ ความโปร และของที่ต้องมีติดอู่</strong>"
+                    </div>
+                    <p style="font-size: 1.1rem; color: var(--ts-white); font-weight: 300;">
+                        เราไม่ได้มาเพื่อติดสติกเกอร์โลโก้บนรถแข่ง แต่เรามาเพื่อสร้าง <strong>สะพานเชื่อม</strong> <br>ระหว่างเครื่องมือช่างระดับมืออาชีพ กับไลฟ์สไตล์การแต่งรถที่เข้าถึงง่าย
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: THE SYNERGY (PONDTECH x NOKIA) -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="huge-text" style="top: auto; bottom: -30px;">SYNERGY</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 15px;">1 TEAM. 2 PILLARS. <br><span class="highlight-gold">MAXIMUM IMPACT.</span></h2>
+                    
+                    <div class="synergy-boxes" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--ts-red);">
+                            <h3 style="font-size: 1.8rem; color: var(--ts-white);">PRO PERFORMANCE <i class="fa-solid fa-wrench highlight-red" style="font-size: 1rem;"></i></h3>
+                            <p style="color: var(--ts-red); font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">ปอนด์เทค เบญจรงค์</p>
+                            <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin:0;">ตัวแทน <strong>"ความสมบุกสมบัน"</strong> พิสูจน์ความทนทานของเครื่องมือ WORKPRO ในการสร้างรถแข่ง 2,000 แรงม้า (Heavy Duty Use)</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--ts-gold);">
+                            <h3 style="font-size: 1.8rem; color: var(--ts-white);">LIFESTYLE & DIY <i class="fa-solid fa-tools highlight-gold" style="font-size: 1rem;"></i></h3>
+                            <p style="color: var(--ts-gold-light); font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">โนเกียร์ สุธาสินี</p>
+                            <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin:0;">ตัวแทน <strong>"ความง่ายและเท่"</strong> รีวิวการใช้เครื่องมือแต่งรถสไตล์ผู้หญิง ส่งตรงถึงผู้ใช้งานทั่วไปและหน้าใหม่ (End User Awareness)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <div class="placeholder-text"><i class="fa-solid fa-users-gear"></i><span>[ รอใส่รูปภาพ: img_wp_synergy.png ]</span></div>
+                        <div class="car-label"><i class="fa-solid fa-handshake"></i> RACING TEAM x WORKPRO</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 4: BRAND DNA ALIGNMENT -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-handshake-angle"></i><span>[ รอใส่รูปภาพ: img_wp_alignment.png ]</span></div>
+                    <div class="car-label"><i class="fa-solid fa-link"></i> THE PERFECT MATCH</div>
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content" style="max-width: 1000px;">
+                    <div class="badge">Brand Compatibility</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 15px;">BRAND DNA <span class="highlight-gold">ALIGNMENT</span></h2>
+                    <h3 style="font-size: 1.5rem; color: var(--ts-white); margin-bottom: 20px;">เมื่อปรัชญาของผู้ชนะ มาเจอกับเครื่องมือช่างระดับโลก</h3>
+                    
+                    <p style="font-size: 1.1rem; color: var(--ts-gray-400); margin-bottom: 30px;">
+                        หัวใจหลักของมอเตอร์สปอร์ตระดับประเทศคือ <strong>"ความแม่นยำ (Precision)"</strong> และ <strong>"ความทนทาน (Durability)"</strong> <br>
+                        ซึ่งสอดคล้องกับ Core Value ของ WORKPRO Tools อย่างสมบูรณ์แบบ นี่ไม่ใช่แค่การสปอนเซอร์ แต่คือการตอกย้ำ DNA ของแบรนด์
+                    </p>
+                    
+                    <div class="synergy-boxes" style="display: flex; flex-direction: row; gap: 15px;">
+                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-top: 3px solid var(--ts-gold-light);">
+                            <i class="fa-solid fa-crosshairs highlight-gold" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin-bottom: 5px;">PRECISION</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ทุกมิลลิเมตรในการเซ็ตอัพรถแข่งมีผลต่อเวลา WORKPRO ตอบโจทย์ความแม่นยำที่ช่างต้องการ</p>
+                        </div>
+                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-top: 3px solid var(--ts-red);">
+                            <i class="fa-solid fa-hammer highlight-red" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin-bottom: 5px;">DURABILITY</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ทนทานต่อการใช้งานหนักในสภาวะกดดันสูงของ Pit Lane เครื่องมือที่ไม่เคยทรยศช่าง</p>
+                        </div>
+                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-top: 3px solid var(--ts-white);">
+                            <i class="fa-solid fa-lightbulb" style="font-size: 2rem; margin-bottom: 10px; color: var(--ts-white);"></i>
+                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin-bottom: 5px;">INNOVATION</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ภาพลักษณ์ของทีมแข่งที่ใช้เทคโนโลยีสูงสุด ช่วยส่งเสริมความล้ำสมัยของเครื่องมือช่าง</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 5: THE ULTIMATE STRESS TEST -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge red-badge">Product Proof</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">THE ULTIMATE <br><span class="highlight-gold">STRESS TEST</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">เปลี่ยนสนามแข่ง ให้เป็นโชว์รูมทดสอบประสิทธิภาพ</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
+                        ไม่มีที่ไหนที่จะทดสอบความอึดของเครื่องมือช่างได้ดีไปกว่า <strong>Pit Lane</strong> ของการแข่งขันความเร็วสูง!
+                    </p>
+                    
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px;">
+                            <i class="fa-solid fa-fire highlight-red" style="margin-top: 5px;"></i>
+                            <div><strong style="color: var(--ts-white);">อุณหภูมิและความร้อน:</strong> เครื่องยนต์ที่เพิ่งลงจากแทร็กต้องการเครื่องมือที่ทนทานความร้อนจัด</div>
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px;">
+                            <i class="fa-solid fa-stopwatch highlight-gold" style="margin-top: 5px;"></i>
+                            <div><strong style="color: var(--ts-white);">เวลาที่บีบคั้น:</strong> การซ่อมบำรุงที่ต้องแข่งกับเวลา เครื่องมือต้องจับถนัด ใช้งานได้ฉับไว</div>
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px;">
+                            <i class="fa-solid fa-bolt" style="color: var(--ts-white); margin-top: 5px;"></i>
+                            <div><strong style="color: var(--ts-white);">แรงบิดมหาศาล:</strong> น็อตและชิ้นส่วนช่วงล่างที่อัดแน่น ต้องใช้เครื่องมือที่แข็งแกร่งไม่รูดหรือแตกหัก</div>
+                        </li>
+                    </ul>
+
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold); border-radius: 4px; margin-top: 15px;">
+                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 0.95rem; margin-bottom: 5px;">Visual Evidence (หลักฐานเชิงประจักษ์)</p>
+                        <p style="font-size: 0.85rem; color: var(--ts-gray-400); margin: 0;">
+                            ภาพของทีมช่าง RACEGO ที่หยิบจับเครื่องมือ WORKPRO ใช้งานจริงในสถานการณ์หน้าสิ่วหน้าขวาน คือสื่อโฆษณาที่ทรงพลังและซื้อใจคนดูได้ดีที่สุด
+                        </p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <div class="placeholder-text"><i class="fa-solid fa-stopwatch"></i><span>[ รอใส่รูปภาพ: img_wp_stresstest.png ]</span></div>
+                        <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> REAL RACING PIT STOP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 6: B2B TRUST & PENETRATION -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--ts-red);">
+                        <div class="placeholder-text"><i class="fa-solid fa-industry"></i><span>[ รอใส่รูปภาพ: img_wp_b2b.png ]</span></div>
+                        <div class="car-label"><i class="fa-solid fa-wrench"></i> MASTER MECHANIC CHOICE</div>
+                    </div>
+                </div>
+                <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
+                    <div class="badge">B2B Penetration</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">B2B <span class="highlight-red">TRUST</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">เจาะตลาดอู่รถยนต์และช่างมืออาชีพทั่วประเทศ</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
+                        ในวงการอู่แต่งรถ <strong>ปอนด์เทค</strong> คือหนึ่งใน "Idol" หรือผู้นำทางความคิด (KOL) ระดับท็อป เมื่อ Master Mechanic ระดับเอเชียเลือกใช้ <strong>WORKPRO</strong> เป็นอาวุธคู่กาย...
+                    </p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-red); border-radius: 4px; text-align: right; margin-bottom: 15px; width: 100%;">
+                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-store"></i> B2B Endorsement</p>
+                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
+                            ช่างซ่อมรถและเจ้าของอู่ทั่วประเทศจะเกิดความเชื่อมั่น (Professional Trust) และพร้อมที่จะสั่งซื้อเครื่องมือ WORKPRO ไปใช้งานในอู่ของตนเอง เพราะเชื่อในการตัดสินใจของมืออาชีพ
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-gold-light); border-radius: 4px; text-align: right; width: 100%;">
+                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-users-gear"></i> Dealer Network Expansion</p>
+                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
+                            ภาพลักษณ์ความเชี่ยวชาญนี้ช่วยให้ทีมเซลส์ของ WORKPRO นำไปต่อยอดเจรจากับ Dealer หรือตัวแทนจำหน่าย (B2B) เพื่อเพิ่มความมั่นใจในการสต็อกสินค้าได้ง่ายขึ้น
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 7: B2C LIFESTYLE EMPOWERMENT -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge">B2C Expansion</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">B2C <span class="highlight-gold">EMPOWERMENT</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">ขยายตลาดสู่มวลชน สาย DIY และไลฟ์สไตล์</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
+                        เครื่องมือช่างไม่ได้มีไว้สำหรับช่างอาชีพเท่านั้น! <strong>โนเกียร์</strong> จะมาช่วยเปลี่ยนภาพลักษณ์ของ WORKPRO ให้ดู <strong>"เป็นมิตร ทันสมัย และน่าใช้"</strong> สำหรับผู้ใช้งานทั่วไป (End Users)
+                    </p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold-light); border-radius: 4px; margin-bottom: 15px;">
+                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-house-user"></i> Everyday DIY Tools</p>
+                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
+                            นำเสนอผ่านคอนเทนต์ไลฟ์สไตล์ เช่น ผู้หญิงก็สามารถใช้สว่านไขควงไฟฟ้า WORKPRO ประกอบของใช้ในบ้าน หรือแต่งรถเล็กๆ น้อยๆ ได้ด้วยตัวเองอย่างมั่นใจ ไม่ใช่เรื่องยากอีกต่อไป
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-red); border-radius: 4px;">
+                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-cart-shopping"></i> E-Commerce Conversion</p>
+                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
+                            เจาะกลุ่มผู้ชมกว่า 3.7 ล้านคนของโนเกียร์ สร้างแคมเปญกระตุ้นยอดขาย (Shoppertainment) ลิงก์ตรงสู่ตะกร้า TikTok Shop หรือ Shopee/Lazada ของ WORKPRO อย่างรวดเร็ว
+                        </p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <div class="placeholder-text"><i class="fa-solid fa-camera"></i><span>[ รอใส่รูปภาพ: img_wp_b2c.png ]</span></div>
+                        <div class="car-label"><i class="fa-solid fa-tools"></i> EVERYDAY LIFESTYLE DIY</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: PONDTECH DEEP DIVE (THE MASTER) -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-cogs"></i><span>[ รอใส่รูปภาพ: img_wp_pondtech.png ]</span></div>
+                    <div class="car-label"><i class="fa-solid fa-gear"></i> PRECISION ENGINEERING</div>
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content" style="display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
+                    <div class="badge red-badge">The Master Mechanic</div>
+                    <h2 style="font-size: 3.5rem; line-height: 1;">ความแม่นยำระดับมิลลิเมตร<br><span class="highlight-gold" style="font-size: 2rem;">ตัดสินแพ้ชนะในสนามแข่ง</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--ts-gray-400); margin-top: 15px; margin-bottom: 20px;">
+                        ปอนด์เทค คือช่างผู้สร้างสถิติรถ Drag ที่เร็วที่สุดในเอเชีย<br>
+                        ทุกชิ้นส่วนประกอบขึ้นด้วยมือ และต้องการเครื่องมือที่ไว้ใจได้ 100% <strong>WORKPRO คือคำตอบของการรับมือกับเครื่องยนต์หลักพันแรงม้า</strong>
+                    </p>
+                    
+                    <div class="synergy-boxes" style="display: flex; flex-direction: row; gap: 15px; width: 100%;">
+                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold);">
+                            <h4 style="font-size: 1.4rem; color: var(--ts-white); margin-bottom: 5px;">PROFESSIONAL TRUST</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ภาพลักษณ์ที่น่าเชื่อถือ เมื่อช่างระดับประเทศเลือกใช้เครื่องมือแบรนด์ของคุณในอู่จริง</p>
+                        </div>
+                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-red);">
+                            <h4 style="font-size: 1.4rem; color: var(--ts-white); margin-bottom: 5px;">THE HEAVY DUTY TEST</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">พิสูจน์ความถึกทนของเครื่องมือช่าง Workpro ในสภาพแวดล้อมการแข่งขันที่กดดันที่สุด</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: NOKIA DEEP DIVE (THE HYPE) -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-camera"></i><span>[ รอใส่รูปภาพ: img_wp_nokia.png ]</span></div>
+                    <div class="car-label"><i class="fa-solid fa-screwdriver"></i> WORKPRO DIY LIFESTYLE</div>
+                </div>
+                <div class="overlay" style="background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);"></div>
+                <div class="content" style="text-align: left;">
+                    <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">The DIY Influencer</div>
+                    <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 10px;">3.7 MILLION<br><span class="highlight-gold">FOLLOWERS.</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--ts-white); font-weight: 300; max-width: 600px; margin-bottom: 20px;">
+                        โนเกียร์ ทำให้การซ่อมรถ/แต่งรถดูเป็นเรื่อง "สนุกและเข้าถึงง่าย" <br>
+                        เมื่อเธอจับเครื่องมือ WORKPRO มันจะกลายเป็น <strong>"ไอเทมไลฟ์สไตล์"</strong> ที่วัยรุ่นและช่างมือใหม่เห็นแล้วอยากซื้อตามทันที
+                    </p>
+                    
+                    <div class="stat-box-mobile" style="display: flex; gap: 15px; max-width: 800px;">
+                        <div style="flex: 1;">
+                            <h4 style="font-size: 2rem; color: var(--ts-gold-light); margin-bottom: 0;">49.1M</h4>
+                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); text-transform: uppercase; margin:0;">FB Views (90 Days)</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-size: 2rem; color: var(--ts-red); margin-bottom: 0;">73.2%</h4>
+                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); text-transform: uppercase; margin:0;">New User Acq.</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-size: 2rem; color: var(--ts-white); margin-bottom: 0;">878K</h4>
+                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); text-transform: uppercase; margin:0;">Viral Max/Clip</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: PONDTECH'S MACHINE (ALTIS OMR) -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge red-badge">The Alpha Weapon</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">TOYOTA COROLLA <br><span class="highlight-gold">ALTIS GR SPORT</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">#59 MAINTAINED BY WORKPRO</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
+                        ขีดสุดแห่งสมรรถนะในคลาสที่เดือดที่สุดของ Toyota Gazoo Racing เมื่อรถทุกคันสเปคเท่ากัน การเซ็ตอัพรถและเปลี่ยนอะไหล่ที่ <strong>"รวดเร็ว แม่นยำ"</strong> ด้วยเครื่องมือชั้นยอดจึงเป็นตัวแปรสำคัญ
+                    </p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold); border-radius: 4px;">
+                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 1rem; margin-bottom: 5px;">Powered by WORKPRO</p>
+                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
+                            โลโก้ WORKPRO ประดับบนตัวรถแข่งและชุดช่าง พิสูจน์ให้เห็นว่าเราคือแบรนด์ผู้อยู่เบื้องหลังความสำเร็จในสนามแข่งระดับอาเซียน
+                        </p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <div class="placeholder-text"><i class="fa-solid fa-car-side"></i><span>[ รอใส่รูปภาพ: img_wp_altis.png ]</span></div>
+                        <div class="car-label" style="background: rgba(0, 86, 179, 0.8); border-color: #fff; color: #fff;"><i class="fa-solid fa-flag-checkered"></i> TOPSECRET x WORKPRO LIVERY</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: NOKIA'S MACHINE (YARIS ATIV OMR) -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--ts-gold-light);">
+                        <div class="placeholder-text"><i class="fa-solid fa-car"></i><span>[ รอใส่รูปภาพ: img_wp_yaris.png ]</span></div>
+                        <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> TOPSECRET x WORKPRO YARIS</div>
+                    </div>
+                </div>
+                <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
+                    <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">The Street Icon</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">TOYOTA YARIS <br><span class="highlight-gold-light">ATIV LADY OMR</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">#122 MAINTAINED BY WORKPRO</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
+                        จากรถ Eco-Car ยอดฮิตที่คนไทยใช้มากที่สุด สู่ไอคอนบนสนามแข่ง เมื่อโนเกียร์จับพวงมาลัยคันนี้ มันจะไม่ใช่แค่รถแข่ง แต่คือ <strong>"แฟชั่นไอเทม"</strong> ที่ดึงดูดทุกสายตาทั้งในสนามและบนท้องถนน
+                    </p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-red); border-radius: 4px; text-align: right; width: 100%;">
+                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;">Mass Market Appeal</p>
+                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
+                            ฐานผู้ใช้ Yaris Ativ ในไทยมีมหาศาล การคาดโลโก้ WORKPRO บนรถคันนี้ จะทำให้วัยรุ่นและคนทั่วไปรู้สึกว่าแบรนด์นี้เข้าถึงได้ง่าย กระตุ้นความอยากดูแลและแต่งรถด้วยตัวเอง
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: CONTENT STRATEGY -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--ts-gold);">
+                        <div class="placeholder-text"><i class="fa-solid fa-video"></i><span>[ รอใส่รูปภาพ: img_wp_content.png ]</span></div>
+                        <div class="car-label"><i class="fa-solid fa-wrench"></i> WORKPRO TOOL REVIEW</div>
+                    </div>
+                </div>
+                <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
+                    <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">Social Media Impact</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">SELLING THE <br><span class="highlight-red">EFFICIENCY</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">เจาะตลาดทั้ง Pro Users และ DIY Users</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
+                        เราจะใช้ช่องทางโซเชียลมีเดียหลักของเรา สร้างคอนเทนต์ "ป้ายยา" เครื่องมือช่าง Workpro ในรูปแบบที่ดูสนุก น่าติดตาม และเห็นผลลัพธ์การใช้งานจริง
+                    </p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-red); border-radius: 4px; text-align: right; width: 100%;">
+                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;">Technical BTS (เจาะลึกการทำรถ)</p>
+                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">ปอนด์เทครีวิวชุดประแจและบล็อกลม Workpro ขณะประกอบเครื่อง โชว์ความแข็งแรง ทนทาน จับถนัดมือ กระตุ้นยอดขายกลุ่มอู่ซ่อมรถ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: THE STAGE (TGR 2026 CALENDAR) -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <div class="placeholder-text" style="color: #222;"><i class="fa-regular fa-calendar-alt"></i><span>[ รอใส่รูปภาพ: img_wp_calendar.png ]</span></div>
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.8);"></div>
+                <div class="content">
+                    <div class="badge" style="background: transparent; border: 1px solid var(--ts-gold); color: var(--ts-gold-light);">The Master Plan</div>
+                    <h2 style="font-size: 4rem; margin-bottom: 15px;">RACING CALENDAR <span class="highlight-red">2026</span></h2>
+                    
+                    <div class="calendar-grid" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--ts-gray-800); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
+                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">1-5 JULY</div>
+                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">ชลบุรี</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.8rem; margin: 0;">Bangsaen GP</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--ts-gray-800); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
+                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">29-30 AUGUST</div>
+                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">ภูเก็ต</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.8rem; margin: 0;">Phuket</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--ts-gray-800); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
+                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">24-27 SEPT</div>
+                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">บุรีรัมย์</h4>
+                            <p style="color: var(--ts-gray-400); font-size: 0.8rem; margin: 0;">Buriram</p>
+                        </div>
+                        <div style="background: rgba(0,86,179,0.2); border: 1px solid var(--ts-gold); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
+                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">21-22 NOV</div>
+                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">เชียงใหม่</h4>
+                            <p style="color: var(--ts-gold-light); font-size: 0.8rem; margin: 0;">Final Race</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-box-mobile" style="display: flex; gap: 15px; justify-content: center;">
+                        <div style="border: 1px solid var(--ts-gray-800); background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; min-width: 150px;">
+                            <h3 style="font-size: 2.5rem; color: var(--ts-gold-light); margin-bottom: 0;">250K+</h3>
+                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); margin: 0; text-transform: uppercase;">On-Ground Visitors</p>
+                        </div>
+                        <div style="border: 1px solid var(--ts-gray-800); background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; min-width: 150px;">
+                            <h3 style="font-size: 2.5rem; color: var(--ts-red); margin-bottom: 0;">B2B & B2C</h3>
+                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); margin: 0; text-transform: uppercase;">Booth Sales Opps.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: THE PARTNERSHIP PROPOSITION -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder"></div>
+                <div class="overlay" style="background: rgba(10,10,10,1);"></div>
+                <div class="huge-text" style="color: rgba(0, 86, 179, 0.05); top: 50%; transform: translateY(-50%); font-size: 10rem;">WORKPRO</div>
+                <div class="content" style="max-width: 1100px; width: 100%;">
+                    <h2 style="font-size: 3rem; margin-bottom: 10px;">OFFICIAL <span class="highlight-gold">TOOL PARTNER</span></h2>
+                    <p style="font-size: 1rem; color: var(--ts-gray-400); margin-bottom: 20px;">
+                        แพ็กเกจผู้สนับสนุนเพื่อผลักดันยอดขายและการรับรู้แบรนด์ WORKPRO ในวงการมอเตอร์สปอร์ต
+                    </p>
+                    
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%;">
+                        <!-- GOLD PACKAGE -->
+                        <div class="package-box" style="flex: 1; min-width: 320px; padding: 25px; border-color: var(--ts-gold-light); box-shadow: 0 10px 30px rgba(51, 133, 255, 0.15);">
+                            <div class="pkg-header" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                                <div>
+                                    <h3 style="font-size: 1.8rem; color: var(--ts-white); margin-bottom: 0;">🥇 GOLD PARTNER</h3>
+                                    <p style="color: var(--ts-gold-light); margin: 0; font-size: 0.9rem;">Official Sponsor (ผู้สนับสนุนระดับสูง)</p>
+                                </div>
+                                <div class="pkg-price" style="font-size: 2rem;">500K - 800K <span style="font-size: 1rem; color: var(--ts-gray-400);">THB</span></div>
+                            </div>
+                            <ul class="pkg-list" style="list-style: none; padding: 0; margin:0; text-align: left;">
+                                <li><i class="fa-solid fa-car"></i> <span><strong>Racing Branding:</strong> โลโก้ขนาดกลางบนรถแข่ง 2 คัน และชุดช่างเทคนิค</span></li>
+                                <li><i class="fa-solid fa-video"></i> <span><strong>Content:</strong> คลิปรีวิวเครื่องมือ Workpro และโลโก้ End Credit ท้ายคลิป</span></li>
+                                <li><i class="fa-solid fa-store"></i> <span><strong>On-Ground:</strong> สิทธิ์ตั้งบูธขายสินค้าในงานแข่งขัน และ VIP Pitwalk</span></li>
+                                <li><i class="fa-solid fa-camera"></i> <span><strong>Media Rights:</strong> สิทธิ์นำภาพนักแข่ง/รถแข่งไปใช้โปรโมทแบรนด์</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- SILVER PACKAGE -->
+                        <div class="package-box" style="flex: 1; min-width: 320px; padding: 25px; border-color: #9ca3af; box-shadow: 0 10px 30px rgba(156, 163, 175, 0.05);">
+                            <div class="pkg-header" style="flex-direction: column; align-items: flex-start; gap: 10px; border-bottom-color: #333;">
+                                <div>
+                                    <h3 style="font-size: 1.8rem; color: var(--ts-white); margin-bottom: 0;">🥈 SILVER PARTNER</h3>
+                                    <p style="color: #9ca3af; margin: 0; font-size: 0.9rem;">Co-Sponsor (ผู้สนับสนุนร่วม)</p>
+                                </div>
+                                <div class="pkg-price" style="font-size: 2rem;">150K - 300K <span style="font-size: 1rem; color: var(--ts-gray-400);">THB</span></div>
+                            </div>
+                            <ul class="pkg-list" style="list-style: none; padding: 0; margin:0; text-align: left;">
+                                <li><i class="fa-solid fa-car" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Racing Branding:</strong> โลโก้ขนาดมาตรฐานบนรถแข่ง 2 คัน และชุดช่าง</span></li>
+                                <li><i class="fa-solid fa-desktop" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Social Media:</strong> โลโก้แบนเนอร์ผู้สนับสนุนหลักบนเพจ RaceGO</span></li>
+                                <li><i class="fa-solid fa-camera" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Awareness:</strong> ภาพถ่ายโปรโมทการใช้เครื่องมือช่างจริงในพิท</span></li>
+                                <li><i class="fa-solid fa-flag-checkered" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Event Access:</strong> บัตรเข้าชมการแข่งขัน และสัมผัสบรรยากาศพิต</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--ts-gold-light); font-size: 0.9rem; margin-top: 20px; font-weight: 600;">* สามารถตกลงแบ่งชำระได้ 5 งวด ตามตารางการแข่งขัน</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: THE CLOSING -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <div class="placeholder-text" style="color: #222;"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: img_wp_closing.png ]</span></div>
+                    <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> GREAT CARS REQUIRE GREAT TOOLS</div>
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content" style="text-align: center;">
+                    <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 15px;">GREAT CARS.<br><span class="highlight-gold">GREAT TOOLS.</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--ts-white); font-weight: 300; margin-bottom: 30px;">
+                        ความแรงเราพร้อม ประสบการณ์เราพร้อม... <br>
+                        ให้ WORKPRO เป็นเครื่องมือเบื้องหลังความสำเร็จของเราในฤดูกาลนี้สิครับ
+                    </p>
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                        <a href="https://www.facebook.com/profile.php?id=61587947141692" target="_blank" style="display: inline-flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--ts-gray-800); text-decoration: none; color: var(--ts-white);">
+                            <i class="fa-brands fa-facebook" style="font-size: 1.5rem; color: var(--ts-gold-light);"></i>
+                            <span style="font-size: 1rem; font-weight: 600; letter-spacing: 1px;">RACEGO MANAGEMENT</span>
+                        </a>
+                        <a href="https://lin.ee/pLEbCpU" target="_blank" style="transition: transform 0.2s; display: inline-block;">
+                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('slider');
+            const hint = document.getElementById('swipeHint');
+            
+            slider.addEventListener('scroll', () => {
+                if(slider.scrollLeft > 50 || slider.scrollTop > 50) {
+                    hint.style.opacity = '0';
+                    hint.style.transition = 'opacity 0.5s ease';
+                }
+            }, { passive: true });
+        });
+    </script>
+</body>
+</html>
