@@ -248,92 +248,110 @@
         /* Swipe Hint */
         .swipe-hint {
             position: fixed;
-            bottom: 10px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255,255,255,0.6);
-            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
             z-index: 100;
             display: flex;
             align-items: center;
             gap: 10px;
             pointer-events: none;
             animation: pulse 2s infinite;
-            background: rgba(0,0,0,0.5);
-            padding: 5px 15px;
+            background: rgba(0,0,0,0.6);
+            padding: 8px 18px;
             border-radius: 20px;
+            backdrop-filter: blur(5px);
         }
-        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
 
-        /* --- MOBILE LANDSCAPE OPTIMIZATION --- */
-        @media (max-height: 600px) {
+        /* --- MOBILE OPTIMIZATION (iPhone & Portrait Screens) --- */
+        @media (max-width: 768px) {
+            .slider-container {
+                flex-direction: column;
+                scroll-snap-type: y mandatory; /* เปลี่ยนเป็นเลื่อนแนวตั้ง */
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            .slide {
+                height: 100dvh; /* ป้องกันปัญหา Address bar บน iOS */
+                width: 100vw;
+            }
+            .layout-split {
+                flex-direction: column; /* วางซ้อนกันแนวตั้ง */
+            }
+            
+            /* ฝั่งข้อความ */
             .split-content {
-                padding: 15px 25px;
+                flex: 1.3 !important; 
+                padding: 30px 20px !important;
+                background: linear-gradient(180deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%) !important;
+                justify-content: flex-start !important;
             }
-            .layout-full {
-                padding: 15px;
+            /* ฝั่งรูปภาพ */
+            .split-image {
+                flex: 0.7 !important;
+                width: 100% !important;
             }
-            .huge-text {
-                font-size: 5rem;
-                top: -10px; left: -10px;
+            .split-image .img-placeholder {
+                border-left: none !important;
+                border-bottom: 3px solid var(--ts-gold) !important;
             }
-            h1 { font-size: 3rem !important; margin-bottom: 5px !important; }
-            h2 { font-size: 2.2rem !important; margin-bottom: 10px !important; }
-            h3 { font-size: 1.3rem !important; margin-bottom: 10px !important; }
-            h4 { font-size: 1.2rem !important; margin-bottom: 5px !important; }
-            p { font-size: 0.95rem !important; margin-bottom: 10px !important; line-height: 1.4 !important; }
-            .badge { padding: 3px 10px; font-size: 0.75rem; margin-bottom: 10px; }
-            .quote-box { margin: 10px 0; font-size: 1rem; padding-left: 10px; }
-            
-            .synergy-boxes { flex-direction: row !important; gap: 10px !important; margin-top: 10px !important;}
-            .synergy-boxes > div { padding: 10px !important; }
-            .synergy-boxes h3 { font-size: 1.5rem !important; }
-            
-            .package-box { padding: 15px; }
-            .pkg-header { margin-bottom: 10px; padding-bottom: 10px; flex-direction: column; align-items: flex-start; gap: 5px;}
-            .pkg-price { font-size: 2rem; }
-            .pkg-list { flex-direction: column !important; gap: 0 !important; }
-            
-            .calendar-grid { gap: 10px !important; margin-bottom: 15px !important; }
-            .calendar-grid > div { padding: 10px !important; width: 140px !important; }
-            
-            .stat-box-mobile { flex-direction: row !important; gap: 10px !important; }
-            .stat-box-mobile > div { padding: 10px !important; min-width: 120px !important; }
-            .stat-box-mobile h3 { font-size: 2rem !important; }
-        }
+            .split-image.left-side .img-placeholder {
+                border-right: none !important;
+            }
+            .split-image .img-placeholder::after, .split-image.left-side .img-placeholder::after {
+                background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.8) 100%) !important;
+            }
 
-        /* Warning Portrait */
-        .portrait-warning {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--ts-black);
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 30px;
-        }
-        @media (orientation: portrait) {
-            .portrait-warning { display: flex; }
-            .slider-container, .swipe-hint { display: none; }
+            /* ปรับ Typography ให้พอดีจอมือถือ */
+            .huge-text { font-size: 3.5rem !important; top: 10px !important; left: 10px !important; opacity: 0.1; }
+            h1 { font-size: 2.8rem !important; line-height: 1.1 !important; }
+            h2.slide-title { font-size: 2.2rem !important; margin-bottom: 15px !important; }
+            h2 { font-size: 2rem !important; }
+            h3 { font-size: 1.2rem !important; margin-bottom: 10px !important; }
+            p { font-size: 0.95rem !important; margin-bottom: 15px !important; line-height: 1.5 !important; }
+            
+            .badge { font-size: 0.75rem !important; padding: 4px 10px !important; margin-bottom: 12px !important;}
+            .quote-box { font-size: 1.05rem !important; padding-left: 15px !important; margin: 15px 0 !important; }
+
+            /* ปรับ Components ให้เรียงแนวตั้งสวยงาม */
+            .synergy-boxes { flex-direction: column !important; gap: 10px !important; margin-top: 10px !important;}
+            .synergy-boxes > div { padding: 15px !important; }
+            
+            .stat-box-mobile { flex-direction: column !important; gap: 10px !important; }
+            .stat-box-mobile > div { padding: 15px !important; width: 100% !important;}
+            
+            /* ตารางปฏิทินแข่ง เปลี่ยนเป็น List แนวนอน */
+            .calendar-grid { flex-direction: column !important; gap: 10px !important; }
+            .calendar-grid > div { 
+                width: 100% !important; 
+                display: flex; 
+                align-items: center; 
+                justify-content: space-between; 
+                text-align: left !important;
+                padding: 12px 15px !important;
+            }
+            .calendar-grid > div > div { margin-bottom: 0 !important; width: 30%; }
+            .calendar-grid h4 { font-size: 1rem !important; width: 40%;}
+            .calendar-grid p { font-size: 0.8rem !important; margin: 0 !important; width: 30%; text-align: right;}
+            
+            .package-box { padding: 20px !important; }
+            .pkg-header { flex-direction: column !important; align-items: flex-start !important; gap: 10px; border-bottom: 1px solid #333; }
+            .pkg-price { font-size: 2rem !important; }
+            .pkg-list li { font-size: 0.9rem !important; margin-bottom: 8px !important; }
+
+            .layout-full .content { padding: 20px !important; max-height: 85dvh; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Portrait Warning -->
-    <div class="portrait-warning">
-        <i class="fa-solid fa-mobile-screen-button" style="font-size: 4rem; color: var(--ts-gold); margin-bottom: 20px; transform: rotate(-90deg);"></i>
-        <h2 style="color: var(--ts-white); font-size: 1.8rem; margin-bottom: 10px;">กรุณาหมุนหน้าจอเป็นแนวนอน</h2>
-        <p style="color: var(--ts-gray-400); font-size: 1rem;">เพื่ออรรถรสสูงสุดในการรับชมประสบการณ์ความเร็ว</p>
-    </div>
-
-    <!-- Swipe Hint -->
-    <div class="swipe-hint">
-        <i class="fa-solid fa-chevron-left"></i> ปัดหน้าจอเพื่อรับชม <i class="fa-solid fa-chevron-right"></i>
+    <!-- Swipe Hint updated for both orientations -->
+    <div class="swipe-hint" id="swipeHint">
+        <i class="fa-solid fa-arrows-up-down-left-right"></i> ปัดหน้าจอเพื่อรับชม
     </div>
 
     <div class="slider-container" id="slider">
@@ -607,7 +625,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 11: THE TEAM OWNER PROPOSITION (REPLACED OLD SLIDE 11) -->
+        <!-- SLIDE 11: THE TEAM OWNER PROPOSITION -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
@@ -642,7 +660,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 12: BANGSAEN -->
+        <!-- SLIDE 12: BANGSAEN -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-content">
@@ -676,7 +694,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 13: PHUKET -->
+        <!-- SLIDE 13: PHUKET -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
@@ -710,7 +728,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 14: BURIRAM -->
+        <!-- SLIDE 14: BURIRAM -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-content">
@@ -744,7 +762,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 15: CHIANG MAI -->
+        <!-- SLIDE 15: CHIANG MAI -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
@@ -890,13 +908,13 @@
     </div>
 
     <script>
-        // Simple script to reveal swipe hint on load, hide on scroll
         document.addEventListener('DOMContentLoaded', () => {
             const slider = document.getElementById('slider');
-            const hint = document.querySelector('.swipe-hint');
+            const hint = document.getElementById('swipeHint');
             
+            // ตรวจสอบการเลื่อน (รองรับทั้งแนวตั้งและแนวนอน) เพื่อซ่อนคำใบ้
             slider.addEventListener('scroll', () => {
-                if(slider.scrollLeft > 50) {
+                if(slider.scrollLeft > 50 || slider.scrollTop > 50) {
                     hint.style.opacity = '0';
                     hint.style.transition = 'opacity 0.5s ease';
                 }
