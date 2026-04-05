@@ -357,36 +357,74 @@
             .stat-box-mobile h3 { font-size: 2rem !important; }
         }
 
-        /* Warning Portrait */
-        .portrait-warning {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--ts-black);
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 30px;
+        /* --- MOBILE PORTRAIT OPTIMIZATION --- */
+        @media (max-width: 768px) {
+            .slider-container {
+                flex-direction: column;
+                scroll-snap-type: y mandatory;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            .slide {
+                height: 100dvh;
+                width: 100vw;
+            }
+            .layout-split {
+                flex-direction: column;
+            }
+            .split-content {
+                flex: 1.3 !important; 
+                padding: 30px 20px !important;
+                background: linear-gradient(180deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%) !important;
+                justify-content: flex-start !important;
+            }
+            .split-image {
+                flex: 0.7 !important;
+                width: 100% !important;
+            }
+            .split-image .img-placeholder {
+                border-left: none !important;
+                border-bottom: 3px solid var(--ts-gold) !important;
+            }
+            .split-image.left-side .img-placeholder {
+                border-right: none !important;
+            }
+            .split-image .img-placeholder::after, .split-image.left-side .img-placeholder::after {
+                background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.8) 100%) !important;
+            }
+            .huge-text { font-size: 3.5rem !important; top: 10px !important; left: 10px !important; opacity: 0.1; }
+            h1 { font-size: 2.8rem !important; line-height: 1.1 !important; }
+            h2 { font-size: 2rem !important; }
+            h3 { font-size: 1.2rem !important; margin-bottom: 10px !important; }
+            p { font-size: 0.95rem !important; margin-bottom: 15px !important; line-height: 1.5 !important; }
+            .badge { font-size: 0.75rem !important; padding: 4px 10px !important; margin-bottom: 12px !important;}
+            .quote-box { font-size: 1.05rem !important; padding-left: 15px !important; margin: 15px 0 !important; }
+            .synergy-boxes { flex-direction: column !important; gap: 10px !important; margin-top: 10px !important;}
+            .synergy-boxes > div { padding: 15px !important; }
+            .stat-box-mobile { flex-direction: column !important; gap: 10px !important; }
+            .stat-box-mobile > div { padding: 15px !important; width: 100% !important;}
+            .calendar-grid { flex-direction: column !important; gap: 10px !important; }
+            .calendar-grid > div { 
+                width: 100% !important; 
+                display: flex; 
+                align-items: center; 
+                justify-content: space-between; 
+                text-align: left !important;
+                padding: 12px 15px !important;
+            }
+            .calendar-grid > div > div { margin-bottom: 0 !important; width: 30%; }
+            .calendar-grid h4 { font-size: 1rem !important; width: 40%;}
+            .calendar-grid p { font-size: 0.8rem !important; margin: 0 !important; width: 30%; text-align: right;}
+            .package-box { padding: 20px !important; }
+            .pkg-header { flex-direction: column !important; align-items: flex-start !important; gap: 10px; border-bottom: 1px solid #333; }
+            .pkg-price { font-size: 2rem !important; }
+            .pkg-list li { font-size: 0.9rem !important; margin-bottom: 8px !important; }
+            .layout-full .content { padding: 20px !important; max-height: 85dvh; }
         }
-        @media (orientation: portrait) {
-            .portrait-warning { display: flex; }
-            .slider-container, .swipe-hint { display: none; }
-        }
-
     </style>
 </head>
 <body>
 
-    <!-- Portrait Warning -->
-    <div class="portrait-warning">
-        <i class="fa-solid fa-mobile-screen-button" style="font-size: 4rem; color: var(--ts-gold); margin-bottom: 20px; transform: rotate(-90deg);"></i>
-        <h2 style="color: var(--ts-white); font-size: 1.8rem; margin-bottom: 10px;">กรุณาหมุนหน้าจอเป็นแนวนอน</h2>
-        <p style="color: var(--ts-gray-400); font-size: 1rem;">เพื่ออรรถรสสูงสุดในการรับชมประสบการณ์ความเร็ว</p>
-    </div>
-
-    <!-- Swipe Hint -->
     <div class="swipe-hint" id="swipeHint">
         <i class="fa-solid fa-arrows-up-down-left-right"></i> ปัดหน้าจอเพื่อรับชม
     </div>
@@ -409,8 +447,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <!-- LINKED ✅ -->
-                        <img src="./img_slide1_cover.png?v=3" alt="Cover">
+                        <img src="./img_slide1_cover.png?v=5" alt="Cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1024&auto=format&fit=crop'">
                         <div class="car-label"><i class="fa-solid fa-car"></i> TOPSECRET SUPRA</div>
                     </div>
                 </div>
@@ -422,8 +459,7 @@
             <div class="slide-inner layout-full">
                 <div class="huge-text">THE VISION</div>
                 <div class="bg-placeholder">
-                    <!-- รออัปโหลด ❌ -->
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: พื้นหลังอู่รถ (img_slide2_vision.png) ]</span></div>
+                    <img src="./img_slide2_vision.png?v=5" alt="Vision" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=1920&auto=format&fit=crop'">
                     <div class="car-label"><i class="fa-solid fa-warehouse"></i> TOPSECRET GARAGE</div>
                 </div>
                 <div class="overlay"></div>
@@ -461,8 +497,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder" style="border-color: var(--ts-red);">
-                        <!-- LINKED ✅ -->
-                        <img src="./img_slide3_synergy.png?v=3" alt="Synergy">
+                        <img src="./img_slide3_synergy.png?v=5" alt="Synergy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1024&auto=format&fit=crop'">
                         <div class="car-label"><i class="fa-solid fa-people-group"></i> RACEGO x TOPSECRET</div>
                     </div>
                 </div>
@@ -473,8 +508,7 @@
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <!-- รออัปโหลด ❌ -->
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: พื้นหลังเครื่องยนต์ GR (img_slide4_pondtech.png) ]</span></div>
+                    <img src="./img_slide4_pondtech.png?v=5" alt="Master Mechanic" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1630403362141-a3f2b318d1a1?q=80&w=1920&auto=format&fit=crop'">
                     <div class="car-label"><i class="fa-solid fa-gear"></i> TOYOTA GR ENGINE</div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
@@ -504,8 +538,7 @@
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <!-- รออัปโหลด ❌ -->
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: พื้นหลังอินฟลูเอนเซอร์ (img_slide5_nokia.png) ]</span></div>
+                    <img src="./img_slide5_nokia.png?v=5" alt="Hype Creator" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529362266718-c2b6f199859b?q=80&w=1920&auto=format&fit=crop'">
                     <div class="car-label"><i class="fa-solid fa-camera"></i> TOYOTA YARIS LIFESTYLE</div>
                 </div>
                 <div class="overlay" style="background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);"></div>
@@ -556,8 +589,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <!-- LINKED ✅ -->
-                        <img src="./img_slide6_altis.png?v=3" alt="Altis OMR">
+                        <img src="./img_slide6_altis.png?v=5" alt="Altis OMR" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1024&auto=format&fit=crop'">
                         <div class="car-label" style="background: rgba(220, 38, 38, 0.8); border-color: #fff; color: #fff;"><i class="fa-solid fa-flag-checkered"></i> TOYOTA ALTIS GR SPORT OMR</div>
                     </div>
                 </div>
@@ -569,8 +601,7 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--ts-gold);">
-                        <!-- LINKED ✅ -->
-                        <img src="./img_slide7_yaris.png?v=3" alt="Yaris ATIV">
+                        <img src="./img_slide7_yaris.png?v=5" alt="Yaris ATIV" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1024&auto=format&fit=crop'">
                         <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> TOYOTA YARIS ATIV LADY OMR</div>
                     </div>
                 </div>
@@ -622,8 +653,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <!-- LINKED ✅ -->
-                        <img src="./img_slide8_merch.png?v=3" alt="Lifestyle">
+                        <img src="./img_slide8_merch.png?v=5" alt="Lifestyle" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1024&auto=format&fit=crop'">
                         <div class="car-label"><i class="fa-solid fa-shirt"></i> TOPSECRET SUPRA LIFESTYLE</div>
                     </div>
                 </div>
@@ -646,8 +676,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <!-- LINKED ✅ -->
-                        <img src="./img_slide9_legacy.png?v=3" alt="Legacy">
+                        <img src="./img_slide9_legacy.png?v=5" alt="Legacy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=1024&auto=format&fit=crop'">
                         <div class="car-label"><i class="fa-solid fa-gauge-high"></i> TOPSECRET SUPRA RACING</div>
                     </div>
                 </div>
@@ -658,8 +687,7 @@
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <!-- LINKED ✅ -->
-                    <img src="./img_slide10_proving.png?v=3" alt="Proving Ground">
+                    <img src="./img_slide10_proving.png?v=5" alt="Proving Ground" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1504215680853-026ed2a45def?q=80&w=1920&auto=format&fit=crop'">
                     <div class="car-label"><i class="fa-solid fa-screwdriver-wrench"></i> TOYOTA GR RACING PIT</div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
@@ -687,8 +715,7 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--ts-red);">
-                        <!-- รออัปโหลด ❌ -->
-                        <div class="placeholder-text"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: ทีมและผู้สนับสนุนหลัก (img_team_owner.png) ]</span></div>
+                        <img src="./img_team_owner.png?v=5" alt="Team Owner" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566336585140-5e36f026a27e?q=80&w=1024&auto=format&fit=crop'">
                         <div class="car-label"><i class="fa-solid fa-crown"></i> TOPSECRET SUPRA TEAM OWNER</div>
                     </div>
                 </div>
@@ -747,8 +774,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <!-- รออัปโหลด ❌ -->
-                        <div class="placeholder-text"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: สนามบางแสน (img_venue_bangsaen.png) ]</span></div>
+                        <img src="./img_venue_bangsaen.png?v=5" alt="Bangsaen GP" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1558234327-0faad4e840d2?q=80&w=1024&auto=format&fit=crop'">
                     </div>
                 </div>
             </div>
@@ -759,8 +785,7 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--ts-gold);">
-                        <!-- รออัปโหลด ❌ -->
-                        <div class="placeholder-text"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: สนามภูเก็ต (img_venue_phuket.png) ]</span></div>
+                        <img src="./img_venue_phuket.png?v=5" alt="Phuket Street Circuit" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581452697825-78e721ce8f31?q=80&w=1024&auto=format&fit=crop'">
                     </div>
                 </div>
                 <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
@@ -817,8 +842,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <!-- รออัปโหลด ❌ -->
-                        <div class="placeholder-text"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: สนามบุรีรัมย์ (img_venue_buriram.png) ]</span></div>
+                        <img src="./img_venue_buriram.png?v=5" alt="Buriram Circuit" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1587841571216-9dc7307e9d72?q=80&w=1024&auto=format&fit=crop'">
                     </div>
                 </div>
             </div>
@@ -829,8 +853,7 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--ts-gold);">
-                        <!-- รออัปโหลด ❌ -->
-                        <div class="placeholder-text"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: สนามเชียงใหม่ (img_venue_chiangmai.png) ]</span></div>
+                        <img src="./img_venue_chiangmai.png?v=5" alt="Chiangmai Stage" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534067332468-b76bb062a4b8?q=80&w=1024&auto=format&fit=crop'">
                     </div>
                 </div>
                 <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
@@ -863,8 +886,7 @@
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <!-- LINKED ✅ -->
-                    <img src="./img_slide12_calendar.png?v=3" alt="Calendar">
+                    <img src="./img_slide12_calendar.png?v=5" alt="Calendar" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1920&auto=format&fit=crop'">
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.8);"></div>
                 <div class="content">
@@ -946,8 +968,7 @@
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <!-- LINKED ✅ -->
-                    <img src="./img_slide14_closing.png?v=3" alt="Closing">
+                    <img src="./img_slide14_closing.png?v=5" alt="Closing" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=1920&auto=format&fit=crop'">
                     <div class="car-label"><i class="fa-solid fa-car-side"></i> TOPSECRET SUPRA & GR LINEUP</div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
