@@ -3,292 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Ultimate Performance: PONDTECH x WORKPRO</title>
+    <title>WORKPRO x RACEGO: Strategic Partnership 2026</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            /* โทนสี Workpro: น้ำเงิน - แดง - ดำ */
-            --ts-gold: #0056b3; 
-            --ts-gold-light: #3385ff;
-            --ts-gold-dark: #003d82;
-            --ts-red: #e60000;
-            --ts-red-dark: #990000;
-            --ts-black: #0a0a0a;
-            --ts-gray-900: #111111;
-            --ts-gray-800: #1a1a1a;
-            --ts-gray-400: #9ca3af;
-            --ts-white: #ffffff;
+            --rg-red: #E60012; /* WORKPRO / RaceGO Red */
+            --rg-black: #050505;
+            --rg-gray-900: #111111;
+            --rg-gray-800: #1a1a1a;
+            --rg-gray-400: #9ca3af;
+            --rg-white: #ffffff;
+            --wp-blue: #0033A0; /* WORKPRO Blue */
+            --wp-blue-light: #0056D6;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 
         body, html {
-            height: 100%;
-            width: 100%;
-            background-color: var(--ts-black);
-            font-family: 'Prompt', sans-serif;
-            overflow: hidden;
-            color: var(--ts-white);
+            height: 100%; width: 100%; background-color: var(--rg-black);
+            font-family: 'Prompt', sans-serif; overflow: hidden; color: var(--rg-white);
         }
 
-        /* --- Horizontal Scroll Container --- */
+        /* --- PRE-LOADER SCREEN --- */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
+            background-color: var(--rg-black); z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            transition: opacity 0.6s cubic-bezier(0.8, 0, 0.2, 1), transform 0.6s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        #loading-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
+        .loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .loader-icon { font-size: 3.5rem; color: var(--wp-blue-light); margin-bottom: 10px; animation: wrenchTurn 1.5s infinite alternate ease-in-out; }
+        @keyframes wrenchTurn { 0% { transform: rotate(-15deg); } 100% { transform: rotate(15deg); } }
+        
+        .loader-text {
+            font-family: 'Teko', sans-serif; font-size: 6rem; font-weight: 700; line-height: 1; letter-spacing: 2px;
+            background: linear-gradient(to right, #333 50%, var(--rg-white) 50%);
+            background-size: 200% 100%; background-position: right bottom;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: fillText 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; text-transform: uppercase;
+        }
+        .loader-subtext { font-family: 'Teko', sans-serif; font-size: 2.5rem; color: var(--rg-red); font-weight: 600; line-height: 1; margin-top: -5px; }
+        @keyframes fillText { 0% { background-position: right bottom; } 100% { background-position: left bottom; } }
+        
+        .loader-bar-container { width: 280px; height: 6px; background: #222; margin: 20px auto; border-radius: 3px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
+        .loader-bar { 
+            height: 100%; width: 0%; background: linear-gradient(90deg, var(--rg-red) 0%, var(--wp-blue-light) 100%); 
+            background-size: 280px 100%; animation: loadProgress 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
+        }
+        @keyframes loadProgress { 0% { width: 0%; } 20% { width: 35%; } 50% { width: 65%; } 80% { width: 90%; } 100% { width: 100%; } }
+        
+        .loader-status { font-family: 'Teko', sans-serif; font-size: 1.3rem; color: var(--rg-white); letter-spacing: 3px; transition: color 0.3s, text-shadow 0.3s; }
+        .loader-status.ready { color: #60a5fa; text-shadow: 0 0 10px rgba(96,165,250,0.6); }
+
+        /* --- SELECTION SCREEN --- */
+        #selection-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
+            background-color: rgba(5,5,5,0.95); z-index: 99998; backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.5s ease;
+        }
+        .selection-content { text-align: center; max-width: 800px; width: 90%; }
+        .selection-content h2 { font-size: 3.5rem; margin-bottom: 5px; color: var(--rg-white); }
+        .selection-content p { font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 40px; font-weight: 300; }
+        .btn-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .view-btn {
+            background: linear-gradient(145deg, #1a1a1a 0%, #111 100%); border: 1px solid #333;
+            border-radius: 12px; padding: 30px 40px; cursor: pointer; transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 15px; width: 260px;
+        }
+        .view-btn i { font-size: 3.5rem; color: var(--rg-gray-400); transition: color 0.3s; }
+        .view-btn span { font-family: 'Teko', sans-serif; font-size: 2rem; font-weight: 600; color: var(--rg-white); line-height: 1; }
+        .view-btn small { font-family: 'Prompt', sans-serif; font-size: 0.9rem; color: var(--rg-gray-400); }
+        .view-btn:hover { border-color: var(--wp-blue-light); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,86,214,0.15); }
+        .view-btn:hover i { color: var(--wp-blue-light); }
+
+        /* --- MAIN SLIDER CONTAINER --- */
         .slider-container {
-            display: flex;
-            flex-direction: row;
-            width: 100vw;
-            height: 100vh;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            display: flex; flex-direction: row; width: 100vw; height: 100vh;
+            overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
         }
-
         .slider-container::-webkit-scrollbar { display: none; }
         .slider-container { -ms-overflow-style: none; scrollbar-width: none; }
 
+        /* --- MOBILE MODE OVERRIDES --- */
+        body.mobile-mode .slider-container {
+            flex-direction: column; overflow-x: hidden; overflow-y: auto; scroll-snap-type: y mandatory;
+        }
+        body.mobile-mode .slide {
+            flex: 0 0 100vh; flex: 0 0 100dvh; height: 100vh; height: 100dvh; scroll-snap-align: start;
+        }
+        body.mobile-mode .portrait-warning { display: none !important; }
+        
+        body.mobile-mode .layout-split { flex-direction: column; }
+        body.mobile-mode .split-image { flex: 0.35; min-height: 35vh; }
+        body.mobile-mode .split-content { flex: 0.65; padding: 25px 20px; justify-content: flex-start; }
+        body.mobile-mode .split-image .img-placeholder { border-left: none; border-top: 5px solid var(--wp-blue-light); }
+        body.mobile-mode .split-image.left-side .img-placeholder { border-right: none; border-bottom: 5px solid var(--wp-blue-light); border-top: none; }
+        body.mobile-mode .split-image.left-side { order: -1; }
+        body.mobile-mode .split-content, body.mobile-mode .layout-full .content { overflow-y: auto !important; -webkit-overflow-scrolling: touch; }
+        
+        body.mobile-mode .layout-full { padding: 15px; }
+        body.mobile-mode .huge-text { font-size: 4rem; top: -5px; left: -5px; opacity: 0.5; }
+        body.mobile-mode h1 { font-size: 2.8rem !important; margin-bottom: 5px !important; }
+        body.mobile-mode h2 { font-size: 2.2rem !important; margin-bottom: 10px !important; }
+        body.mobile-mode .badge { padding: 3px 10px; font-size: 0.75rem; margin-bottom: 8px; }
+        body.mobile-mode .tier-focus-header { flex-direction: column; align-items: flex-start; gap: 10px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        body.mobile-mode .tier-price-block { text-align: left; }
+        body.mobile-mode .tier-price { font-size: 2rem !important; }
+        body.mobile-mode .tier-focus-grid { grid-template-columns: 1fr; gap: 10px; }
+        body.mobile-mode .tier-focus-box { padding: 15px; }
+        body.mobile-mode .tier-focus-box li { font-size: 0.85rem; flex-wrap: wrap;}
+        body.mobile-mode .menu-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important;}
+
+        /* General Slide Layout */
         .slide {
-            flex: 0 0 100vw;
-            height: 100vh;
-            scroll-snap-align: start;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--ts-gray-900);
+            flex: 0 0 100vw; height: 100vh; scroll-snap-align: start;
+            position: relative; overflow: hidden; display: flex;
+            align-items: center; justify-content: center; background-color: var(--rg-gray-900);
         }
-
         .slide::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.3;
+            background-size: 20px 20px; pointer-events: none; z-index: 1; opacity: 0.3;
         }
-
-        .slide-inner {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-        }
+        .slide-inner { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; }
 
         h1, h2, h3, h4 { font-family: 'Teko', 'Prompt', sans-serif; text-transform: uppercase; line-height: 1.1; }
         
         .huge-text {
-            font-size: 8rem;
-            font-weight: 700;
-            color: transparent;
-            -webkit-text-stroke: 2px rgba(0, 86, 179, 0.3); 
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            z-index: 0;
-            white-space: nowrap;
-            pointer-events: none;
+            font-size: 8rem; font-weight: 700; color: transparent;
+            -webkit-text-stroke: 2px rgba(0, 86, 214, 0.15); /* Blue stroke */
+            position: absolute; top: -20px; left: -20px; z-index: 0;
+            white-space: nowrap; pointer-events: none;
         }
 
-        .highlight-gold { color: var(--ts-gold-light); }
-        .highlight-red { color: var(--ts-red); }
+        .highlight-red { color: var(--rg-red); }
+        .highlight-white { color: var(--rg-white); }
+        .highlight-blue { color: var(--wp-blue-light); }
 
-        /* --- Placeholder System --- */
-        .placeholder-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #333;
-            text-align: center;
-            z-index: 0;
-            width: 100%;
+        .img-placeholder-box {
+            width: 100%; height: 100%; background-color: #111; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; padding: 30px;
+            color: var(--rg-gray-400); border: 1px dashed #333; position: relative; z-index: 1;
         }
-        .placeholder-text i { font-size: 4rem; margin-bottom: 10px; display: block; }
-        .placeholder-text span { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; display: block; font-family: 'Teko', sans-serif; }
+        .img-placeholder-box i { font-size: 3rem; margin-bottom: 15px; color: var(--wp-blue-light); opacity: 0.8; }
+        .img-placeholder-box span { font-size: 0.95rem; font-family: 'Prompt', sans-serif; line-height: 1.5; margin-top:10px; color:#666;}
+        
+        /* Manga placeholder style - adapted for WORKPRO */
+        .manga-placeholder { background: linear-gradient(135deg, #0a1128, #111); border: 1px solid var(--wp-blue-light); }
+        .manga-placeholder span { color: #93c5fd; font-weight: 500; font-size: 1.2rem;}
 
         .car-label {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.75);
-            color: var(--ts-white);
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            font-family: 'Teko', sans-serif;
-            letter-spacing: 1px;
-            border: 1px solid var(--ts-gold);
-            z-index: 10;
-            pointer-events: none;
-            backdrop-filter: blur(4px);
-            text-transform: uppercase;
+            position: absolute; bottom: 15px; right: 15px; background: rgba(0, 0, 0, 0.85);
+            color: var(--rg-white); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+            font-weight: 700; font-family: 'Teko', sans-serif; letter-spacing: 1px;
+            border: 1px solid var(--wp-blue-light); z-index: 10; pointer-events: none; backdrop-filter: blur(4px);
         }
 
-        /* --- Layout Types --- */
         .layout-split { display: flex; width: 100%; height: 100%; }
         .split-content {
-            flex: 1.1;
-            padding: 40px 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: linear-gradient(90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%);
-            z-index: 3;
-            overflow-y: auto; 
+            flex: 1.1; padding: 40px 60px; display: flex; flex-direction: column; justify-content: center;
+            background: linear-gradient(90deg, var(--rg-black) 0%, rgba(5,5,5,0.95) 100%); z-index: 3; overflow-y: auto; 
         }
         .split-content::-webkit-scrollbar, .layout-full .content::-webkit-scrollbar { width: 4px; }
-        .split-content::-webkit-scrollbar-thumb, .layout-full .content::-webkit-scrollbar-thumb { background: var(--ts-gold); border-radius: 4px; }
+        .split-content::-webkit-scrollbar-thumb, .layout-full .content::-webkit-scrollbar-thumb { background: var(--wp-blue-light); border-radius: 4px; }
 
-        .split-image { flex: 0.9; position: relative; background-color: var(--ts-gray-800); }
-        .split-image .img-placeholder {
-            width: 100%; height: 100%;
-            background-color: var(--ts-gray-800);
-            border-left: 5px solid var(--ts-gold);
+        .split-image { flex: 0.9; position: relative; background-color: var(--rg-gray-800); }
+        .split-image .img-placeholder { width: 100%; height: 100%; border-left: 5px solid var(--wp-blue-light); position: relative; }
+        .split-image .img-placeholder > img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; position: relative; z-index: 1; }
+        .split-image .img-placeholder::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, transparent 30%); z-index: 2; pointer-events: none; }
+        .split-image.left-side .img-placeholder { border-left: none; border-right: 5px solid var(--wp-blue-light); }
+        .split-image.left-side .img-placeholder::after { background: linear-gradient(-90deg, rgba(5,5,5,0.95) 0%, transparent 30%); }
+
+        .layout-full { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; position: relative; }
+        .layout-full .bg-placeholder { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--rg-gray-900); z-index: -1; }
+        .layout-full .bg-placeholder > img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; position: relative; z-index: 1; }
+        .layout-full .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); z-index: 0; }
+        .layout-full .content { z-index: 2; max-width: 1200px; width: 100%; max-height: 95vh; overflow-y: auto; padding: 10px; }
+
+        .badge { background: var(--rg-white); color: var(--rg-black); padding: 5px 15px; font-weight: 700; font-size: 0.9rem; border-radius: 4px; display: inline-block; margin-bottom: 15px; letter-spacing: 2px; }
+        .badge.red-badge { background: var(--rg-red); color: var(--rg-white);}
+        .badge.blue-badge { background: var(--wp-blue-light); color: var(--rg-white);}
+
+        /* --- CONTENT MENU GRID --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+            text-align: left;
+            width: 100%;
+        }
+        .menu-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--wp-blue-light);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .menu-box:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
+        .menu-box.red-top { border-top-color: var(--rg-red); }
+        .menu-box h4 { font-family: 'Prompt', sans-serif; font-size: 1.1rem; color: var(--rg-white); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;}
+        .menu-box h4 i { font-size: 1.2rem; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list li {
+            font-size: 0.9rem;
+            color: var(--rg-gray-400);
+            margin-bottom: 12px;
+            line-height: 1.5;
             position: relative;
-            background-size: cover; background-position: center 15%; background-repeat: no-repeat;
+            padding-left: 20px;
         }
-        .split-image .img-placeholder > img {
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: center 15%; 
-            display: block; position: relative; z-index: 1;
+        .menu-list li::before {
+            content: "▶";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.7rem;
+            color: var(--wp-blue-light);
         }
-        .split-image .img-placeholder::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, transparent 30%);
-            pointer-events: none; z-index: 2;
-        }
-        .split-image.left-side .img-placeholder { border-left: none; border-right: 5px solid var(--ts-gold); }
-        .split-image.left-side .img-placeholder::after { background: linear-gradient(-90deg, rgba(10,10,10,0.95) 0%, transparent 30%); }
+        .menu-box.red-top .menu-list li::before { color: var(--rg-red); }
+        .menu-list li strong { color: var(--rg-white); font-weight: 500; display: block; margin-bottom: 2px;}
 
-        .layout-full {
-            width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 40px; position: relative;
-        }
-        .layout-full .bg-placeholder {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--ts-gray-900);
-            background-size: cover; background-position: center 15%; background-repeat: no-repeat;
-            z-index: -1; overflow: hidden;
-        }
-        .layout-full .bg-placeholder > img {
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: center 15%;
-            display: block; position: relative; z-index: 1;
-        }
-        .layout-full .overlay {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.75); z-index: 0;
-        }
-        .layout-full .content {
-            z-index: 2; max-width: 1100px; width: 100%; max-height: 95vh; overflow-y: auto; padding: 10px;
-        }
-
-        .badge {
-            background: var(--ts-gold); color: var(--ts-white);
-            padding: 5px 15px; font-weight: 700; font-size: 0.9rem;
-            border-radius: 4px; display: inline-block; margin-bottom: 15px;
-            text-transform: uppercase; letter-spacing: 2px;
-        }
-        .badge.red-badge { background: var(--ts-red); }
-
-        .quote-box {
-            border-left: 4px solid var(--ts-red);
-            padding-left: 20px; margin: 20px 0; font-size: 1.2rem;
-            font-style: italic; color: var(--ts-gray-400); line-height: 1.5;
-        }
-
-        .package-box {
-            background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 1px solid var(--ts-gold); border-radius: 12px;
-            padding: 30px; width: 100%; margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0, 86, 179, 0.2);
-        }
-        .pkg-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
-        .pkg-price { font-size: 2.5rem; color: var(--ts-white); font-family: 'Teko'; line-height: 1;}
-        .pkg-list li { margin-bottom: 10px; font-size: 1rem; display: flex; align-items: flex-start; gap: 10px; text-align: left;}
-        .pkg-list li i { color: var(--ts-gold-light); margin-top: 5px; font-size: 1rem;}
+        /* --- TIER FOCUS (PRICING GRID) --- */
+        .tier-focus-container { display: flex; flex-direction: column; width: 100%; height: 100%; max-width: 1200px; text-align: left; }
+        .tier-focus-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        .tier-price-block { text-align: right; }
+        .tier-price { font-size: 3.5rem; color: #60a5fa; font-family: 'Teko'; line-height: 1; margin-bottom: 5px;}
+        .roi-tag { background: rgba(0, 86, 214, 0.15); border: 1px solid var(--wp-blue-light); border-radius: 6px; padding: 5px 10px; display: inline-block; }
+        .tier-focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; }
+        
+        .tier-focus-box { background: linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(5,5,5,0.9) 100%); border: 1px solid var(--rg-gray-800); border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, border-color 0.3s ease; }
+        .tier-focus-box:hover { border-color: var(--wp-blue-light); transform: translateY(-3px); }
+        .tier-focus-box h4 { font-family: 'Prompt', sans-serif; font-size: 1.1rem; color: var(--rg-white); margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; letter-spacing: 1px; }
+        .tier-focus-box .price-tag { font-family: 'Teko'; font-size: 1.5rem; color: #60a5fa; font-weight: 500;}
+        .tier-focus-box ul { list-style: none; padding: 0; margin: 0; }
+        .tier-focus-box li { font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
+        .tier-focus-box li i { margin-top: 4px; font-size: 0.8rem; color: var(--wp-blue-light); }
 
         .swipe-hint {
-            position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
-            color: rgba(255,255,255,0.6); font-size: 0.8rem; z-index: 100;
-            display: flex; align-items: center; gap: 10px; pointer-events: none;
-            animation: pulse 2s infinite; background: rgba(0,0,0,0.5);
-            padding: 5px 15px; border-radius: 20px;
+            position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 0.8rem; z-index: 100; display: flex; align-items: center; gap: 10px;
+            pointer-events: none; animation: pulse 2s infinite; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
         }
         @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 
-        /* --- FORCE PORTRAIT WARNING --- */
         .portrait-warning {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--ts-black);
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 30px;
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--rg-black); z-index: 9999; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; padding: 30px;
         }
-        @media (orientation: portrait) {
-            .portrait-warning { display: flex; }
-            .slider-container, .swipe-hint { display: none !important; }
+        @media (hover: none) and (pointer: coarse) and (orientation: portrait) {
+            body:not(.mobile-mode) .portrait-warning { display: flex; }
+            body:not(.mobile-mode) .slider-container, body:not(.mobile-mode) .swipe-hint { display: none !important; }
         }
 
-        /* --- MOBILE LANDSCAPE OPTIMIZATION --- */
-        @media (max-height: 600px) {
-            .split-content { padding: 15px 25px; }
-            .layout-full { padding: 15px; }
-            .huge-text { font-size: 5rem; top: -10px; left: -10px; }
-            h1 { font-size: 2.8rem !important; margin-bottom: 5px !important; }
-            h2 { font-size: 2.2rem !important; margin-bottom: 10px !important; }
-            h3 { font-size: 1.2rem !important; margin-bottom: 10px !important; }
-            h4 { font-size: 1.1rem !important; margin-bottom: 5px !important; }
-            p { font-size: 0.9rem !important; margin-bottom: 8px !important; line-height: 1.4 !important; }
-            .badge { padding: 3px 10px; font-size: 0.75rem; margin-bottom: 8px; }
-            .quote-box { margin: 8px 0; font-size: 0.95rem; padding-left: 10px; }
-            .car-label { font-size: 0.7rem; bottom: 10px; right: 10px; padding: 4px 8px;}
-            
-            .synergy-boxes { flex-direction: row !important; gap: 10px !important; margin-top: 10px !important;}
-            .synergy-boxes > div { padding: 10px !important; }
-            .synergy-boxes h3 { font-size: 1.3rem !important; }
-            
-            .package-box { padding: 15px; }
-            .pkg-header { margin-bottom: 10px; padding-bottom: 8px; flex-direction: column; align-items: flex-start; gap: 5px;}
-            .pkg-price { font-size: 1.8rem; }
-            .pkg-list li { font-size: 0.85rem !important; margin-bottom: 5px !important;}
-            
-            .calendar-grid { gap: 10px !important; margin-bottom: 15px !important; }
-            .calendar-grid > div { padding: 10px !important; width: 120px !important; }
-            
-            .stat-box-mobile { flex-direction: row !important; gap: 10px !important; }
-            .stat-box-mobile > div { padding: 10px !important; min-width: 120px !important; }
-            .stat-box-mobile h3 { font-size: 1.8rem !important; }
+        .social-link {
+            display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; text-decoration: none; color: var(--rg-white);
+            font-size: 0.9rem; transition: background 0.3s, transform 0.2s; cursor: pointer;
         }
+        .social-link:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
     </style>
 </head>
 <body>
 
-    <!-- PORTRAIT WARNING (FORCES LANDSCAPE ONLY) -->
+    <!-- PRE-LOADER SCREEN -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <i class="fa-solid fa-wrench loader-icon"></i>
+            <div class="loader-text">WORKPRO</div>
+            <div class="loader-subtext">x RACEGO</div>
+            <div class="loader-bar-container"><div class="loader-bar"></div></div>
+            <div class="loader-status">PREPARING TOOLS...</div>
+        </div>
+    </div>
+
+    <!-- SELECTION SCREEN -->
+    <div id="selection-screen">
+        <div class="selection-content">
+            <h2>CHOOSE VIEWING MODE</h2>
+            <p>กรุณาเลือกรูปแบบอุปกรณ์ เพื่อประสบการณ์รับชมที่ดีที่สุด</p>
+            <div class="btn-container">
+                <button id="btn-mobile" class="view-btn interactive-element">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <span>MOBILE</span>
+                    <small>ดูบนมือถือ (เลื่อนขึ้น-ลง)</small>
+                </button>
+                <button id="btn-pc" class="view-btn interactive-element">
+                    <i class="fa-solid fa-desktop"></i>
+                    <span>PC / TABLET</span>
+                    <small>จอใหญ่ (ปัดซ้าย-ขวา)</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="portrait-warning">
-        <i class="fa-solid fa-mobile-screen-button" style="font-size: 4rem; color: var(--ts-gold-light); margin-bottom: 20px; transform: rotate(-90deg);"></i>
-        <h2 style="color: var(--ts-white); font-size: 1.8rem; margin-bottom: 10px;">กรุณาหมุนหน้าจอเป็นแนวนอน</h2>
-        <p style="color: var(--ts-gray-400); font-size: 1rem;">เพื่ออรรถรสสูงสุดในการรับชม</p>
+        <i class="fa-solid fa-mobile-screen-button" style="font-size: 4rem; color: var(--wp-blue-light); margin-bottom: 20px; transform: rotate(-90deg);"></i>
+        <h2 style="color: var(--rg-white); font-size: 1.8rem; margin-bottom: 10px;">กรุณาหมุนหน้าจอเป็นแนวนอน</h2>
+        <p style="color: var(--rg-gray-400); font-size: 1rem;">เพื่ออรรถรสสูงสุดในการรับชมแบบ PC Mode<br><br>หรือกดรีเฟรชหน้าเว็บแล้วเลือกโหมด "MOBILE"</p>
     </div>
 
     <div class="swipe-hint" id="swipeHint">
@@ -301,496 +328,471 @@
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-content">
-                    <div class="badge">Official Partner Proposal</div>
-                    <h1 style="font-size: 4.5rem; margin-bottom: 10px;">ENGINEERED FOR <br><span class="highlight-gold">CHAMPIONS</span></h1>
-                    <p style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 20px; max-width: 90%;">
-                        นำเสนอความร่วมมือเบื้องหลังสถิติอันดับ 1 ของเอเชีย สู่การต่อยอดแบรนด์เครื่องมือช่างที่แข็งแกร่งที่สุด
+                    <div class="badge blue-badge">Strategic Partnership 2026</div>
+                    <h1 style="font-size: 4.5rem; margin-bottom: 10px;">WORKPRO <br><span style="font-size: 2.5rem; color: var(--rg-gray-400);">x</span> <span class="highlight-red">RACEGO</span></h1>
+                    <p style="font-size: 1.2rem; color: var(--rg-gray-400); margin-bottom: 20px; max-width: 90%;">
+                        ข้อเสนอพิเศษเชิงยุทธศาสตร์การตลาด แคมเปญ "Quality over Quantity" ปรับแพ็กเกจมุ่งเน้นผลลัพธ์สูงสุด เพื่อขยายการรับรู้ตราสินค้า WORKPRO ในประเทศไทย
                     </p>
-                    <div style="border-left: 3px solid var(--ts-red); padding-left: 15px;">
-                        <p style="color: var(--ts-white); font-size: 1rem; margin: 0; font-weight: 500;">นำเสนอ ทีมผู้บริหาร</p>
-                        <p style="color: var(--ts-gold-light); font-size: 0.9rem; margin: 0;">WORKPRO TOOLS THAILAND</p>
+                    <div style="border-left: 3px solid var(--wp-blue-light); padding-left: 15px;">
+                        <p style="color: var(--rg-white); font-size: 1rem; margin: 0; font-weight: 500;">PRESENTED TO: SANGCHAI GROUP</p>
+                        <p style="color: var(--wp-blue-light); font-size: 0.9rem; margin: 0;">BY RACEGO MANAGEMENT</p>
                     </div>
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <div class="placeholder-text"><i class="fa-solid fa-toolbox"></i><span>[ รอใส่รูปภาพ: img_wp_cover.png ]</span></div>
-                        <div class="car-label"><i class="fa-solid fa-wrench"></i> BUILT WITH WORKPRO</div>
+                        <div class="img-placeholder-box manga-placeholder">
+                            <i class="fa-solid fa-toolbox"></i>
+                            <span>wp_01_cover_manga.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-handshake"></i> STRATEGIC ALLIANCE</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 2: THE VISION / THE WHY -->
+        <!-- SLIDE 2: THE CHALLENGE -->
         <div class="slide">
             <div class="slide-inner layout-full">
-                <div class="huge-text">THE VISION</div>
+                <div class="huge-text" style="color: transparent; -webkit-text-stroke: 2px rgba(230,0,18,0.15);">BUILDING TRUST</div>
                 <div class="bg-placeholder">
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-gears"></i><span>[ รอใส่รูปภาพ: img_wp_vision.png ]</span></div>
-                    <div class="car-label"><i class="fa-solid fa-warehouse"></i> THE PROFESSIONAL GARAGE</div>
-                </div>
-                <div class="overlay"></div>
-                <div class="content">
-                    <h2 style="font-size: 3rem; margin-bottom: 15px;"><span class="highlight-gold">เครื่องมือช่าง</span> ไม่ใช่แค่ของใช้... <br>แต่คือ <span class="highlight-red">อาวุธของผู้ชนะ</span></h2>
-                    <div class="quote-box">
-                        "WORKPRO คือเครื่องมือคุณภาพระดับโลกอยู่แล้ว <br>แต่เป้าหมายของเราคือการทำให้ 'วัยรุ่นสายคัสตอมและช่างรุ่นใหม่' <br>รู้สึกว่าแบรนด์นี้คือ <strong>ความเท่ ความโปร และของที่ต้องมีติดอู่</strong>"
+                    <div class="img-placeholder-box manga-placeholder" style="background-color: #050505;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>wp_02_trust_manga.jpg</span>
                     </div>
-                    <p style="font-size: 1.1rem; color: var(--ts-white); font-weight: 300;">
-                        เราไม่ได้มาเพื่อติดสติกเกอร์โลโก้บนรถแข่ง แต่เรามาเพื่อสร้าง <strong>สะพานเชื่อม</strong> <br>ระหว่างเครื่องมือช่างระดับมืออาชีพ กับไลฟ์สไตล์การแต่งรถที่เข้าถึงง่าย
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 3: THE SYNERGY (PONDTECH x NOKIA) -->
-        <div class="slide">
-            <div class="slide-inner layout-split">
-                <div class="split-content">
-                    <div class="huge-text" style="top: auto; bottom: -30px;">SYNERGY</div>
-                    <h2 style="font-size: 3.5rem; margin-bottom: 15px;">1 TEAM. 2 PILLARS. <br><span class="highlight-gold">MAXIMUM IMPACT.</span></h2>
-                    
-                    <div class="synergy-boxes" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--ts-red);">
-                            <h3 style="font-size: 1.8rem; color: var(--ts-white);">PRO PERFORMANCE <i class="fa-solid fa-wrench highlight-red" style="font-size: 1rem;"></i></h3>
-                            <p style="color: var(--ts-red); font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">ปอนด์เทค เบญจรงค์</p>
-                            <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin:0;">ตัวแทน <strong>"ความสมบุกสมบัน"</strong> พิสูจน์ความทนทานของเครื่องมือ WORKPRO ในการสร้างรถแข่ง 2,000 แรงม้า (Heavy Duty Use)</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--ts-gold);">
-                            <h3 style="font-size: 1.8rem; color: var(--ts-white);">LIFESTYLE & DIY <i class="fa-solid fa-tools highlight-gold" style="font-size: 1rem;"></i></h3>
-                            <p style="color: var(--ts-gold-light); font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">โนเกียร์ สุธาสินี</p>
-                            <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin:0;">ตัวแทน <strong>"ความง่ายและเท่"</strong> รีวิวการใช้เครื่องมือแต่งรถสไตล์ผู้หญิง ส่งตรงถึงผู้ใช้งานทั่วไปและหน้าใหม่ (End User Awareness)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="split-image">
-                    <div class="img-placeholder">
-                        <div class="placeholder-text"><i class="fa-solid fa-users-gear"></i><span>[ รอใส่รูปภาพ: img_wp_synergy.png ]</span></div>
-                        <div class="car-label"><i class="fa-solid fa-handshake"></i> RACING TEAM x WORKPRO</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NEW SLIDE 4: BRAND DNA ALIGNMENT -->
-        <div class="slide">
-            <div class="slide-inner layout-full">
-                <div class="bg-placeholder">
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-handshake-angle"></i><span>[ รอใส่รูปภาพ: img_wp_alignment.png ]</span></div>
-                    <div class="car-label"><i class="fa-solid fa-link"></i> THE PERFECT MATCH</div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
-                <div class="content" style="max-width: 1000px;">
-                    <div class="badge">Brand Compatibility</div>
-                    <h2 style="font-size: 3.5rem; margin-bottom: 15px;">BRAND DNA <span class="highlight-gold">ALIGNMENT</span></h2>
-                    <h3 style="font-size: 1.5rem; color: var(--ts-white); margin-bottom: 20px;">เมื่อปรัชญาของผู้ชนะ มาเจอกับเครื่องมือช่างระดับโลก</h3>
-                    
-                    <p style="font-size: 1.1rem; color: var(--ts-gray-400); margin-bottom: 30px;">
-                        หัวใจหลักของมอเตอร์สปอร์ตระดับประเทศคือ <strong>"ความแม่นยำ (Precision)"</strong> และ <strong>"ความทนทาน (Durability)"</strong> <br>
-                        ซึ่งสอดคล้องกับ Core Value ของ WORKPRO Tools อย่างสมบูรณ์แบบ นี่ไม่ใช่แค่การสปอนเซอร์ แต่คือการตอกย้ำ DNA ของแบรนด์
+                <div class="content">
+                    <div class="badge red-badge">The Core Challenge</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 15px;">ทำลายกำแพง <span class="highlight-blue">ความสงสัยของผู้บริโภค</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--rg-gray-400); font-style: italic; margin: 20px auto; border-left: 4px solid var(--wp-blue-light); padding-left: 20px; text-align: left; max-width: 800px;">
+                        "แม้ WORKPRO จะมีมาตรฐานระดับโลก มี In-house Production ของตนเอง แต่ผู้บริโภคชาวไทยบางส่วนยังคงยึดติดแบรนด์เดิม หรือมีความกังวลต่อแบรนด์ใหม่"
                     </p>
-                    
-                    <div class="synergy-boxes" style="display: flex; flex-direction: row; gap: 15px;">
-                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-top: 3px solid var(--ts-gold-light);">
-                            <i class="fa-solid fa-crosshairs highlight-gold" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin-bottom: 5px;">PRECISION</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ทุกมิลลิเมตรในการเซ็ตอัพรถแข่งมีผลต่อเวลา WORKPRO ตอบโจทย์ความแม่นยำที่ช่างต้องการ</p>
-                        </div>
-                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-top: 3px solid var(--ts-red);">
-                            <i class="fa-solid fa-hammer highlight-red" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin-bottom: 5px;">DURABILITY</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ทนทานต่อการใช้งานหนักในสภาวะกดดันสูงของ Pit Lane เครื่องมือที่ไม่เคยทรยศช่าง</p>
-                        </div>
-                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-top: 3px solid var(--ts-white);">
-                            <i class="fa-solid fa-lightbulb" style="font-size: 2rem; margin-bottom: 10px; color: var(--ts-white);"></i>
-                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin-bottom: 5px;">INNOVATION</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ภาพลักษณ์ของทีมแข่งที่ใช้เทคโนโลยีสูงสุด ช่วยส่งเสริมความล้ำสมัยของเครื่องมือช่าง</p>
-                        </div>
-                    </div>
+                    <p style="font-size: 1.1rem; color: var(--rg-white); font-weight: 300;">
+                        การทำตลาดผ่านผู้สร้างสรรค์เนื้อหา (Creator) ที่น่าเชื่อถือและมีทักษะ <strong>สาธิตการใช้งานเชิงประจักษ์ (Heavy-Duty Proof)</strong> คือกุญแจสำคัญเร่งด่วนในการยกระดับภาพลักษณ์แบรนด์
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- NEW SLIDE 5: THE ULTIMATE STRESS TEST -->
+        <!-- SLIDE 3: SYNERGY -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-content">
-                    <div class="badge red-badge">Product Proof</div>
-                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">THE ULTIMATE <br><span class="highlight-gold">STRESS TEST</span></h2>
-                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">เปลี่ยนสนามแข่ง ให้เป็นโชว์รูมทดสอบประสิทธิภาพ</h3>
+                    <div class="huge-text" style="top: auto; bottom: -30px; -webkit-text-stroke: 2px rgba(0,86,214,0.15);">SYNERGY</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 15px;">2 PILLARS TO <br><span class="highlight-blue">AMPLIFY WORKPRO.</span></h2>
                     
-                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
-                        ไม่มีที่ไหนที่จะทดสอบความอึดของเครื่องมือช่างได้ดีไปกว่า <strong>Pit Lane</strong> ของการแข่งขันความเร็วสูง!
-                    </p>
-                    
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px;">
-                            <i class="fa-solid fa-fire highlight-red" style="margin-top: 5px;"></i>
-                            <div><strong style="color: var(--ts-white);">อุณหภูมิและความร้อน:</strong> เครื่องยนต์ที่เพิ่งลงจากแทร็กต้องการเครื่องมือที่ทนทานความร้อนจัด</div>
-                        </li>
-                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px;">
-                            <i class="fa-solid fa-stopwatch highlight-gold" style="margin-top: 5px;"></i>
-                            <div><strong style="color: var(--ts-white);">เวลาที่บีบคั้น:</strong> การซ่อมบำรุงที่ต้องแข่งกับเวลา เครื่องมือต้องจับถนัด ใช้งานได้ฉับไว</div>
-                        </li>
-                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px;">
-                            <i class="fa-solid fa-bolt" style="color: var(--ts-white); margin-top: 5px;"></i>
-                            <div><strong style="color: var(--ts-white);">แรงบิดมหาศาล:</strong> น็อตและชิ้นส่วนช่วงล่างที่อัดแน่น ต้องใช้เครื่องมือที่แข็งแกร่งไม่รูดหรือแตกหัก</div>
-                        </li>
-                    </ul>
-
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold); border-radius: 4px; margin-top: 15px;">
-                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 0.95rem; margin-bottom: 5px;">Visual Evidence (หลักฐานเชิงประจักษ์)</p>
-                        <p style="font-size: 0.85rem; color: var(--ts-gray-400); margin: 0;">
-                            ภาพของทีมช่าง RACEGO ที่หยิบจับเครื่องมือ WORKPRO ใช้งานจริงในสถานการณ์หน้าสิ่วหน้าขวาน คือสื่อโฆษณาที่ทรงพลังและซื้อใจคนดูได้ดีที่สุด
-                        </p>
+                    <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--rg-white);">
+                            <h3 style="font-size: 1.8rem; color: var(--rg-white);">1. THE MASS COMMUNICATOR <i class="fa-solid fa-camera" style="font-size: 1rem;"></i></h3>
+                            <p style="color: var(--rg-white); font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">โนเกียร์ สุธาสินี (Presenter & Lifestyle)</p>
+                            <p style="font-size: 0.9rem; color: var(--rg-gray-400); margin:0;">ตัวแทนฝั่งผู้ใช้งานทั่วไป (Mass/DIY) <strong>เน้นภาพลักษณ์พรีเซนเตอร์บนบรรจุภัณฑ์สินค้า</strong> และกระตุ้นยอดขายผ่าน Short Video</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--rg-red);">
+                            <h3 style="font-size: 1.8rem; color: var(--rg-white);">2. THE PROFESSIONAL TRUST <i class="fa-solid fa-wrench highlight-red" style="font-size: 1rem;"></i></h3>
+                            <p style="color: var(--rg-red); font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">ปอนด์เทค & ทีมแข่ง RaceGO (Pro & B2B)</p>
+                            <p style="font-size: 0.9rem; color: var(--rg-gray-400); margin:0;">ตัวแทนฝั่งวิชาชีพ (Professional) สร้างความน่าเชื่อถือผ่านการสาธิตเชิงประจักษ์ในพิทรถแข่ง เพื่อเจาะตลาดอู่ซ่อมรถ</p>
+                        </div>
                     </div>
                 </div>
                 <div class="split-image">
-                    <div class="img-placeholder">
-                        <div class="placeholder-text"><i class="fa-solid fa-stopwatch"></i><span>[ รอใส่รูปภาพ: img_wp_stresstest.png ]</span></div>
-                        <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> REAL RACING PIT STOP</div>
+                    <div class="img-placeholder" style="border-color: var(--wp-blue-light);">
+                        <div class="img-placeholder-box manga-placeholder">
+                            <i class="fa-solid fa-people-group"></i>
+                            <span>wp_03_synergy_manga.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-bolt"></i> THE PERFECT BALANCE</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- NEW SLIDE 6: B2B TRUST & PENETRATION -->
+        <!-- ========================================== -->
+        <!-- NOKIA: THE FACE OF WORKPRO                 -->
+        <!-- ========================================== -->
+
+        <!-- SLIDE 4: NOKIA INTRO -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <img src="racego_05_nokia.jpg" alt="Nokia" onerror="this.style.display='none';">
+                    <div class="img-placeholder-box" style="background-color: var(--rg-gray-900); z-index: -1;">
+                        <i class="fa-solid fa-star"></i>
+                        <span>racego_05_nokia.jpg</span>
+                    </div>
+                    <div class="car-label"><i class="fa-solid fa-camera"></i> BRAND PRESENTER</div>
+                </div>
+                <div class="overlay" style="background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%);"></div>
+                <div class="content" style="text-align: left;">
+                    <div class="badge blue-badge">The Face of WORKPRO</div>
+                    <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 10px;">NOKIA SUTASINEE<br><span class="highlight-white" style="font-size: 2.5rem;">3.7 MILLION FOLLOWERS</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--rg-white); font-weight: 300; max-width: 650px; margin-bottom: 15px;">
+                        Mega Influencer ผู้มีอิทธิพลในการชี้นำเทรนด์ ด้วยภาพลักษณ์ที่สดใสแต่แฝงความเท่ "โนเกียร์" จะเข้ามาเป็นใบหน้าหลัก (Key Visual) ของ WORKPRO เพื่อดึงดูดกลุ่มผู้บริโภคทั่วไป (Mass Market) และสาย DIY ให้เปิดใจทดลองใช้แบรนด์
+                    </p>
+
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <a href="https://www.tiktok.com/@nokia_sutasinee" target="_blank" class="social-link" style="border: 1px solid #69C9D0;"><i class="fa-brands fa-tiktok" style="color: #fff;"></i> 1.3M Followers</a>
+                        <a href="https://www.facebook.com/nokia.sutasinee" target="_blank" class="social-link" style="border: 1px solid #1877F2;"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i> 1.17M Followers</a>
+                        <a href="https://www.instagram.com/nokia_sutasinee" target="_blank" class="social-link" style="border: 1px solid #E1306C;"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i> 1.01M Followers</a>
+                        <a href="https://www.youtube.com/@NokiaSutasinee" target="_blank" class="social-link" style="border: 1px solid #FF0000;"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i> 260K Followers</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: NOKIA PACKAGING RIGHTS -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
-                    <div class="img-placeholder" style="border-color: var(--ts-red);">
-                        <div class="placeholder-text"><i class="fa-solid fa-industry"></i><span>[ รอใส่รูปภาพ: img_wp_b2b.png ]</span></div>
-                        <div class="car-label"><i class="fa-solid fa-wrench"></i> MASTER MECHANIC CHOICE</div>
+                    <div class="img-placeholder" style="border-color: var(--wp-blue-light);">
+                        <div class="img-placeholder-box manga-placeholder">
+                            <i class="fa-solid fa-box-open"></i>
+                            <span>wp_05_packaging_manga.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-copyright"></i> EXCLUSIVE RIGHTS</div>
                     </div>
                 </div>
-                <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
-                    <div class="badge">B2B Penetration</div>
-                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">B2B <span class="highlight-red">TRUST</span></h2>
-                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">เจาะตลาดอู่รถยนต์และช่างมืออาชีพทั่วประเทศ</h3>
-                    
-                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
-                        ในวงการอู่แต่งรถ <strong>ปอนด์เทค</strong> คือหนึ่งใน "Idol" หรือผู้นำทางความคิด (KOL) ระดับท็อป เมื่อ Master Mechanic ระดับเอเชียเลือกใช้ <strong>WORKPRO</strong> เป็นอาวุธคู่กาย...
+                <div class="split-content" style="background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(5,5,5,0.95) 100%); align-items: flex-end; text-align: right;">
+                    <div class="badge blue-badge">Long-term Branding</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">PRESENTER & <br><span class="highlight-blue">PACKAGING</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">สินทรัพย์ทางสื่อที่ทรงพลังและคุ้มค่าที่สุด</h3>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        มอบสิทธิ์การนำภาพถ่ายในสตูดิโอ (Studio Key Visual) ของโนเกียร์ ไปใช้บน <strong>บรรจุภัณฑ์สินค้า (Packaging)</strong>, ป้ายบิลบอร์ด, และสื่อ ณ จุดขายทั่วประเทศ ตลอดระยะเวลาสัญญา 1 ปีเต็ม
                     </p>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-red); border-radius: 4px; text-align: right; margin-bottom: 15px; width: 100%;">
-                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-store"></i> B2B Endorsement</p>
-                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
-                            ช่างซ่อมรถและเจ้าของอู่ทั่วประเทศจะเกิดความเชื่อมั่น (Professional Trust) และพร้อมที่จะสั่งซื้อเครื่องมือ WORKPRO ไปใช้งานในอู่ของตนเอง เพราะเชื่อในการตัดสินใจของมืออาชีพ
-                        </p>
-                    </div>
-
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-gold-light); border-radius: 4px; text-align: right; width: 100%;">
-                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-users-gear"></i> Dealer Network Expansion</p>
-                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
-                            ภาพลักษณ์ความเชี่ยวชาญนี้ช่วยให้ทีมเซลส์ของ WORKPRO นำไปต่อยอดเจรจากับ Dealer หรือตัวแทนจำหน่าย (B2B) เพื่อเพิ่มความมั่นใจในการสต็อกสินค้าได้ง่ายขึ้น
-                        </p>
-                    </div>
+                    <ul style="list-style: none; padding: 0; color: var(--rg-gray-400); font-size: 0.95rem; line-height: 1.6; text-align: right; width: 100%;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start; justify-content: flex-end; gap: 10px;">
+                            <div>
+                                <strong>100% Exclusivity:</strong> สงวนสิทธิ์ห้ามรับงานโฆษณาแบรนด์เครื่องมือช่างคู่แข่งตลอดสัญญา
+                            </div>
+                            <i class="fa-solid fa-lock highlight-blue" style="margin-top: 5px;"></i>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
 
-        <!-- NEW SLIDE 7: B2C LIFESTYLE EMPOWERMENT -->
+        <!-- SLIDE 6: NOKIA SHORT VIDEO CONVERSION -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-content">
-                    <div class="badge">B2C Expansion</div>
-                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">B2C <span class="highlight-gold">EMPOWERMENT</span></h2>
-                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">ขยายตลาดสู่มวลชน สาย DIY และไลฟ์สไตล์</h3>
-                    
-                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
-                        เครื่องมือช่างไม่ได้มีไว้สำหรับช่างอาชีพเท่านั้น! <strong>โนเกียร์</strong> จะมาช่วยเปลี่ยนภาพลักษณ์ของ WORKPRO ให้ดู <strong>"เป็นมิตร ทันสมัย และน่าใช้"</strong> สำหรับผู้ใช้งานทั่วไป (End Users)
+                    <div class="badge blue-badge">Sales Conversion</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">SHORT-FORM <br><span class="highlight-white">VIDEO IMPACT</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">ปรับยุทธศาสตร์วิดีโอ เพื่อยอดขายที่รวดเร็ว</h3>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        ลดต้นทุนโปรดักชันคลิปยาว เปลี่ยนเป็นการทำ <strong>Short-Video 6 ชิ้นงาน</strong> (TikTok/Reels) เน้นเนื้อหา DIY ดูสนุก เข้าถึงง่าย (Shoppertainment) พร้อมแนบตะกร้าสินค้าเพื่อกระตุ้นให้เกิดการซื้อทันที (Conversion)
                     </p>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold-light); border-radius: 4px; margin-bottom: 15px;">
-                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-house-user"></i> Everyday DIY Tools</p>
-                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
-                            นำเสนอผ่านคอนเทนต์ไลฟ์สไตล์ เช่น ผู้หญิงก็สามารถใช้สว่านไขควงไฟฟ้า WORKPRO ประกอบของใช้ในบ้าน หรือแต่งรถเล็กๆ น้อยๆ ได้ด้วยตัวเองอย่างมั่นใจ ไม่ใช่เรื่องยากอีกต่อไป
-                        </p>
-                    </div>
-
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-red); border-radius: 4px;">
-                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-cart-shopping"></i> E-Commerce Conversion</p>
-                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
-                            เจาะกลุ่มผู้ชมกว่า 3.7 ล้านคนของโนเกียร์ สร้างแคมเปญกระตุ้นยอดขาย (Shoppertainment) ลิงก์ตรงสู่ตะกร้า TikTok Shop หรือ Shopee/Lazada ของ WORKPRO อย่างรวดเร็ว
-                        </p>
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div class="proof-stat-box" style="flex:1; border-color: var(--wp-blue-light);">
+                            <div class="proof-stat-number" style="color: var(--wp-blue-light);">HIGH</div>
+                            <div class="proof-stat-label">Engagement Rate</div>
+                        </div>
                     </div>
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
-                        <div class="placeholder-text"><i class="fa-solid fa-camera"></i><span>[ รอใส่รูปภาพ: img_wp_b2c.png ]</span></div>
-                        <div class="car-label"><i class="fa-solid fa-tools"></i> EVERYDAY LIFESTYLE DIY</div>
+                        <div class="img-placeholder-box manga-placeholder">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                            <span>wp_06_tiktok_manga.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-play"></i> REELS & TIKTOK</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 8: PONDTECH DEEP DIVE (THE MASTER) -->
+        <!-- ========================================== -->
+        <!-- PONDTECH: THE PROFESSIONAL TRUST           -->
+        <!-- ========================================== -->
+
+        <!-- SLIDE 7: PONDTECH INTRO -->
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-cogs"></i><span>[ รอใส่รูปภาพ: img_wp_pondtech.png ]</span></div>
-                    <div class="car-label"><i class="fa-solid fa-gear"></i> PRECISION ENGINEERING</div>
+                    <img src="racego_04_pondtech.jpg" alt="Pondtech" onerror="this.style.display='none';">
+                    <div class="img-placeholder-box" style="background-color: var(--rg-gray-900); z-index: -1;">
+                        <i class="fa-solid fa-user-gear"></i>
+                        <span>racego_04_pondtech.jpg</span>
+                    </div>
+                    <div class="car-label"><i class="fa-solid fa-wrench"></i> MASTER MECHANIC</div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
                 <div class="content" style="display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
-                    <div class="badge red-badge">The Master Mechanic</div>
-                    <h2 style="font-size: 3.5rem; line-height: 1;">ความแม่นยำระดับมิลลิเมตร<br><span class="highlight-gold" style="font-size: 2rem;">ตัดสินแพ้ชนะในสนามแข่ง</span></h2>
-                    <p style="font-size: 1.1rem; color: var(--ts-gray-400); margin-top: 15px; margin-bottom: 20px;">
-                        ปอนด์เทค คือช่างผู้สร้างสถิติรถ Drag ที่เร็วที่สุดในเอเชีย<br>
-                        ทุกชิ้นส่วนประกอบขึ้นด้วยมือ และต้องการเครื่องมือที่ไว้ใจได้ 100% <strong>WORKPRO คือคำตอบของการรับมือกับเครื่องยนต์หลักพันแรงม้า</strong>
+                    <div class="badge red-badge">The Professional Trust</div>
+                    <h2 style="font-size: 3.5rem; line-height: 1; margin-bottom: 10px;">PONDTECH<br><span class="highlight-white" style="font-size: 2rem;">386K HARDCORE FOLLOWERS</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 15px; max-width: 800px;">
+                        "ปรมาจารย์แห่งความเร็ว" ที่คนรักรถตัวจริงและเจ้าของอู่ซ่อมรถเชื่อมั่น (B2B Trust) ปอนด์เทคคือตัวแทนที่สมบูรณ์แบบในการนำเครื่องมือ WORKPRO ไปใช้งานแบบ <strong>Heavy-Duty</strong> เพื่อทำลายกำแพงความสงสัยของช่างมืออาชีพ
                     </p>
-                    
-                    <div class="synergy-boxes" style="display: flex; flex-direction: row; gap: 15px; width: 100%;">
-                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold);">
-                            <h4 style="font-size: 1.4rem; color: var(--ts-white); margin-bottom: 5px;">PROFESSIONAL TRUST</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">ภาพลักษณ์ที่น่าเชื่อถือ เมื่อช่างระดับประเทศเลือกใช้เครื่องมือแบรนด์ของคุณในอู่จริง</p>
-                        </div>
-                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-red);">
-                            <h4 style="font-size: 1.4rem; color: var(--ts-white); margin-bottom: 5px;">THE HEAVY DUTY TEST</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.9rem; margin: 0;">พิสูจน์ความถึกทนของเครื่องมือช่าง Workpro ในสภาพแวดล้อมการแข่งขันที่กดดันที่สุด</p>
-                        </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px;">
+                        <a href="https://www.facebook.com/profile.php?id=100064480248488" target="_blank" class="social-link" style="border: 1px solid #1877F2;"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i> 285K Followers</a>
+                        <a href="https://www.youtube.com/@pondtechracing1001" target="_blank" class="social-link" style="border: 1px solid #FF0000;"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i> 101K Followers</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 9: NOKIA DEEP DIVE (THE HYPE) -->
-        <div class="slide">
-            <div class="slide-inner layout-full">
-                <div class="bg-placeholder">
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-solid fa-camera"></i><span>[ รอใส่รูปภาพ: img_wp_nokia.png ]</span></div>
-                    <div class="car-label"><i class="fa-solid fa-screwdriver"></i> WORKPRO DIY LIFESTYLE</div>
-                </div>
-                <div class="overlay" style="background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);"></div>
-                <div class="content" style="text-align: left;">
-                    <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">The DIY Influencer</div>
-                    <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 10px;">3.7 MILLION<br><span class="highlight-gold">FOLLOWERS.</span></h2>
-                    <p style="font-size: 1.1rem; color: var(--ts-white); font-weight: 300; max-width: 600px; margin-bottom: 20px;">
-                        โนเกียร์ ทำให้การซ่อมรถ/แต่งรถดูเป็นเรื่อง "สนุกและเข้าถึงง่าย" <br>
-                        เมื่อเธอจับเครื่องมือ WORKPRO มันจะกลายเป็น <strong>"ไอเทมไลฟ์สไตล์"</strong> ที่วัยรุ่นและช่างมือใหม่เห็นแล้วอยากซื้อตามทันที
-                    </p>
-                    
-                    <div class="stat-box-mobile" style="display: flex; gap: 15px; max-width: 800px;">
-                        <div style="flex: 1;">
-                            <h4 style="font-size: 2rem; color: var(--ts-gold-light); margin-bottom: 0;">49.1M</h4>
-                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); text-transform: uppercase; margin:0;">FB Views (90 Days)</p>
-                        </div>
-                        <div style="flex: 1;">
-                            <h4 style="font-size: 2rem; color: var(--ts-red); margin-bottom: 0;">73.2%</h4>
-                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); text-transform: uppercase; margin:0;">New User Acq.</p>
-                        </div>
-                        <div style="flex: 1;">
-                            <h4 style="font-size: 2rem; color: var(--ts-white); margin-bottom: 0;">878K</h4>
-                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); text-transform: uppercase; margin:0;">Viral Max/Clip</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 10: PONDTECH'S MACHINE (ALTIS OMR) -->
-        <div class="slide">
-            <div class="slide-inner layout-split">
-                <div class="split-content">
-                    <div class="badge red-badge">The Alpha Weapon</div>
-                    <h2 style="font-size: 3rem; margin-bottom: 5px;">TOYOTA COROLLA <br><span class="highlight-gold">ALTIS GR SPORT</span></h2>
-                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">#59 MAINTAINED BY WORKPRO</h3>
-                    
-                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
-                        ขีดสุดแห่งสมรรถนะในคลาสที่เดือดที่สุดของ Toyota Gazoo Racing เมื่อรถทุกคันสเปคเท่ากัน การเซ็ตอัพรถและเปลี่ยนอะไหล่ที่ <strong>"รวดเร็ว แม่นยำ"</strong> ด้วยเครื่องมือชั้นยอดจึงเป็นตัวแปรสำคัญ
-                    </p>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--ts-gold); border-radius: 4px;">
-                        <p style="color: var(--ts-gold-light); font-weight: 600; font-size: 1rem; margin-bottom: 5px;">Powered by WORKPRO</p>
-                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
-                            โลโก้ WORKPRO ประดับบนตัวรถแข่งและชุดช่าง พิสูจน์ให้เห็นว่าเราคือแบรนด์ผู้อยู่เบื้องหลังความสำเร็จในสนามแข่งระดับอาเซียน
-                        </p>
-                    </div>
-                </div>
-                <div class="split-image">
-                    <div class="img-placeholder">
-                        <div class="placeholder-text"><i class="fa-solid fa-car-side"></i><span>[ รอใส่รูปภาพ: img_wp_altis.png ]</span></div>
-                        <div class="car-label" style="background: rgba(0, 86, 179, 0.8); border-color: #fff; color: #fff;"><i class="fa-solid fa-flag-checkered"></i> TOPSECRET x WORKPRO LIVERY</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 11: NOKIA'S MACHINE (YARIS ATIV OMR) -->
+        <!-- SLIDE 8: PONDTECH HEAVY DUTY PROOF -->
         <div class="slide">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
-                    <div class="img-placeholder" style="border-color: var(--ts-gold-light);">
-                        <div class="placeholder-text"><i class="fa-solid fa-car"></i><span>[ รอใส่รูปภาพ: img_wp_yaris.png ]</span></div>
-                        <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> TOPSECRET x WORKPRO YARIS</div>
+                    <div class="img-placeholder" style="border-color: var(--rg-red);">
+                        <div class="img-placeholder-box manga-placeholder">
+                            <i class="fa-solid fa-hammer"></i>
+                            <span>wp_08_heavyduty_manga.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-fire-flame-curved"></i> HEAVY-DUTY PROOF</div>
                     </div>
                 </div>
-                <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
-                    <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">The Street Icon</div>
-                    <h2 style="font-size: 3rem; margin-bottom: 5px;">TOYOTA YARIS <br><span class="highlight-gold-light">ATIV LADY OMR</span></h2>
-                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">#122 MAINTAINED BY WORKPRO</h3>
-                    
-                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
-                        จากรถ Eco-Car ยอดฮิตที่คนไทยใช้มากที่สุด สู่ไอคอนบนสนามแข่ง เมื่อโนเกียร์จับพวงมาลัยคันนี้ มันจะไม่ใช่แค่รถแข่ง แต่คือ <strong>"แฟชั่นไอเทม"</strong> ที่ดึงดูดทุกสายตาทั้งในสนามและบนท้องถนน
+                <div class="split-content" style="background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(5,5,5,0.95) 100%); align-items: flex-end; text-align: right;">
+                    <div class="badge red-badge">B2B Authority</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">TECHNICAL <br><span class="highlight-red">REVIEW</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">การสาธิตเชิงประจักษ์โดยผู้เชี่ยวชาญ</h3>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        นำเสนอคลิป <strong>Technical Review 4 ชิ้นงาน (Hero Content)</strong> เจาะลึกการใช้เครื่องมือ WORKPRO ซ่อมบำรุงรถแข่งในสภาวะสุดขั้ว เพื่อเป็นเครื่องการันตีคุณภาพว่า "ทนทานและแม่นยำระดับทีมแข่ง"
                     </p>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-red); border-radius: 4px; text-align: right; width: 100%;">
-                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;">Mass Market Appeal</p>
-                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">
-                            ฐานผู้ใช้ Yaris Ativ ในไทยมีมหาศาล การคาดโลโก้ WORKPRO บนรถคันนี้ จะทำให้วัยรุ่นและคนทั่วไปรู้สึกว่าแบรนด์นี้เข้าถึงได้ง่าย กระตุ้นความอยากดูแลและแต่งรถด้วยตัวเอง
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 12: CONTENT STRATEGY -->
-        <div class="slide">
-            <div class="slide-inner layout-split">
-                <div class="split-image left-side">
-                    <div class="img-placeholder" style="border-color: var(--ts-gold);">
-                        <div class="placeholder-text"><i class="fa-solid fa-video"></i><span>[ รอใส่รูปภาพ: img_wp_content.png ]</span></div>
-                        <div class="car-label"><i class="fa-solid fa-wrench"></i> WORKPRO TOOL REVIEW</div>
-                    </div>
-                </div>
-                <div class="split-content" style="background: linear-gradient(-90deg, var(--ts-black) 0%, rgba(10,10,10,0.95) 100%); align-items: flex-end; text-align: right;">
-                    <div class="badge" style="background: var(--ts-white); color: var(--ts-black);">Social Media Impact</div>
-                    <h2 style="font-size: 3rem; margin-bottom: 5px;">SELLING THE <br><span class="highlight-red">EFFICIENCY</span></h2>
-                    <h3 style="font-size: 1.2rem; color: var(--ts-gray-400); margin-bottom: 15px;">เจาะตลาดทั้ง Pro Users และ DIY Users</h3>
-                    
-                    <p style="font-size: 1rem; color: var(--ts-white); margin-bottom: 15px;">
-                        เราจะใช้ช่องทางโซเชียลมีเดียหลักของเรา สร้างคอนเทนต์ "ป้ายยา" เครื่องมือช่าง Workpro ในรูปแบบที่ดูสนุก น่าติดตาม และเห็นผลลัพธ์การใช้งานจริง
-                    </p>
-                    
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-right: 3px solid var(--ts-red); border-radius: 4px; text-align: right; width: 100%;">
-                        <p style="color: var(--ts-red); font-weight: 600; font-size: 1rem; margin-bottom: 5px;">Technical BTS (เจาะลึกการทำรถ)</p>
-                        <p style="font-size: 0.9rem; color: var(--ts-gray-400); margin: 0;">ปอนด์เทครีวิวชุดประแจและบล็อกลม Workpro ขณะประกอบเครื่อง โชว์ความแข็งแรง ทนทาน จับถนัดมือ กระตุ้นยอดขายกลุ่มอู่ซ่อมรถ</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- ========================================== -->
+        <!-- ON-GROUND & THE PACKAGE                    -->
+        <!-- ========================================== -->
 
-        <!-- SLIDE 12: THE STAGE (TGR 2026 CALENDAR) -->
+        <!-- SLIDE 9: TGR ROADSHOW -->
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-regular fa-calendar-alt"></i><span>[ รอใส่รูปภาพ: img_wp_calendar.png ]</span></div>
+                    <img src="racego_08_tgr_overview.jpg" alt="TGR Roadshow" onerror="this.style.display='none';">
+                    <div class="img-placeholder-box" style="background-color: #111; z-index: -1;">
+                        <i class="fa-solid fa-flag-checkered"></i>
+                        <span>racego_08_tgr_overview.jpg</span>
+                    </div>
                 </div>
-                <div class="overlay" style="background: rgba(0,0,0,0.8);"></div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
                 <div class="content">
-                    <div class="badge" style="background: transparent; border: 1px solid var(--ts-gold); color: var(--ts-gold-light);">The Master Plan</div>
-                    <h2 style="font-size: 4rem; margin-bottom: 15px;">RACING CALENDAR <span class="highlight-red">2026</span></h2>
-                    
-                    <div class="calendar-grid" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--ts-gray-800); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
-                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">1-5 JULY</div>
-                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">ชลบุรี</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.8rem; margin: 0;">Bangsaen GP</p>
+                    <div class="badge blue-badge">National Roadshow Exposure</div>
+                    <h2 style="font-size: 4.5rem; margin-bottom: 15px;">TOYOTA GAZOO RACING <span class="highlight-red">2026</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--rg-gray-400); margin-bottom: 25px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                        โลโก้ตราสินค้า WORKPRO จะถูกประดับลงบน **เสื้อทีมช่าง (Pit Crew)** และ **ตัวรถแข่ง** นำขบวนทัวร์ 4 ภูมิภาคหลักของไทย (ชลบุรี, ภูเก็ต, บุรีรัมย์, เชียงใหม่) สู่สายตาผู้ชมกว่า 250,000 คน
+                    </p>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-shirt highlight-blue" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">Pit Crew Uniforms</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">ทีมช่างใส่เสื้อที่มีโลโก้แบรนด์ขณะปฏิบัติงานจริง</p>
                         </div>
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--ts-gray-800); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
-                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">29-30 AUGUST</div>
-                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">ภูเก็ต</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.8rem; margin: 0;">Phuket</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--ts-gray-800); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
-                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">24-27 SEPT</div>
-                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">บุรีรัมย์</h4>
-                            <p style="color: var(--ts-gray-400); font-size: 0.8rem; margin: 0;">Buriram</p>
-                        </div>
-                        <div style="background: rgba(0,86,179,0.2); border: 1px solid var(--ts-gold); padding: 15px; border-radius: 8px; width: 140px; text-align: center;">
-                            <div style="color: var(--ts-gold-light); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">21-22 NOV</div>
-                            <h4 style="color: var(--ts-white); font-size: 1.2rem; margin: 0;">เชียงใหม่</h4>
-                            <p style="color: var(--ts-gold-light); font-size: 0.8rem; margin: 0;">Final Race</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-box-mobile" style="display: flex; gap: 15px; justify-content: center;">
-                        <div style="border: 1px solid var(--ts-gray-800); background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; min-width: 150px;">
-                            <h3 style="font-size: 2.5rem; color: var(--ts-gold-light); margin-bottom: 0;">250K+</h3>
-                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); margin: 0; text-transform: uppercase;">On-Ground Visitors</p>
-                        </div>
-                        <div style="border: 1px solid var(--ts-gray-800); background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; min-width: 150px;">
-                            <h3 style="font-size: 2.5rem; color: var(--ts-red); margin-bottom: 0;">B2B & B2C</h3>
-                            <p style="font-size: 0.8rem; color: var(--ts-gray-400); margin: 0; text-transform: uppercase;">Booth Sales Opps.</p>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-car-side highlight-red" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">Race Car Branding</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">พื้นที่สติกเกอร์สปอนเซอร์บนรถแข่ง</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 13: THE PARTNERSHIP PROPOSITION -->
+        <!-- SLIDE 10: CONTENT MENU NOKIA -->
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder"></div>
                 <div class="overlay" style="background: rgba(10,10,10,1);"></div>
-                <div class="huge-text" style="color: rgba(0, 86, 179, 0.05); top: 50%; transform: translateY(-50%); font-size: 10rem;">WORKPRO</div>
-                <div class="content" style="max-width: 1100px; width: 100%;">
-                    <h2 style="font-size: 3rem; margin-bottom: 10px;">OFFICIAL <span class="highlight-gold">TOOL PARTNER</span></h2>
-                    <p style="font-size: 1rem; color: var(--ts-gray-400); margin-bottom: 20px;">
-                        แพ็กเกจผู้สนับสนุนเพื่อผลักดันยอดขายและการรับรู้แบรนด์ WORKPRO ในวงการมอเตอร์สปอร์ต
+                <div class="content" style="max-width: 1200px;">
+                    <div class="badge blue-badge" style="margin-bottom: 5px;">Content Strategy Pool: Nokia Sutasinee</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">เมนูไอเดีย <span class="highlight-blue">SHORT VIDEO</span></h2>
+                    <p style="color: var(--rg-gray-400); font-size: 1rem; margin-bottom: 20px;">
+                        นำเสนอ 12 ไอเดีย ให้ทางแบรนด์เลือกผลิตจริงจำนวน <strong>6 คลิป</strong> (เตรียมไอเดียเผื่อให้เลือกถึง 2 เท่า) เพื่ออิสระในการตอบโจทย์เป้าหมายการตลาดในแต่ละไตรมาส
                     </p>
                     
-                    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%;">
-                        <!-- GOLD PACKAGE -->
-                        <div class="package-box" style="flex: 1; min-width: 320px; padding: 25px; border-color: var(--ts-gold-light); box-shadow: 0 10px 30px rgba(51, 133, 255, 0.15);">
-                            <div class="pkg-header" style="flex-direction: column; align-items: flex-start; gap: 10px;">
-                                <div>
-                                    <h3 style="font-size: 1.8rem; color: var(--ts-white); margin-bottom: 0;">🥇 GOLD PARTNER</h3>
-                                    <p style="color: var(--ts-gold-light); margin: 0; font-size: 0.9rem;">Official Sponsor (ผู้สนับสนุนระดับสูง)</p>
-                                </div>
-                                <div class="pkg-price" style="font-size: 2rem;">500K - 800K <span style="font-size: 1rem; color: var(--ts-gray-400);">THB</span></div>
-                            </div>
-                            <ul class="pkg-list" style="list-style: none; padding: 0; margin:0; text-align: left;">
-                                <li><i class="fa-solid fa-car"></i> <span><strong>Racing Branding:</strong> โลโก้ขนาดกลางบนรถแข่ง 2 คัน และชุดช่างเทคนิค</span></li>
-                                <li><i class="fa-solid fa-video"></i> <span><strong>Content:</strong> คลิปรีวิวเครื่องมือ Workpro และโลโก้ End Credit ท้ายคลิป</span></li>
-                                <li><i class="fa-solid fa-store"></i> <span><strong>On-Ground:</strong> สิทธิ์ตั้งบูธขายสินค้าในงานแข่งขัน และ VIP Pitwalk</span></li>
-                                <li><i class="fa-solid fa-camera"></i> <span><strong>Media Rights:</strong> สิทธิ์นำภาพนักแข่ง/รถแข่งไปใช้โปรโมทแบรนด์</span></li>
+                    <div class="menu-grid">
+                        <div class="menu-box">
+                            <h4><i class="fa-solid fa-screwdriver-wrench" style="color: var(--wp-blue-light);"></i> งานช่างง่ายๆ สไตล์ผู้หญิง</h4>
+                            <ul class="menu-list">
+                                <li><strong>ประกอบชั้นวางของในอู่</strong> โชว์สว่านไขควง WORKPRO ขนาดกะทัดรัด ผู้หญิงทำได้ไม่ง้อช่าง</li>
+                                <li><strong>แต่งตัวเตรียมลุยสนามแข่ง</strong> พร็อพเด่นคือกระเป๋าเครื่องมือ WORKPRO สีแดงสุดชิค</li>
+                                <li><strong>ASMR แกะกล่องเครื่องมือ</strong> โฟกัสเสียงฟินๆ และความพรีเมียมของแพ็กเกจจิ้งแบบเน้นๆ</li>
                             </ul>
                         </div>
-
-                        <!-- SILVER PACKAGE -->
-                        <div class="package-box" style="flex: 1; min-width: 320px; padding: 25px; border-color: #9ca3af; box-shadow: 0 10px 30px rgba(156, 163, 175, 0.05);">
-                            <div class="pkg-header" style="flex-direction: column; align-items: flex-start; gap: 10px; border-bottom-color: #333;">
-                                <div>
-                                    <h3 style="font-size: 1.8rem; color: var(--ts-white); margin-bottom: 0;">🥈 SILVER PARTNER</h3>
-                                    <p style="color: #9ca3af; margin: 0; font-size: 0.9rem;">Co-Sponsor (ผู้สนับสนุนร่วม)</p>
-                                </div>
-                                <div class="pkg-price" style="font-size: 2rem;">150K - 300K <span style="font-size: 1rem; color: var(--ts-gray-400);">THB</span></div>
-                            </div>
-                            <ul class="pkg-list" style="list-style: none; padding: 0; margin:0; text-align: left;">
-                                <li><i class="fa-solid fa-car" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Racing Branding:</strong> โลโก้ขนาดมาตรฐานบนรถแข่ง 2 คัน และชุดช่าง</span></li>
-                                <li><i class="fa-solid fa-desktop" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Social Media:</strong> โลโก้แบนเนอร์ผู้สนับสนุนหลักบนเพจ RaceGO</span></li>
-                                <li><i class="fa-solid fa-camera" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Awareness:</strong> ภาพถ่ายโปรโมทการใช้เครื่องมือช่างจริงในพิท</span></li>
-                                <li><i class="fa-solid fa-flag-checkered" style="color: #9ca3af;"></i> <span style="color: #d1d5db;"><strong>Event Access:</strong> บัตรเข้าชมการแข่งขัน และสัมผัสบรรยากาศพิต</span></li>
+                        <div class="menu-box">
+                            <h4><i class="fa-solid fa-cart-arrow-down" style="color: var(--wp-blue-light);"></i> ป้ายยาพาช้อป (Conversion)</h4>
+                            <ul class="menu-list">
+                                <li><strong>3 ไอเทม WORKPRO ติดรถไว้</strong> อุ่นใจแน่นอน ป้ายยาให้คนดูรู้สึก "ของมันต้องมี"</li>
+                                <li><strong>ท้าเพื่อนใช้เครื่องมือช่าง</strong> พิสูจน์ความ User-Friendly ว่าใครๆ ก็จับใช้งานได้ง่าย</li>
+                                <li><strong>จัดระเบียบท้ายรถฉบับโนเกียร์</strong> ใช้กล่องและกระเป๋า WORKPRO เก็บของให้เนี๊ยบ</li>
+                            </ul>
+                        </div>
+                        <div class="menu-box">
+                            <h4><i class="fa-solid fa-car-sparkles" style="color: var(--wp-blue-light);"></i> ไลฟ์สไตล์คนรักรถ</h4>
+                            <ul class="menu-list">
+                                <li><strong>เปิดคาร์แคร์ (ทำเอง)!</strong> ขัดสีรถแข่งด้วยเครื่องขัดไฟฟ้า โชว์พลังมอเตอร์ที่ควบคุมง่าย</li>
+                                <li><strong>เปลี่ยนยางรถแข่งด้วยตัวเอง</strong> โชว์ความสตรอง ใช้บล็อกกระแทกยิงน็อตล้อสุดเท่</li>
+                                <li><strong>ทำมุมนั่งเล่นชิลๆ ในอู่</strong> ใช้เครื่องมือประกอบเฟอร์นิเจอร์ ผสานไลฟ์สไตล์กับงานช่าง</li>
+                            </ul>
+                        </div>
+                        <div class="menu-box">
+                            <h4><i class="fa-solid fa-shirt" style="color: var(--wp-blue-light);"></i> แฟชั่นสตรีทแวร์</h4>
+                            <ul class="menu-list">
+                                <li><strong>แต่งตัวลุคช่างสุดคูล (OOTD)</strong> เดินถือกล่องเครื่องมือ WORKPRO เหมือนถือกระเป๋าแบรนด์ดัง</li>
+                                <li><strong>เบื้องหลังถ่ายรูปขึ้นกล่องสินค้า</strong> พาทัวร์กองถ่าย บิ๊วแฟนคลับให้รอซื้อสินค้า WORKPRO</li>
+                                <li><strong>จัดกระเป๋าไปแข่งรถต่างจังหวัด</strong> เนียนแทรกการจัดเครื่องมือช่างชิ้นสำคัญลงไปด้วย</li>
                             </ul>
                         </div>
                     </div>
-                    
-                    <p style="color: var(--ts-gold-light); font-size: 0.9rem; margin-top: 20px; font-weight: 600;">* สามารถตกลงแบ่งชำระได้ 5 งวด ตามตารางการแข่งขัน</p>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 14: THE CLOSING -->
+        <!-- SLIDE 11: CONTENT MENU PONDTECH -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder"></div>
+                <div class="overlay" style="background: rgba(10,10,10,1);"></div>
+                <div class="content" style="max-width: 1200px;">
+                    <div class="badge red-badge" style="margin-bottom: 5px;">Content Strategy Pool: Pondtech Racing</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">เมนูไอเดีย <span class="highlight-red">TECHNICAL REVIEW</span></h2>
+                    <p style="color: var(--rg-gray-400); font-size: 1rem; margin-bottom: 20px;">
+                        นำเสนอ 8 ไอเดีย ให้ทางแบรนด์เลือกผลิตจริงจำนวน <strong>4 คลิป</strong> เพื่อเจาะกลุ่มอู่ซ่อมรถ B2B และยืนยันความทนทานแบบ Heavy-Duty
+                    </p>
+                    
+                    <div class="menu-grid">
+                        <div class="menu-box red-top">
+                            <h4><i class="fa-solid fa-fire-flame-curved" style="color: var(--rg-red);"></i> บททดสอบสุดโหด</h4>
+                            <ul class="menu-list">
+                                <li><strong>รื้อประกอบเครื่อง 1,000 ม้า</strong> ด้วย WORKPRO ล้วนๆ โชว์น็อตแน่นแค่ไหนหัวก็ไม่รูด อะไหล่ไม่พัง</li>
+                                <li><strong>ท้าชนความถึก!</strong> บล็อกกระแทก WORKPRO งัดน็อตล้อรถแข่งที่กำลังร้อนจัดลงจากสนามสดๆ</li>
+                            </ul>
+                        </div>
+                        <div class="menu-box red-top">
+                            <h4><i class="fa-solid fa-stopwatch" style="color: var(--rg-red);"></i> สถานการณ์จริงหน้าสนาม</h4>
+                            <ul class="menu-list">
+                                <li><strong>10 นาทีพลิกนรก!</strong> แก้ปัญหารถพังหน้าพิท โชว์ให้เห็นว่าเครื่องมือที่ดีช่วยเซฟชีวิตทีมแข่งได้</li>
+                                <li><strong>แข่งเปลี่ยนอะไหล่หน้าพิท</strong> ให้ทีมช่าง RaceGO ดวลความเร็วโดยใช้อุปกรณ์ WORKPRO ทั้งทีม</li>
+                            </ul>
+                        </div>
+                        <div class="menu-box red-top">
+                            <h4><i class="fa-solid fa-comment-dots" style="color: var(--rg-red);"></i> เคล็ดลับจากแชมป์</h4>
+                            <ul class="menu-list">
+                                <li><strong>เปิดตู้เครื่องมืออู่ปอนด์เทค</strong> อธิบายข้อดีของเครื่องมือเชิงลึก (วัสดุ, น้ำหนัก, ความถนัดมือ)</li>
+                                <li><strong>5 เครื่องมือช่าง WORKPRO</strong> ที่อู่ทำรถซิ่งต้องมีติดอู่ คลิปกระตุ้นยอดขายกลุ่มช่างซ่อมรถ (B2B)</li>
+                            </ul>
+                        </div>
+                        <div class="menu-box red-top">
+                            <h4><i class="fa-solid fa-trophy" style="color: var(--rg-red);"></i> เส้นทางสู่แชมป์</h4>
+                            <ul class="menu-list">
+                                <li><strong>พาทัวร์รถบรรทุกเครื่องมือ</strong> เปิดโชว์การจัดเก็บ WORKPRO ที่เป็นระเบียบสำหรับออกทัวร์ทั่วไทย</li>
+                                <li><strong>วินาทีฉลองชัยชนะ</strong> คลิปซึ้งทรงพลัง ขอบคุณแบรนด์ WORKPRO อาวุธคู่กายเบื้องหลังความสำเร็จ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: THE PACKAGE BREAKDOWN -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder"></div>
+                <div class="overlay" style="background: rgba(5,5,5,1);"></div>
+                <div class="content tier-focus-container">
+                    <div class="tier-focus-header">
+                        <div>
+                            <div class="badge blue-badge">Adjusted Strategic Package</div>
+                            <h2 style="font-size: 3rem; margin-bottom: 0;">QUALITY OVER <span class="highlight-red" style="font-size: 3rem;">QUANTITY</span></h2>
+                            <p style="color: var(--rg-gray-400); margin-top: 5px; font-size: 0.95rem;">หั่นความถี่วิดีโอลง เพื่อโฟกัสสิทธิ์ Packaging โดยประหยัดงบถึง 30%</p>
+                        </div>
+                        <div class="tier-price-block">
+                            <div class="roi-tag" style="background: rgba(0, 86, 214, 0.1); border-color: var(--wp-blue-light); margin-bottom: 5px;">
+                                <span style="font-size: 0.8rem; color: var(--rg-gray-400);">งบประมาณเงินสด (ลดจากเดิม 500,000):</span>
+                            </div>
+                            <div class="tier-price">350,000 THB</div>
+                        </div>
+                    </div>
+
+                    <div class="tier-focus-grid">
+                        <!-- Box 1 -->
+                        <div class="tier-focus-box" style="border-color: var(--wp-blue-light);">
+                            <h4>
+                                <span><i class="fa-solid fa-box-open" style="color: var(--wp-blue-light);"></i> 1. Presenter & Packaging</span>
+                            </h4>
+                            <p style="color: #60a5fa; font-size: 0.85rem; margin-bottom: 10px;">คุณโนเกียร์ สุธาสินี</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>Studio Photoshoot:</b> สิทธิ์ภาพนิ่ง Key Visual</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>Packaging Rights:</b> ใช้ภาพบนกล่อง/สื่อ ทุกช่องทาง 1 ปี</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>100% Exclusivity:</b> ห้ามรับโฆษณาคู่แข่งกลุ่มเครื่องมือช่าง</div></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Box 2 -->
+                        <div class="tier-focus-box">
+                            <h4>
+                                <span><i class="fa-solid fa-mobile-screen" style="color: var(--wp-blue-light);"></i> 2. Short Video Content</span>
+                            </h4>
+                            <p style="color: #60a5fa; font-size: 0.85rem; margin-bottom: 10px;">คุณโนเกียร์ สุธาสินี (เปลี่ยนจากคลิปยาวเป็นคลิปสั้น)</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>Quantity:</b> สร้างสรรค์วิดีโอ 6 ชิ้นงาน</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>Format:</b> TikTok / Reels เน้น DIY และ Lifestyle</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>Conversion:</b> เน้นกระตุ้นยอดขายแบบ Shoppertainment</div></li>
+                            </ul>
+                        </div>
+
+                        <!-- Box 3 -->
+                        <div class="tier-focus-box" style="border-color: var(--rg-red);">
+                            <h4>
+                                <span><i class="fa-solid fa-wrench" style="color: var(--rg-red);"></i> 3. B2B Technical Content</span>
+                            </h4>
+                            <p style="color: var(--rg-red); font-size: 0.85rem; margin-bottom: 10px;">คุณปอนด์เทค & ทีมแข่ง RaceGO</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>Quantity:</b> ลดเหลือ 4 คลิป (Hero Content ประจำไตรมาส)</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>On-Ground Branding:</b> โลโก้บนเสื้อทีมช่าง และ โลโก้บนเสื้อ Fanclub T-Shirt ประจำฤดูกาล ดีไซน์หลัก</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div style="flex:1;"><b>Car Branding:</b> สติกเกอร์บนรถแข่ง TGR ตลอดฤดูกาล</div></li>
+                            </ul>
+                        </div>
+
+                        <!-- Box 4 -->
+                        <div class="tier-focus-box" style="border: 1px dashed #333; background: #0a0a0a;">
+                            <h4>
+                                <span style="color: var(--rg-gray-400);"><i class="fa-solid fa-handshake"></i> 4. Barter Sponsorship</span>
+                            </h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.85rem; margin-bottom: 10px;">การสนับสนุนรูปแบบสินค้าเครื่องมือช่าง</p>
+                            <ul style="opacity: 0.7;">
+                                <li><i class="fa-solid fa-plus" style="color: var(--rg-gray-400);"></i> <div style="flex:1;"><b>Official Pit Tools:</b> สนับสนุนเครื่องมือช่าง WORKPRO เซ็ตใหญ่สำหรับใช้งานจริงในพิทแข่งรถตลอดทั้งปี</div></li>
+                                <li><i class="fa-solid fa-plus" style="color: var(--rg-gray-400);"></i> <div style="flex:1;"><b>Giveaways:</b> สินค้าสำหรับจัดกิจกรรมแจกแฟนคลับ</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: CLOSING -->
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <div class="placeholder-text" style="color: #222;"><i class="fa-regular fa-image"></i><span>[ รอใส่รูปภาพ: img_wp_closing.png ]</span></div>
-                    <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> GREAT CARS REQUIRE GREAT TOOLS</div>
+                    <img src="racego_03_synergy.jpg" alt="Closing" onerror="this.style.display='none';">
+                    <div class="img-placeholder-box manga-placeholder" style="background-color: var(--rg-gray-900); z-index: -1;">
+                        <i class="fa-solid fa-building"></i>
+                        <span>racego_03_synergy.jpg</span>
+                    </div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
                 <div class="content" style="text-align: center;">
-                    <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 15px;">GREAT CARS.<br><span class="highlight-gold">GREAT TOOLS.</span></h2>
-                    <p style="font-size: 1.2rem; color: var(--ts-white); font-weight: 300; margin-bottom: 30px;">
-                        ความแรงเราพร้อม ประสบการณ์เราพร้อม... <br>
-                        ให้ WORKPRO เป็นเครื่องมือเบื้องหลังความสำเร็จของเราในฤดูกาลนี้สิครับ
+                    <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 15px;">BUILD THE FUTURE <br><span class="highlight-blue">WITH WORKPRO.</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--rg-white); font-weight: 300; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                        พร้อมตอบโจทย์วิสัยทัศน์ของแสงชัยกรุ๊ป สร้างแบรนด์ระยะยาว ควบคู่ยอดขายที่เติบโต
                     </p>
                     
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                        <a href="https://www.facebook.com/profile.php?id=61587947141692" target="_blank" style="display: inline-flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--ts-gray-800); text-decoration: none; color: var(--ts-white);">
-                            <i class="fa-brands fa-facebook" style="font-size: 1.5rem; color: var(--ts-gold-light);"></i>
-                            <span style="font-size: 1rem; font-weight: 600; letter-spacing: 1px;">RACEGO MANAGEMENT</span>
-                        </a>
-                        <a href="https://lin.ee/pLEbCpU" target="_blank" style="transition: transform 0.2s; display: inline-block;">
-                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                            <a href="https://www.facebook.com/profile.php?id=61587947141692" target="_blank" class="social-link" style="border: 1px solid #1877F2; background: rgba(24,119,242,0.1);">
+                                <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> RACEGO
+                            </a>
+                            <a href="https://www.facebook.com/nokia.sutasinee" target="_blank" class="social-link" style="border: 1px solid #1877F2; background: rgba(24,119,242,0.1);">
+                                <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> NOKIA
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=100064480248488" target="_blank" class="social-link" style="border: 1px solid #1877F2; background: rgba(24,119,242,0.1);">
+                                <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> PONDTECH
+                            </a>
+                        </div>
+                        <a href="https://lin.ee/oBw7GTC" target="_blank" style="display: inline-flex; align-items: center; gap: 15px; background: rgba(0,86,214,0.1); padding: 12px 30px; border-radius: 50px; border: 1px solid var(--wp-blue-light); text-decoration: none; color: var(--rg-white); transition: background 0.3s; box-shadow: 0 4px 15px rgba(0,195,0,0.15);">
+                            <i class="fa-brands fa-line" style="font-size: 1.8rem; color: #00C300;"></i>
+                            <span style="font-size: 1.1rem; font-weight: 700; letter-spacing: 1px;">CONFIRM PROPOSAL</span>
                         </a>
                     </div>
                 </div>
@@ -801,15 +803,80 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const selectionScreen = document.getElementById('selection-screen');
             const slider = document.getElementById('slider');
             const hint = document.getElementById('swipeHint');
+            const statusText = document.querySelector('.loader-status');
             
-            slider.addEventListener('scroll', () => {
-                if(slider.scrollLeft > 50 || slider.scrollTop > 50) {
-                    hint.style.opacity = '0';
-                    hint.style.transition = 'opacity 0.5s ease';
+            // Safety fallback
+            const safetyTimer = setTimeout(() => {
+                if(loadingScreen) loadingScreen.style.display = 'none';
+                if(selectionScreen) {
+                    selectionScreen.style.visibility = 'visible';
+                    selectionScreen.style.opacity = '1';
                 }
-            }, { passive: true });
+            }, 4000);
+
+            const messages = ["SYSTEM CHECK...", "ASSEMBLING TOOLS...", "CALIBRATING ENGINE...", "READY TO WORK!"];
+            let msgIdx = 0;
+            
+            const msgInterval = setInterval(() => {
+                msgIdx++;
+                if(msgIdx < messages.length - 1 && statusText) {
+                    statusText.innerText = messages[msgIdx];
+                }
+            }, 600);
+
+            setTimeout(() => {
+                clearInterval(msgInterval);
+                clearTimeout(safetyTimer);
+                
+                if(statusText) {
+                    statusText.innerText = messages[messages.length - 1];
+                    statusText.classList.add('ready');
+                }
+                
+                setTimeout(() => {
+                    if(loadingScreen) loadingScreen.classList.add('hidden');
+                    setTimeout(() => {
+                        if(loadingScreen) loadingScreen.style.display = 'none';
+                        if(selectionScreen) {
+                            selectionScreen.style.visibility = 'visible';
+                            selectionScreen.style.opacity = '1';
+                        }
+                    }, 600);
+                }, 500);
+            }, 2800);
+
+            const btnMobile = document.getElementById('btn-mobile');
+            const btnPc = document.getElementById('btn-pc');
+
+            function startPresentation(mode) {
+                document.body.classList.add(mode);
+                if(selectionScreen) {
+                    selectionScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        selectionScreen.style.display = 'none';
+                    }, 500);
+                }
+
+                if (mode === 'mobile-mode' && hint) {
+                    hint.innerHTML = '<i class="fa-solid fa-arrows-up-down"></i> เลื่อนหน้าจอขึ้น-ลงเพื่อรับชม';
+                }
+            }
+
+            if(btnMobile) btnMobile.addEventListener('click', () => startPresentation('mobile-mode'));
+            if(btnPc) btnPc.addEventListener('click', () => startPresentation('pc-mode'));
+
+            if(slider && hint) {
+                slider.addEventListener('scroll', () => {
+                    if(slider.scrollLeft > 50 || slider.scrollTop > 50) {
+                        hint.style.opacity = '0';
+                        hint.style.transition = 'opacity 0.5s ease';
+                    }
+                }, { passive: true });
+            }
         });
     </script>
 </body>
