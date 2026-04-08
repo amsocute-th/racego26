@@ -154,7 +154,7 @@
         .img-placeholder-box {
             width: 100%; height: 100%; background-color: #111; display: flex; flex-direction: column;
             align-items: center; justify-content: center; text-align: center; padding: 30px;
-            color: var(--rg-gray-400); border: 1px dashed #333; position: relative; z-index: 1;
+            color: var(--rg-gray-400); border: 1px dashed #333; position: absolute; top: 0; left: 0; z-index: -1;
         }
         .img-placeholder-box i { font-size: 3rem; margin-bottom: 15px; color: var(--wp-blue-light); opacity: 0.8; }
         .img-placeholder-box span { font-size: 0.95rem; font-family: 'Prompt', sans-serif; line-height: 1.5; margin-top:10px; color:#666;}
@@ -179,14 +179,14 @@
         .split-content::-webkit-scrollbar-thumb, .layout-full .content::-webkit-scrollbar-thumb { background: var(--wp-blue-light); border-radius: 4px; }
 
         .split-image { flex: 0.9; position: relative; background-color: var(--rg-gray-800); }
-        .split-image .img-placeholder { width: 100%; height: 100%; border-left: 5px solid var(--wp-blue-light); position: relative; }
+        .split-image .img-placeholder { width: 100%; height: 100%; border-left: 5px solid var(--wp-blue-light); position: relative; overflow: hidden; }
         .split-image .img-placeholder > img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; position: relative; z-index: 1; }
         .split-image .img-placeholder::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, transparent 30%); z-index: 2; pointer-events: none; }
         .split-image.left-side .img-placeholder { border-left: none; border-right: 5px solid var(--wp-blue-light); }
         .split-image.left-side .img-placeholder::after { background: linear-gradient(-90deg, rgba(5,5,5,0.95) 0%, transparent 30%); }
 
         .layout-full { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; position: relative; }
-        .layout-full .bg-placeholder { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--rg-gray-900); z-index: -1; }
+        .layout-full .bg-placeholder { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--rg-gray-900); z-index: -1; overflow: hidden; }
         .layout-full .bg-placeholder > img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; position: relative; z-index: 1; }
         .layout-full .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); z-index: 0; }
         .layout-full .content { z-index: 2; max-width: 1200px; width: 100%; max-height: 95vh; overflow-y: auto; padding: 10px; }
@@ -251,7 +251,6 @@
         .tier-focus-box { background: linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(5,5,5,0.9) 100%); border: 1px solid var(--rg-gray-800); border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, border-color 0.3s ease; }
         .tier-focus-box:hover { border-color: var(--wp-blue-light); transform: translateY(-3px); }
         .tier-focus-box h4 { font-family: 'Prompt', sans-serif; font-size: 1.1rem; color: var(--rg-white); margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; letter-spacing: 1px; }
-        .tier-focus-box .price-tag { font-family: 'Teko'; font-size: 1.5rem; color: #60a5fa; font-weight: 500;}
         .tier-focus-box ul { list-style: none; padding: 0; margin: 0; }
         .tier-focus-box li { font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
         .tier-focus-box li i { margin-top: 4px; font-size: 0.8rem; color: var(--wp-blue-light); }
@@ -340,9 +339,9 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
+                        <img src="wp_01_cover_manga.jpg" alt="Cover" onerror="this.style.display='none';">
                         <div class="img-placeholder-box manga-placeholder">
                             <i class="fa-solid fa-toolbox"></i>
-                            <span>wp_01_cover_manga.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-handshake"></i> STRATEGIC ALLIANCE</div>
                     </div>
@@ -355,9 +354,9 @@
             <div class="slide-inner layout-full">
                 <div class="huge-text" style="color: transparent; -webkit-text-stroke: 2px rgba(230,0,18,0.15);">BUILDING TRUST</div>
                 <div class="bg-placeholder">
+                    <img src="wp_02_trust_manga.jpg" alt="Building Trust" onerror="this.style.display='none';">
                     <div class="img-placeholder-box manga-placeholder" style="background-color: #050505;">
                         <i class="fa-solid fa-shield-halved"></i>
-                        <span>wp_02_trust_manga.jpg</span>
                     </div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
@@ -396,9 +395,9 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder" style="border-color: var(--wp-blue-light);">
+                        <img src="wp_03_synergy_manga.jpg" alt="Synergy" onerror="this.style.display='none';">
                         <div class="img-placeholder-box manga-placeholder">
                             <i class="fa-solid fa-people-group"></i>
-                            <span>wp_03_synergy_manga.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-bolt"></i> THE PERFECT BALANCE</div>
                     </div>
@@ -415,9 +414,8 @@
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
                     <img src="racego_05_nokia.jpg" alt="Nokia" onerror="this.style.display='none';">
-                    <div class="img-placeholder-box" style="background-color: var(--rg-gray-900); z-index: -1;">
+                    <div class="img-placeholder-box" style="background-color: var(--rg-gray-900);">
                         <i class="fa-solid fa-star"></i>
-                        <span>racego_05_nokia.jpg</span>
                     </div>
                     <div class="car-label"><i class="fa-solid fa-camera"></i> BRAND PRESENTER</div>
                 </div>
@@ -444,9 +442,9 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--wp-blue-light);">
+                        <img src="wp_05_packaging_manga.jpg" alt="Packaging" onerror="this.style.display='none';">
                         <div class="img-placeholder-box manga-placeholder">
                             <i class="fa-solid fa-box-open"></i>
-                            <span>wp_05_packaging_manga.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-copyright"></i> EXCLUSIVE RIGHTS</div>
                     </div>
@@ -489,9 +487,9 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder">
+                        <img src="wp_06_tiktok_manga.jpg" alt="TikTok" onerror="this.style.display='none';">
                         <div class="img-placeholder-box manga-placeholder">
                             <i class="fa-solid fa-mobile-screen"></i>
-                            <span>wp_06_tiktok_manga.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-play"></i> REELS & TIKTOK</div>
                     </div>
@@ -508,9 +506,8 @@
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
                     <img src="racego_04_pondtech.jpg" alt="Pondtech" onerror="this.style.display='none';">
-                    <div class="img-placeholder-box" style="background-color: var(--rg-gray-900); z-index: -1;">
+                    <div class="img-placeholder-box" style="background-color: var(--rg-gray-900);">
                         <i class="fa-solid fa-user-gear"></i>
-                        <span>racego_04_pondtech.jpg</span>
                     </div>
                     <div class="car-label"><i class="fa-solid fa-wrench"></i> MASTER MECHANIC</div>
                 </div>
@@ -534,9 +531,9 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--rg-red);">
+                        <img src="wp_08_heavyduty_manga.jpg" alt="Heavy Duty" onerror="this.style.display='none';">
                         <div class="img-placeholder-box manga-placeholder">
                             <i class="fa-solid fa-hammer"></i>
-                            <span>wp_08_heavyduty_manga.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-fire-flame-curved"></i> HEAVY-DUTY PROOF</div>
                     </div>
@@ -561,9 +558,8 @@
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
                     <img src="racego_08_tgr_overview.jpg" alt="TGR Roadshow" onerror="this.style.display='none';">
-                    <div class="img-placeholder-box" style="background-color: #111; z-index: -1;">
+                    <div class="img-placeholder-box" style="background-color: #111;">
                         <i class="fa-solid fa-flag-checkered"></i>
-                        <span>racego_08_tgr_overview.jpg</span>
                     </div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
@@ -766,9 +762,8 @@
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
                     <img src="racego_03_synergy.jpg" alt="Closing" onerror="this.style.display='none';">
-                    <div class="img-placeholder-box manga-placeholder" style="background-color: var(--rg-gray-900); z-index: -1;">
+                    <div class="img-placeholder-box manga-placeholder" style="background-color: var(--rg-gray-900);">
                         <i class="fa-solid fa-building"></i>
-                        <span>racego_03_synergy.jpg</span>
                     </div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
