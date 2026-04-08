@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Moty's x PONDTECH: The Ultimate Track-Proven Partnership</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* โทนสี: ดำ - ขาว - แดง */
+            --mt-red: #E60000;
+            --mt-red-dark: #990000;
+            --rg-black: #050505;
+            --rg-gray-900: #111111;
+            --rg-gray-800: #1a1a1a;
+            --rg-gray-400: #9ca3af;
+            --rg-white: #ffffff;
+            --border-color: #262626;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+        body, html {
+            height: 100%; width: 100%; background-color: var(--rg-black);
+            font-family: 'Prompt', sans-serif; overflow: hidden; color: var(--rg-white);
+        }
+
+        /* --- PRE-LOADER SCREEN --- */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
+            background-color: var(--rg-black); z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            background-image: radial-gradient(rgba(230, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            transition: opacity 0.6s cubic-bezier(0.8, 0, 0.2, 1), transform 0.6s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        #loading-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
+        .loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .loader-icon { font-size: 3.5rem; color: var(--mt-red); margin-bottom: 10px; animation: spin 2s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .loader-text {
+            font-family: 'Teko', sans-serif; font-size: 6rem; font-weight: 700; line-height: 1; letter-spacing: 2px;
+            background: linear-gradient(to right, #333 50%, var(--rg-white) 50%);
+            background-size: 200% 100%; background-position: right bottom;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: fillText 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; text-transform: uppercase;
+        }
+        .loader-subtext { font-family: 'Teko', sans-serif; font-size: 2.5rem; color: var(--mt-red); font-weight: 600; line-height: 1; margin-top: -5px; }
+        @keyframes fillText { 0% { background-position: right bottom; } 100% { background-position: left bottom; } }
+        
+        .loader-bar-container { width: 280px; height: 6px; background: #222; margin: 20px auto; border-radius: 3px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
+        .loader-bar { 
+            height: 100%; width: 0%; background: linear-gradient(90deg, var(--mt-red-dark) 0%, var(--mt-red) 100%); 
+            background-size: 280px 100%; animation: loadProgress 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
+        }
+        @keyframes loadProgress { 0% { width: 0%; } 20% { width: 35%; } 50% { width: 65%; } 80% { width: 90%; } 100% { width: 100%; } }
+        
+        .loader-status { font-family: 'Teko', sans-serif; font-size: 1.3rem; color: var(--rg-white); letter-spacing: 3px; transition: color 0.3s, text-shadow 0.3s; }
+        .loader-status.ready { color: var(--mt-red); text-shadow: 0 0 10px rgba(230,0,0,0.6); }
+
+        /* --- SELECTION SCREEN --- */
+        #selection-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
+            background-color: rgba(5,5,5,0.95); z-index: 99998; backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.5s ease;
+        }
+        .selection-content { text-align: center; max-width: 800px; width: 90%; }
+        .selection-content h2 { font-size: 3.5rem; margin-bottom: 5px; color: var(--rg-white); }
+        .selection-content p { font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 40px; font-weight: 300; }
+        .btn-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .view-btn {
+            background: linear-gradient(145deg, #1a1a1a 0%, #111 100%); border: 1px solid #333;
+            border-radius: 12px; padding: 30px 40px; cursor: pointer; transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 15px; width: 260px;
+        }
+        .view-btn i { font-size: 3.5rem; color: var(--rg-gray-400); transition: color 0.3s; }
+        .view-btn span { font-family: 'Teko', sans-serif; font-size: 2rem; font-weight: 600; color: var(--rg-white); line-height: 1; }
+        .view-btn small { font-family: 'Prompt', sans-serif; font-size: 0.9rem; color: var(--rg-gray-400); }
+        .view-btn:hover { border-color: var(--mt-red); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(230,0,0,0.15); }
+        .view-btn:hover i { color: var(--mt-red); }
+
+        /* --- MAIN SLIDER CONTAINER --- */
+        .slider-container {
+            display: flex; flex-direction: row; width: 100vw; height: 100vh;
+            overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+        }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slider-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* --- MOBILE MODE OVERRIDES --- */
+        body.mobile-mode .slider-container {
+            flex-direction: column; overflow-x: hidden; overflow-y: auto; scroll-snap-type: y mandatory;
+        }
+        body.mobile-mode .slide {
+            flex: 0 0 100vh; flex: 0 0 100dvh; height: 100vh; height: 100dvh; scroll-snap-align: start;
+        }
+        body.mobile-mode .portrait-warning { display: none !important; }
+        
+        body.mobile-mode .layout-split { flex-direction: column; }
+        body.mobile-mode .split-image { flex: 0.35; min-height: 35vh; }
+        body.mobile-mode .split-content { flex: 0.65; padding: 25px 20px; justify-content: flex-start; }
+        body.mobile-mode .split-image .img-placeholder { border-left: none; border-top: 5px solid var(--mt-red); }
+        body.mobile-mode .split-image.left-side .img-placeholder { border-right: none; border-bottom: 5px solid var(--mt-red); border-top: none; }
+        body.mobile-mode .split-image.left-side { order: -1; }
+        body.mobile-mode .split-content, body.mobile-mode .layout-full .content { overflow-y: auto !important; -webkit-overflow-scrolling: touch; }
+        
+        body.mobile-mode .layout-full { padding: 15px; }
+        body.mobile-mode .huge-text { font-size: 4rem; top: -5px; left: -5px; opacity: 0.5; }
+        body.mobile-mode h1 { font-size: 2.8rem !important; margin-bottom: 5px !important; }
+        body.mobile-mode h2 { font-size: 2.2rem !important; margin-bottom: 10px !important; }
+        body.mobile-mode .badge { padding: 3px 10px; font-size: 0.75rem; margin-bottom: 8px; }
+        body.mobile-mode .tier-focus-header { flex-direction: column; align-items: flex-start; gap: 10px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        body.mobile-mode .tier-price-block { text-align: left; }
+        body.mobile-mode .tier-price { font-size: 2rem !important; }
+        body.mobile-mode .tier-focus-grid { grid-template-columns: 1fr; gap: 10px; }
+        body.mobile-mode .tier-focus-box { padding: 15px; }
+        body.mobile-mode .tier-focus-box li { font-size: 0.85rem; flex-wrap: wrap;}
+
+        .slide {
+            flex: 0 0 100vw; height: 100vh; scroll-snap-align: start;
+            position: relative; overflow: hidden; display: flex;
+            align-items: center; justify-content: center; background-color: var(--rg-gray-900);
+        }
+        .slide::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px; pointer-events: none; z-index: 1; opacity: 0.3;
+        }
+        .slide-inner { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; }
+
+        h1, h2, h3, h4 { font-family: 'Teko', 'Prompt', sans-serif; text-transform: uppercase; line-height: 1.1; }
+        
+        .huge-text {
+            font-size: 8rem; font-weight: 700; color: transparent;
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.1);
+            position: absolute; top: -20px; left: -20px; z-index: 0;
+            white-space: nowrap; pointer-events: none;
+        }
+
+        .highlight-red { color: var(--mt-red); }
+        .highlight-white { color: var(--rg-white); }
+
+        .img-placeholder-box {
+            width: 100%; height: 100%; background-color: #0d0d0d; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; padding: 30px;
+            color: var(--rg-gray-400); border: 1px dashed #333; position: relative; z-index: 1;
+        }
+        .img-placeholder-box i { font-size: 3rem; margin-bottom: 15px; color: var(--rg-white); opacity: 0.8; }
+        .img-placeholder-box span { font-size: 0.95rem; font-family: 'Prompt', sans-serif; line-height: 1.5; margin-top:10px; color:#666;}
+        
+        /* Manga placeholder style */
+        .manga-placeholder { background: linear-gradient(135deg, #111, #0a0a0a); border: 1px solid var(--mt-red); }
+        .manga-placeholder span { color: var(--rg-white); font-weight: 500; font-size: 1.1rem;}
+
+        .car-label {
+            position: absolute; bottom: 15px; right: 15px; background: rgba(0, 0, 0, 0.85);
+            color: var(--rg-white); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+            font-weight: 700; font-family: 'Teko', sans-serif; letter-spacing: 1px;
+            border: 1px solid var(--mt-red); z-index: 10; pointer-events: none; backdrop-filter: blur(4px);
+        }
+
+        .layout-split { display: flex; width: 100%; height: 100%; }
+        .split-content {
+            flex: 1.1; padding: 40px 60px; display: flex; flex-direction: column; justify-content: center;
+            background: linear-gradient(90deg, var(--rg-black) 0%, rgba(5,5,5,0.95) 100%); z-index: 3; overflow-y: auto; 
+        }
+        .split-content::-webkit-scrollbar, .layout-full .content::-webkit-scrollbar { width: 4px; }
+        .split-content::-webkit-scrollbar-thumb, .layout-full .content::-webkit-scrollbar-thumb { background: var(--mt-red); border-radius: 4px; }
+
+        .split-image { flex: 0.9; position: relative; background-color: #050505; }
+        .split-image .img-placeholder { width: 100%; height: 100%; border-left: 5px solid var(--mt-red); position: relative; }
+        .split-image .img-placeholder > img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; position: relative; z-index: 1; }
+        .split-image .img-placeholder::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, transparent 30%); z-index: 2; pointer-events: none; }
+        .split-image.left-side .img-placeholder { border-left: none; border-right: 5px solid var(--mt-red); }
+        .split-image.left-side .img-placeholder::after { background: linear-gradient(-90deg, rgba(5,5,5,0.95) 0%, transparent 30%); }
+
+        .layout-full { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; position: relative; }
+        .layout-full .bg-placeholder { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--rg-gray-900); z-index: -1; overflow: hidden; }
+        .layout-full .bg-placeholder > img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; position: relative; z-index: 1; }
+        .layout-full .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 0; }
+        .layout-full .content { z-index: 2; max-width: 1000px; width: 100%; max-height: 95vh; overflow-y: auto; padding: 10px; }
+
+        .badge { background: var(--rg-white); color: var(--rg-black); padding: 5px 15px; font-weight: 700; font-size: 0.9rem; border-radius: 4px; display: inline-block; margin-bottom: 15px; letter-spacing: 2px; }
+        .badge.red-badge { background: var(--mt-red); color: var(--rg-white);}
+
+        /* --- STAT BOXES & HIGHLIGHTS --- */
+        .proof-stat-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: center;}
+        .proof-stat-number { font-family: 'Teko', sans-serif; font-size: 3.5rem; font-weight: 700; color: var(--rg-white); line-height: 1; margin-bottom: 5px; }
+        .proof-stat-label { font-size: 0.9rem; color: var(--rg-gray-400); text-transform: uppercase; font-weight: 600; line-height: 1.2;}
+
+        .swipe-hint {
+            position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 0.8rem; z-index: 100; display: flex; align-items: center; gap: 10px;
+            pointer-events: none; animation: pulse 2s infinite; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
+        }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+        .portrait-warning {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--rg-black); z-index: 9999; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; padding: 30px;
+        }
+        @media (hover: none) and (pointer: coarse) and (orientation: portrait) {
+            body:not(.mobile-mode) .portrait-warning { display: flex; }
+            body:not(.mobile-mode) .slider-container, body:not(.mobile-mode) .swipe-hint { display: none !important; }
+        }
+
+        .social-link {
+            display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; text-decoration: none; color: var(--rg-white);
+            font-size: 0.9rem; transition: background 0.3s, transform 0.2s; cursor: pointer;
+        }
+        .social-link:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
+
+        /* TIER FOCUS & TABLE */
+        .tier-focus-container { display: flex; flex-direction: column; width: 100%; height: 100%; max-width: 1200px; text-align: left; }
+        .tier-focus-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        
+        .table-layout { width: 100%; }
+        .table-layout table { border-collapse: collapse; width: 100%; background-color: #0A0A0A; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
+        .table-layout th, .table-layout td { border-bottom: 1px solid #222; padding: 15px 20px; text-align: left; }
+        .table-layout th { background-color: #050505; color: var(--rg-white); font-size: 16px; font-weight: 700; font-family: 'Urbanist', sans-serif; text-transform: uppercase; }
+        .table-layout td { font-size: 14px; vertical-align: top; color: var(--rg-gray-400); }
+        .table-layout tr:last-child td { border-bottom: none; }
+        .tier-title { font-weight: 800; font-size: 16px; }
+        .price-tag { color: var(--rg-white); font-weight: 700; font-size: 16px; font-family: 'Teko', sans-serif; letter-spacing: 1px;}
+        .benefit-list { list-style: none; padding: 0; margin: 0; }
+        .benefit-item { position: relative; padding-left: 18px; margin-bottom: 6px; font-size: 13px; color: var(--rg-gray-400); }
+        .benefit-item::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--mt-red); font-size: 12px; }
+
+        /* --- TIER SLIDES (NEW DESIGN) --- */
+        .tier-slide-wrap {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: var(--rg-black);
+        }
+        .tier-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .tier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+        .tier-header-left { display: flex; flex-direction: column; align-items: flex-start; }
+        .tier-badge {
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .tier-title-wrap { display: flex; align-items: center; gap: 15px; }
+        .tier-icon { font-size: 3rem; }
+        .tier-name {
+            font-size: 3.5rem;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            line-height: 1;
+            text-transform: uppercase;
+            color: white;
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        .tier-sub {
+            font-size: 1.2rem;
+            color: var(--rg-gray-400);
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .tier-price-wrap { text-align: right; }
+        .tier-price-val {
+            font-size: 3.5rem;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+            color: white;
+        }
+        .tier-price-val span { font-size: 1.5rem; color: var(--rg-gray-400); }
+        .tier-price-val.text-price { font-size: 1.8rem; font-family: 'Prompt', sans-serif; }
+        .tier-value-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .tier-value-box span { font-size: 0.9rem; color: var(--rg-gray-400); }
+        .tier-value-box strong { font-size: 1.2rem; font-family: 'Teko', sans-serif; margin-left: 10px; }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            flex: 1;
+        }
+        .tier-box {
+            background: #0A0A0A;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 20px 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        .tier-box h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+        }
+        .tier-list { list-style: none; padding: 0; margin: 0; }
+        .tier-list li {
+            font-size: 0.95rem;
+            color: var(--rg-gray-400);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.5;
+        }
+        .tier-list li i { margin-top: 4px; font-size: 0.9rem; }
+        .tier-list li i.fa-check { color: var(--mt-red); }
+        .tier-list li i.fa-plus { color: var(--rg-white); }
+        .tier-list li b { color: var(--rg-white); font-weight: 600; }
+        .badge-sm {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-weight: 800;
+            border: 1px solid;
+            display: inline-block;
+            transform: translateY(-2px);
+        }
+        .badge-sm.gold { color: #facc15; border-color: #facc15; background: rgba(250,204,21,0.1); }
+        .badge-sm.silver { color: #cbd5e1; border-color: #cbd5e1; background: rgba(203,213,225,0.1); }
+        .badge-sm.bronze { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.1); }
+
+        .tier-remark {
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid var(--mt-red);
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--rg-gray-400);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content-list-item {
+            background: rgba(255,255,255,0.05);
+            border-left: 3px solid var(--mt-red);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .content-list-item.white-border { border-left-color: var(--rg-white); }
+        
+        .content-list-item h4 {
+            color: var(--rg-white);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        .content-list-item p {
+            color: var(--rg-gray-400);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRE-LOADER SCREEN -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <i class="fa-solid fa-flask loader-icon"></i>
+            <div class="loader-text">MOTY'S</div>
+            <div class="loader-subtext">x PONDTECH</div>
+            <div class="loader-bar-container"><div class="loader-bar"></div></div>
+            <div class="loader-status">INJECTING HYPER LUBRICANT...</div>
+        </div>
+    </div>
+
+    <!-- SELECTION SCREEN -->
+    <div id="selection-screen">
+        <div class="selection-content">
+            <h2>CHOOSE VIEWING MODE</h2>
+            <p>กรุณาเลือกรูปแบบอุปกรณ์ เพื่อประสบการณ์รับชมที่ดีที่สุด</p>
+            <div class="btn-container">
+                <button id="btn-mobile" class="view-btn interactive-element">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <span>MOBILE</span>
+                    <small>ดูบนมือถือ (เลื่อนขึ้น-ลง)</small>
+                </button>
+                <button id="btn-pc" class="view-btn interactive-element">
+                    <i class="fa-solid fa-desktop"></i>
+                    <span>PC / TABLET</span>
+                    <small>จอใหญ่ (ปัดซ้าย-ขวา)</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="portrait-warning">
+        <i class="fa-solid fa-mobile-screen-button" style="font-size: 4rem; color: var(--rg-white); margin-bottom: 20px; transform: rotate(-90deg);"></i>
+        <h2 style="color: var(--rg-white); font-size: 1.8rem; margin-bottom: 10px;">กรุณาหมุนหน้าจอเป็นแนวนอน</h2>
+        <p style="color: var(--rg-gray-400); font-size: 1rem;">เพื่ออรรถรสสูงสุดในการรับชมแบบ PC Mode</p>
+    </div>
+
+    <div class="swipe-hint" id="swipeHint">
+        <i class="fa-solid fa-arrows-left-right"></i> ปัดหน้าจอซ้าย-ขวาเพื่อรับชม
+    </div>
+
+    <div class="slider-container" id="slider">
+
+        <!-- SLIDE 1: THE COVER -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge red-badge">Strategic Sponsorship 2026</div>
+                    <h1 style="font-size: 4.5rem; margin-bottom: 10px;">MOTY'S <br><span style="font-size: 2.5rem; color: var(--rg-gray-400);">x</span> <span class="highlight-red">PONDTECH RACING</span></h1>
+                    <p style="font-size: 1.2rem; color: var(--rg-gray-400); margin-bottom: 20px; max-width: 90%;">
+                        การบรรจบกันของ "สมรรถนะทางเรียบ" และ "ปรมาจารย์วงการรถซิ่ง" ยุทธศาสตร์เจาะตลาดเฉพาะกลุ่ม (Niche Market) ผ่านอิทธิพลของสุดยอดช่างเครื่องระดับประเทศ
+                    </p>
+                    <div style="border-left: 3px solid var(--mt-red); padding-left: 15px;">
+                        <p style="color: var(--rg-white); font-size: 1rem; margin: 0; font-weight: 500;">PRESENTED TO: MOTY'S THAILAND</p>
+                        <p style="color: var(--rg-white); font-size: 0.9rem; margin: 0;">BY RACEGO MANAGEMENT</p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <img src="motys_01_cover.jpg" alt="Moty's x Pondtech Cover" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-flask"></i>
+                            <span>motys_01_cover.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-handshake"></i> THE ULTIMATE PARTNERSHIP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: MOTY'S PHILOSOPHY -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-full">
+                <div class="huge-text">HYPER LUBRICANT</div>
+                <div class="bg-placeholder">
+                    <img src="motys_02_philosophy.jpg" alt="Moty's Philosophy" onerror="this.style.display='none'">
+                    <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                        <i class="fa-solid fa-microscope"></i>
+                        <span>motys_02_philosophy.jpg</span>
+                    </div>
+                </div>
+                <div class="overlay"></div>
+                <div class="content">
+                    <div class="badge red-badge">Boutique Engineering</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 15px;">WE DON'T COMPETE IN THE MASS.<br>WE <span class="highlight-white">DEFY THE LIMITS.</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--rg-gray-400); font-style: italic; margin: 20px auto; border-left: 4px solid var(--mt-red); padding-left: 20px; text-align: left; max-width: 800px;">
+                        "ในขณะที่แบรนด์น้ำมันระดับโลกเน้นการผลิตจำนวนมาก Moty's ขับเคลื่อนด้วยปรัชญา <strong>Hyper Lubricant Technology (100% Made in Japan)</strong> เราออกแบบสสารเคมีเฉพาะทางสำหรับสภาวะการทำงานสุดขั้ว ที่ผู้ผลิตระดับ Mass Market ไม่สามารถลอกเลียนแบบได้"
+                    </p>
+                    <p style="font-size: 1.1rem; color: var(--rg-white); font-weight: 300;">
+                        กลุ่มเป้าหมายของเราไม่ใช่รถบ้านทั่วไป แต่คือ <strong>"ผู้เสพติดสมรรถนะ"</strong> ที่ต้องการปรับแต่งเครื่องยนต์อย่างแม่นยำ
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: THE ICON (PONDTECH) -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder">
+                        <img src="racego_04_pondtech.jpg" alt="Pondtech" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                            <span>racego_04_pondtech.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-crown"></i> THAILAND'S DRAG LEGEND</div>
+                    </div>
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right;">
+                    <div class="badge red-badge">The Human Sensor</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">PONDTECH <br><span class="highlight-white">BENJARONG</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">นักแข่ง DRAG เบอร์หนึ่งของเมืองไทย</h3>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        รถแข่งของสำนักปอนด์เทคต้องสร้างพละกำลังทะลุ 1,000 - 2,000 แรงม้า ด้วยบูสต์เทอร์โบที่สูงลิบลิ่ว และต้องถ่ายทอดพลังทั้งหมดลงสู่พื้นถนนภายในเวลาไม่กี่วินาที ความล้มเหลวเพียงเสี้ยววินาทีหมายถึงความพินาศของเครื่องยนต์
+                    </p>
+                    <p style="font-size: 1rem; color: var(--rg-white); font-weight: 600; line-height: 1.6;">
+                        "การตัดสินใจเลือกใช้น้ำมันเครื่องใดๆ ของสำนักปอนด์เทค จึงเปรียบเสมือนเครื่องการันตีสมรรถนะขั้นสูงสุด (Ultimate Endorsement) ให้กับผลิตภัณฑ์นั้น"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: THE ULTIMATE STRESS TEST -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge red-badge">Drag to Circuit Transition</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">THE ULTIMATE <br><span class="highlight-white">STRESS TEST</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">เมื่อยอดฝีมือทางตรง ลงสนามทางเรียบ</h3>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        จากวิ่งแค่ 10 วินาที เปลี่ยนเป็นการขับขี่ความเร็วสูงและเข้าโค้งต่อเนื่องนับสิบนาทีในรายการ Toyota Gazoo Racing <strong>"ความร้อนสะสมในห้องเครื่อง (Thermal Load)"</strong> คือศัตรูตัวฉกาจ
+                    </p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid var(--mt-red); border-radius: 4px;">
+                        <p style="color: var(--rg-white); font-weight: 600; font-size: 1rem; margin-bottom: 5px;">The Track is Our Lab</p>
+                        <p style="font-size: 0.9rem; color: var(--rg-gray-400); margin: 0;">ให้รถแข่งของปอนด์เทค (Toyota Altis GR Sport เครื่องยนต์ 2ZR-FBE) เป็นห้องทดลองเคลื่อนที่ พิสูจน์ความทนทานของ Moty's ภายใต้รอบเครื่องยนต์สูงปรี๊ดตลอดการแข่งขัน</p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <img src="racego_05_pondtech_lab.jpg" alt="Stress Test" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-temperature-arrow-up"></i>
+                            <span>racego_05_pondtech_lab.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-fire"></i> THERMAL LOAD ACCUMULATION</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: ENGINEERING SYNERGY (THE OILS) -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <img src="motys_03_formula.jpg" alt="Formula" onerror="this.style.display='none'">
+                </div>
+                <div class="overlay" style="background: rgba(5,5,5,0.9);"></div>
+                <div class="content tier-focus-container" style="max-width: 1000px;">
+                    <div class="tier-focus-header">
+                        <div>
+                            <div class="badge red-badge">Perfect Technical Synergy</div>
+                            <h2 style="font-size: 3rem; margin-bottom: 0;">THE PERFECT <span class="highlight-white" style="font-size: 3rem;">FORMULA</span></h2>
+                            <p style="color: var(--rg-gray-400); margin-top: 5px; font-size: 1rem;">สถาปัตยกรรมทางวิศวกรรมของ Moty's ที่ตอบโจทย์รถแข่งปอนด์เทค</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1;">
+                        <div style="background: linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(5,5,5,0.9) 100%); border: 1px solid var(--mt-red); border-radius: 12px; padding: 20px;">
+                            <h4 style="color: var(--mt-red); font-family: 'Prompt', sans-serif; font-size: 1.1rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-temperature-high"></i> THERMAL RESISTANCE</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; gap: 10px;"><i class="fa-solid fa-check" style="color: var(--mt-red); margin-top: 4px;"></i> <div style="flex:1;"><b>M111H & M114 Series:</b> ทนอุณหภูมิห้องเครื่องร้อนระอุ</div></li>
+                                <li style="font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; gap: 10px;"><i class="fa-solid fa-check" style="color: var(--mt-red); margin-top: 4px;"></i> <div style="flex:1;"><b>Non-Polymer Technology:</b> ลดความเสี่ยงฟิล์มน้ำมันแตกตัวจากแรงเฉือน (Shear Down)</div></li>
+                                <li style="font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; gap: 10px;"><i class="fa-solid fa-check" style="color: var(--mt-red); margin-top: 4px;"></i> <div style="flex:1;"><b>Protection:</b> ปกป้องการสึกหรอของกระบอกสูบและชาร์ปอย่างสมบูรณ์แบบ</div></li>
+                            </ul>
+                        </div>
+                        <div style="background: linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(5,5,5,0.9) 100%); border: 1px solid var(--rg-white); border-radius: 12px; padding: 20px;">
+                            <h4 style="color: var(--rg-white); font-family: 'Prompt', sans-serif; font-size: 1.1rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-gears"></i> DRIVETRAIN PROTECTION</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; gap: 10px;"><i class="fa-solid fa-check" style="color: var(--rg-white); margin-top: 4px;"></i> <div style="flex:1;"><b>M409 & M409M Series:</b> น้ำมันเกียร์เรือธงสำหรับการแข่งขัน</div></li>
+                                <li style="font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; gap: 10px;"><i class="fa-solid fa-check" style="color: var(--rg-white); margin-top: 4px;"></i> <div style="flex:1;"><b>Micron Molecule:</b> การกระจายโมเลกุลระดับไมครอน ทนแรงโหลดจากการสับเกียร์อย่างรุนแรง</div></li>
+                                <li style="font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 10px; display: flex; gap: 10px;"><i class="fa-solid fa-check" style="color: var(--rg-white); margin-top: 4px;"></i> <div style="flex:1;"><b>LSD Stability:</b> ช่วยให้ระบบส่งกำลังออกจากโค้งได้อย่างแม่นยำ</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: TRICKLE DOWN PSYCHOLOGY -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--mt-red);">
+                        <img src="racego_07_pondtech_b2b.jpg" alt="B2B Influence" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-brain"></i>
+                            <span>racego_07_pondtech_b2b.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-users-gear"></i> GRASSROOTS INFLUENCE</div>
+                    </div>
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right;">
+                    <div class="badge red-badge">B2B Authority</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">WINNING <br><span class="highlight-white">THE GARAGES</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">จิตวิทยาการตลาดแบบส่งผ่าน (Trickle-down Psychology)</h3>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        "หากน้ำมันยี่ห้อนี้สามารถปกป้องทั้งเครื่องยนต์เทอร์โบ 1,000 แรงม้าทางตรง และเครื่อง 2ZR-FBE ที่แช่รอบเหยียบมิดในทางเรียบได้อย่างไร้ที่ติ ย่อมหมายความว่ามันจะปกป้องเครื่องยนต์รถซิ่งบนถนนทั่วไปได้อย่างเหนือชั้น"
+                    </p>
+                    <p style="font-size: 1rem; color: var(--rg-gray-400); line-height: 1.6;">
+                        การสนับสนุนนักแข่งอิสระที่มีกลิ่นอาย Street Credibility เป็นการสื่อสารที่เข้าถึงอารมณ์ของ <strong>"สายซิ่ง" และ "อู่แต่งรถทั่วประเทศ"</strong> ได้ตรงจุดยิ่งกว่าการโฆษณาแบบ Mass Media
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: THE GRAND STAGE (TGR) -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <img src="racego_08_tgr_overview.jpg" alt="TGR Overview" onerror="this.style.display='none'">
+                    <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                        <i class="fa-solid fa-flag-checkered"></i>
+                        <span>racego_08_tgr_overview.jpg</span>
+                    </div>
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content">
+                    <div class="badge red-badge">National Exposure</div>
+                    <h2 style="font-size: 4.5rem; margin-bottom: 15px;">THE GRAND STAGE: <br><span class="highlight-white">TGR 2026</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--rg-gray-400); margin-bottom: 25px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                        โลโก้ Moty's จะปรากฏเคียงข้างปอนด์เทค บนเวที One Make Race ที่ใหญ่ที่สุดในอาเซียน นำขบวนทัวร์ 4 ภูมิภาคหลักของไทย (บางแสน, ภูเก็ต, บุรีรัมย์, เชียงใหม่) สู่สายตาผู้ชมกว่า 250,000 คน
+                    </p>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-satellite-dish highlight-white" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">Live Broadcast</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">กอบโกยแอร์ไทม์ฟรีมูลค่ามหาศาลขณะถ่ายทอดสด</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-store highlight-red" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">B2B Networking</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">สร้างเครือข่ายอู่ซ่อมรถผ่านอีเวนต์ทั่วประเทศ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 8: RACEGO OFFICIAL MEDIA CONTENT -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge red-badge">Content Strategy</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">RACEGO <br><span class="highlight-white">OFFICIAL MEDIA</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">การนำเสนอภาพรวมของทีม และบรรยากาศการแข่งขัน</h3>
+                    
+                    <div class="content-list-item">
+                        <h4><i class="fa-solid fa-video highlight-red" style="margin-right: 8px;"></i> 1. RACE HIGHLIGHT (VLOG)</h4>
+                        <p>ประมวลภาพไฮไลต์การแข่งขันแต่ละสนาม ความเดือดบนแทร็ก และโมเมนต์ประทับใจของทีม</p>
+                    </div>
+                    <div class="content-list-item">
+                        <h4><i class="fa-solid fa-people-carry-box highlight-red" style="margin-right: 8px;"></i> 2. TEAM PREPARATION</h4>
+                        <p>เบื้องหลังการเตรียมรถแข่ง การทำงานเป็นทีมของ RaceGO Crew ก่อนลงสมรภูมิความเร็ว</p>
+                    </div>
+                    <div class="content-list-item">
+                        <h4><i class="fa-solid fa-stopwatch highlight-red" style="margin-right: 8px;"></i> 3. PIT STOP ACTION</h4>
+                        <p>วินาทีซ่อมบำรุงหน้าพิทที่ต้องแข่งกับเวลา แสดงถึงความเป็นมืออาชีพภายใต้ความกดดันสูง</p>
+                    </div>
+                    <div class="content-list-item">
+                        <h4><i class="fa-solid fa-ticket highlight-red" style="margin-right: 8px;"></i> 4. EVENT VIBE & LIFESTYLE</h4>
+                        <p>ภาพรวมงาน TGR สัมภาษณ์แฟนคลับ กิจกรรมบูธสปอนเซอร์ และไลฟ์สไตล์ผู้คนในสนาม</p>
+                    </div>
+                    <div class="content-list-item">
+                        <h4><i class="fa-solid fa-trophy highlight-red" style="margin-right: 8px;"></i> 5. VICTORY CELEBRATION</h4>
+                        <p>บรรยากาศการรับถ้วยรางวัล บทสัมภาษณ์หลังแข่งจบ และความสำเร็จของทีมร่วมกับสปอนเซอร์</p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder" style="border-color: var(--rg-white);">
+                        <img src="racego_09_tgr_media.jpg" alt="RaceGO Media" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-film"></i>
+                            <span>racego_09_tgr_media.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-play"></i> RACEGO OFFICIAL CONTENT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 9: PONDTECH'S MEDIA CONTENT -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--mt-red);">
+                        <img src="racego_06_pondtech_collab.jpg" alt="Pondtech Media" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-wrench"></i>
+                            <span>racego_06_pondtech_collab.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-gears"></i> TECHNICAL CONTENT</div>
+                    </div>
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right; background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(10,10,10,0.95) 100%);">
+                    <div class="badge red-badge">Technical Content</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">PONDTECH'S <br><span class="highlight-white">MEDIA</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">การเจาะลึกเชิงวิศวกรรม สร้างความเชื่อมั่นกลุ่ม B2B</h3>
+                    
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-flask highlight-white" style="margin-right: 8px;"></i> 1. TECHNICAL REVIEW</h4>
+                        <p>ปอนด์เทครีวิวเจาะลึกน้ำมันเครื่อง/เกียร์ Moty's อธิบายสเปคและกลไกทางวิศวกรรมให้ช่างเข้าใจ</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-magnifying-glass highlight-white" style="margin-right: 8px;"></i> 2. ENGINE TEARDOWN</h4>
+                        <p>เปิดฝาเครื่องยนต์/เกียร์หลังจบการแข่งขัน เพื่อพิสูจน์การปกป้องชิ้นส่วนว่าสึกหรอน้อยแค่ไหน</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-chart-line highlight-white" style="margin-right: 8px;"></i> 3. DYNO TEST & TUNING</h4>
+                        <p>นำรถขึ้นแท่น Dyno ทดสอบสมรรถนะ โชว์การจูนนิ่งและการตอบสนองของเครื่องยนต์หลังรับการบำรุงรักษา</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-map-location-dot highlight-white" style="margin-right: 8px;"></i> 4. TRACK WALK & STRATEGY</h4>
+                        <p>พาเดินวิเคราะห์ไลน์สนามแข่ง อธิบายผลกระทบของอุณหภูมิต่อสมรรถนะยางและเครื่องยนต์</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-helmet-safety highlight-white" style="margin-right: 8px;"></i> 5. ON-BOARD POV</h4>
+                        <p>มุมมองจากหมวกกันน็อกนักแข่ง (POV) โชว์ความดุดัน เสียงเครื่องยนต์ และเทคนิคการขับขี่</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SPONSORSHIP TIERS (BRONZE -> PLATINUM)     -->
+        <!-- ========================================== -->
+
+        <!-- SLIDE 10: BRONZE TIER -->
+        <div class="slide slide-element">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: #b45309;">SUPPORTING PARTNER</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-medal tier-icon" style="color: #b45309;"></i>
+                                <div class="tier-name">BRONZE <span class="tier-sub">(SUPPORTING)</span></div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="tier-price-val">100K - 150K <span>THB</span></div>
+                            <div class="tier-value-box" style="border-color: #333;">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: #b45309;">~450,000 THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <!-- Box 1 -->
+                        <div class="tier-box">
+                            <h4 style="color: #b45309;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) ตำแหน่งเสริม (บังโคลนหน้า, มุมกระจกบานหน้า) บนรถ 2 คัน</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Fan Apparel:</b> โลโก้ประดับบนเสื้อยืดแฟนคลับ (Fanclub T-Shirt) ประจำฤดูกาล ดีไซน์หลัก</div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 2 -->
+                        <div class="tier-box">
+                            <h4 style="color: #b45309;"><i class="fa-solid fa-video"></i> 2. RACEGO MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-users"></i> <div><b>RaceGO Official Media (5 คอนเทนต์):</b> คอนเทนต์ประมวลภาพรวมทีม <span style="color: #b45309; font-weight:700;">~75K</span></div></li>
+                                <li><i class="fa-solid fa-wrench"></i> <div><b>Pondtech's Media (1 คอนเทนต์):</b> คอนเทนต์รีวิวสินค้า/Tie-in ช่องปอนด์เทค <span style="color: #b45309; font-weight:700;">~15K</span></div></li>
+                                <li><i class="fa-solid fa-handshake"></i> <div><b>Flexible Payment:</b> เปิดรับออปชันผสม (เงินสด + สนับสนุนสินค้า Barter)</div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 3 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-tower-broadcast"></i> 3. TGR EARNED MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>General Visibility:</b> โลโก้เห็นแบบภาพรวม (บรรยากาศ) ในสนาม/ถ่ายทอดสด</div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 4 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-box-open"></i> 4. MERCHANDISE RIGHTS</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-crown"></i> <div><b>Merchandise Quota:</b> รับโควตาสินค้าของทีม นำไปจัดแจก (Giveaway) ให้ลูกค้าของท่าน</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-remark">
+                        <i class="fa-solid fa-circle-info"></i> <div><b>Remark:</b> Estimated Media Value ปรับคำนวณใหม่ตามมาตรฐานสปอนเซอร์ชิป (ROI ~3.5x) อ้างอิงจาก Media Rate Card จริงของคอนเทนต์ออนไลน์, แอร์ไทม์ถ่ายทอดสด TGR, และพื้นที่ On-ground</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: SILVER TIER -->
+        <div class="slide slide-element">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: #cbd5e1; color: #000;">CO-SPONSOR</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-medal tier-icon" style="color: #cbd5e1;"></i>
+                                <div class="tier-name">SILVER <span class="tier-sub">(CO-SPONSOR)</span></div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="tier-price-val">200K - 300K <span>THB</span></div>
+                            <div class="tier-value-box" style="border-color: #333;">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: #cbd5e1;">~1,200,000 THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <!-- Box 1 -->
+                        <div class="tier-box">
+                            <h4 style="color: #cbd5e1;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Car Branding:</b> โลโก้ขนาดกลาง (M) บนรถ 2 คัน และสติกเกอร์ตู้เครื่องมือช่าง</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Apparel:</b> โลโก้แขน/หลังชุดแข่งและเสื้อทีมช่าง</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Pit & PR:</b> โลโก้ป้าย Sponsor หน้าพิท และธงญี่ปุ่น (Flag/Standee)</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้เสริมรถแข่ง (S) <span class="badge-sm bronze">BRZ</span></div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้บนเสื้อยืดแฟนคลับ <span class="badge-sm bronze">BRZ</span></div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 2 -->
+                        <div class="tier-box">
+                            <h4 style="color: #cbd5e1;"><i class="fa-solid fa-video"></i> 2. RACEGO MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-users"></i> <div><b>RaceGO Official Media (8 คอนเทนต์):</b> คอนเทนต์หลักจากทางทีม</div></li>
+                                <li><i class="fa-solid fa-wrench"></i> <div><b>Pondtech's Media (2 คอนเทนต์):</b> แทรกสินค้าในคอนเทนต์ Technical/BTS</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Affiliate & Sales:</b> ผูกโค้ดส่วนลดกระตุ้นยอดขาย <span style="color: #4ade80;">Direct ROI</span></div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 3 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-tower-broadcast"></i> 3. TGR EARNED MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Background Visibility:</b> โลโก้ปรากฏเป็นฉากหลังตอนถ่ายทอดสด TGR Live</div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 4 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-crown"></i> 4. MERCHANDISE & IP</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Official Team Gear:</b> โลโก้บนชุดทำงานทีมช่างหน้างาน</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>IP Licensing (Non-Retail):</b> นำโลโก้โปรโมทยิง Ads โฆษณาของแบรนด์ท่าน</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โควตาสินค้าทีมสำหรับแจก (Giveaway) <span class="badge-sm bronze">BRZ</span></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-remark">
+                        <i class="fa-solid fa-circle-info"></i> <div><b>Remark:</b> Estimated Media Value ปรับคำนวณใหม่ตามมาตรฐานสปอนเซอร์ชิป (ROI ~3.5x) อ้างอิงจาก Media Rate Card จริงของคอนเทนต์ออนไลน์, แอร์ไทม์ถ่ายทอดสด TGR, และพื้นที่ On-ground</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: GOLD TIER -->
+        <div class="slide slide-element">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: #facc15; color: #000;">จำกัด 2 สิทธิ์</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-medal tier-icon" style="color: #facc15;"></i>
+                                <div class="tier-name">GOLD <span class="tier-sub">(MAIN SPONSOR)</span></div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="tier-price-val text-price">กรุณาติดต่อทีมงานเพื่อเสนอราคา</div>
+                            <div class="tier-value-box" style="border-color: #333;">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: #facc15;">~3,000,000 THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <!-- Box 1 -->
+                        <div class="tier-box">
+                            <h4 style="color: #facc15;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Car Branding:</b> โลโก้ขนาดใหญ่ (L) บนรถแข่ง 2 คัน และป้ายแบนเนอร์กั้นโซนพิท (Pit Wall Banner)</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Apparel:</b> โลโก้อกเสื้อนักแข่ง, เสื้อช่าง, ร่ม และชุด Race Queen</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Pit Visibility:</b> ป้าย Sponsor หลัก และโซนโชว์เคสผลิตภัณฑ์ (Showcase)</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้เสริม (M,S), ตู้เครื่องมือ, ธงญี่ปุ่น <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้บนเสื้อยืดแฟนคลับ <span class="badge-sm bronze">BRZ</span></div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 2 -->
+                        <div class="tier-box">
+                            <h4 style="color: #facc15;"><i class="fa-solid fa-video"></i> 2. RACEGO MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-users"></i> <div><b>RaceGO Official Media (16 คอนเทนต์):</b> คอนเทนต์หลักจากทางทีม</div></li>
+                                <li><i class="fa-solid fa-wrench"></i> <div><b>Pondtech's Media (4 คอนเทนต์):</b> คอนเทนต์ Tie-in โชว์ประสิทธิภาพหน้าอู่/เบื้องหลัง</div></li>
+                                <li><i class="fa-solid fa-bullhorn"></i> <div><b>Live Shoutout:</b> นักแข่งพูด Mention แบรนด์ช่วง Live สดขอบสนาม</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โค้ดส่วนลด Affiliate <span class="badge-sm silver">SLV</span></div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 3 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-tower-broadcast"></i> 3. TGR EARNED MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Live Camera:</b> โลโก้ชัดเจนช่วงกล้องแพนบน Grid ก่อนแข่ง</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Official Photos:</b> ภาพ Action Shots ในอัลบั้มโปรโมท TGR</div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 4 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-crown"></i> 4. MERCHANDISE & IP</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-shirt"></i> <div><b>Apparel Placement:</b> สกรีนโลโก้ลงบนเสื้อผ้าคอลเลกชันปกติที่จำหน่าย</div></li>
+                                <li><i class="fa-solid fa-gift"></i> <div><b>GWP Rights:</b> สิทธิผลิตของแจกลิขสิทธิ์ทีม แจกคู่กับสินค้าท่าน</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>IP Licensing & โลโก้บนชุดช่างหน้างาน <span class="badge-sm silver">SLV</span></div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โควตาสินค้าทีมสำหรับแจกลูกค้า <span class="badge-sm bronze">BRZ</span></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-remark">
+                        <i class="fa-solid fa-circle-info"></i> <div><b>Remark:</b> Estimated Media Value ปรับคำนวณใหม่ตามมาตรฐานสปอนเซอร์ชิป (ROI ~3.5x) อ้างอิงจาก Media Rate Card จริงของคอนเทนต์ออนไลน์, แอร์ไทม์ถ่ายทอดสด TGR, และพื้นที่ On-ground</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: PLATINUM TIER -->
+        <div class="slide slide-element">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: var(--rg-white); color: var(--rg-black);">จำกัด 1 สิทธิ์</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-gem tier-icon" style="color: var(--rg-white);"></i>
+                                <div class="tier-name">PLATINUM <span class="tier-sub" style="color: var(--rg-white);">(TITLE SPONSOR)</span></div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="tier-price-val text-price">กรุณาติดต่อทีมงานเพื่อเสนอราคา</div>
+                            <div class="tier-value-box" style="border-color: #333;">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: var(--rg-white);">~8,000,000 THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <!-- Box 1 -->
+                        <div class="tier-box" style="border-color: var(--mt-red);">
+                            <h4 style="color: var(--rg-white);"><i class="fa-solid fa-flag-checkered" style="color: var(--mt-red);"></i> 1. ON-GROUND & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Car Livery & Naming:</b> ชื่อทีม, คุมโทนสีรถ (XL) และแรปสติกเกอร์รถพ่วง (Trailer)</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Pit Experience:</b> ตกแต่งพิท + RaceQueen ประจำแบรนด์</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Exclusive Gear:</b> แถบคาดหมวกกันน็อกนักแข่ง (Visor Strip & Helmet)</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้จุดเล็ก-ใหญ่ (L,M,S), ป้ายพิท, ตู้เครื่องมือ <span class="badge-sm gold">GLD</span> <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้ชุดแข่ง, ร่ม, เสื้อแฟนคลับครบเซ็ต <span class="badge-sm gold">GLD</span> <span class="badge-sm bronze">BRZ</span></div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 2 -->
+                        <div class="tier-box" style="border-color: var(--mt-red);">
+                            <h4 style="color: var(--rg-white);"><i class="fa-solid fa-video" style="color: var(--mt-red);"></i> 2. RACEGO MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-users"></i> <div><b>RaceGO Official Media (48 คอนเทนต์):</b> คอนเทนต์โปรโมทหลักจากทีม</div></li>
+                                <li><i class="fa-solid fa-wrench"></i> <div><b>Pondtech's Media (12 คอนเทนต์):</b> Technical Review เจาะลึกสไตล์ช่าง</div></li>
+                                <li><i class="fa-solid fa-camera"></i> <div><b>Media Rights:</b> สิทธิ์นำภาพ/วิดีโอไปยิง Ads โฆษณาได้ตลอดปี</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>Live Shoutout, โค้ดส่วนลด Affiliate <span class="badge-sm gold">GLD</span> <span class="badge-sm silver">SLV</span></div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 3 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-tower-broadcast"></i> 3. TGR EARNED MEDIA</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check"></i> <div><b>Live Broadcast:</b> แอร์ไทม์เด่นสุดช่วงจุดสตาร์ทและถ่ายทอดสด</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Official PR:</b> โลโก้/สีรถปรากฏในคอนเทนต์ VOD ย้อนหลังและภาพ PR</div></li>
+                            </ul>
+                        </div>
+                        <!-- Box 4 -->
+                        <div class="tier-box">
+                            <h4 style="color: var(--mt-red);"><i class="fa-solid fa-crown"></i> 4. MERCHANDISE & IP</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-crown"></i> <div><b>Co-Branding:</b> สิทธิร่วมผลิต Merchandise คอลเลกชันพิเศษระดับพรีเมียม</div></li>
+                                <li><i class="fa-solid fa-crown"></i> <div><b>Full IP Licensing:</b> นำภาพนักแข่ง/โลโก้จัดแคมเปญพาณิชย์เต็มรูปแบบ</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้บนสินค้าคอลเลกชัน, เสื้อช่างหน้างาน <span class="badge-sm gold">GLD</span> <span class="badge-sm silver">SLV</span></div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>GWP ของแจก, โควตาสินค้าทีมแจกลูกค้า <span class="badge-sm gold">GLD</span> <span class="badge-sm bronze">BRZ</span></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-remark">
+                        <i class="fa-solid fa-circle-info"></i> <div><b>Remark:</b> Estimated Media Value ปรับคำนวณใหม่ตามมาตรฐานสปอนเซอร์ชิป (ROI ~3.5x) อ้างอิงจาก Media Rate Card จริงของคอนเทนต์ออนไลน์, แอร์ไทม์ถ่ายทอดสด TGR, และพื้นที่ On-ground</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: CLOSING -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder">
+                    <img src="racego_20_closing.jpg" alt="Closing" onerror="this.style.display='none'">
+                    <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                        <i class="fa-solid fa-flag-checkered"></i>
+                        <span>racego_20_closing.jpg</span>
+                    </div>
+                    <div class="car-label"><i class="fa-solid fa-trophy"></i> SEE YOU ON THE PODIUM</div>
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content" style="text-align: center;">
+                    <h2 style="font-size: 4rem; line-height: 1; margin-bottom: 15px;">BEYOND THE <br><span class="highlight-white">LIMITS.</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--rg-white); font-weight: 300; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                        ความสำเร็จไม่ได้วัดจากปริมาณลิตรที่ขายได้ในซุปเปอร์มาร์เก็ต <br>แต่วัดจากการเป็นตัวเลือกลำดับแรกและลำดับเดียว ในใจของวิศวกรและยอดนักขับ
+                    </p>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                        <a href="https://www.facebook.com/profile.php?id=61587947141692" target="_blank" style="display: inline-flex; align-items: center; gap: 15px; background: rgba(230,0,0,0.1); padding: 10px 25px; border-radius: 50px; border: 1px solid var(--mt-red); text-decoration: none; color: var(--rg-white); transition: background 0.3s;">
+                            <i class="fa-brands fa-facebook" style="font-size: 1.5rem; color: var(--mt-red);"></i>
+                            <span style="font-size: 1rem; font-weight: 600; letter-spacing: 1px;">RACEGO MANAGEMENT</span>
+                        </a>
+                        <a href="https://lin.ee/oBw7GTC" target="_blank" style="display: inline-flex; align-items: center; gap: 15px; background: rgba(0,195,0,0.1); padding: 10px 25px; border-radius: 50px; border: 1px solid #00C300; text-decoration: none; color: var(--rg-white); transition: background 0.3s; box-shadow: 0 4px 15px rgba(0,195,0,0.15);">
+                            <i class="fa-brands fa-line" style="font-size: 1.5rem; color: #00C300;"></i>
+                            <span style="font-size: 1rem; font-weight: 600; letter-spacing: 1px;">CONTACT TEAM</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const selectionScreen = document.getElementById('selection-screen');
+            const slider = document.getElementById('slider');
+            const hint = document.getElementById('swipeHint');
+            const statusText = document.querySelector('.loader-status');
+            
+            // Safety fallback
+            const safetyTimer = setTimeout(() => {
+                if(loadingScreen) loadingScreen.style.display = 'none';
+                if(selectionScreen) {
+                    selectionScreen.style.visibility = 'visible';
+                    selectionScreen.style.opacity = '1';
+                }
+            }, 4000);
+
+            const messages = ["ANALYZING VISCOSITY...", "CHECKING THERMAL LOAD...", "INJECTING HYPER LUBRICANT...", "READY TO RACE!"];
+            let msgIdx = 0;
+            
+            const msgInterval = setInterval(() => {
+                msgIdx++;
+                if(msgIdx < messages.length - 1 && statusText) {
+                    statusText.innerText = messages[msgIdx];
+                }
+            }, 600);
+
+            setTimeout(() => {
+                clearInterval(msgInterval);
+                clearTimeout(safetyTimer);
+                
+                if(statusText) {
+                    statusText.innerText = messages[messages.length - 1];
+                    statusText.classList.add('ready');
+                }
+                
+                setTimeout(() => {
+                    if(loadingScreen) loadingScreen.classList.add('hidden');
+                    setTimeout(() => {
+                        if(loadingScreen) loadingScreen.style.display = 'none';
+                        if(selectionScreen) {
+                            selectionScreen.style.visibility = 'visible';
+                            selectionScreen.style.opacity = '1';
+                        }
+                    }, 600);
+                }, 500);
+            }, 2800);
+
+            const btnMobile = document.getElementById('btn-mobile');
+            const btnPc = document.getElementById('btn-pc');
+
+            function startPresentation(mode) {
+                document.body.classList.add(mode);
+                if(selectionScreen) {
+                    selectionScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        selectionScreen.style.display = 'none';
+                    }, 500);
+                }
+
+                if (mode === 'mobile-mode' && hint) {
+                    hint.innerHTML = '<i class="fa-solid fa-arrows-up-down"></i> เลื่อนหน้าจอขึ้น-ลงเพื่อรับชม';
+                }
+            }
+
+            if(btnMobile) btnMobile.addEventListener('click', () => startPresentation('mobile-mode'));
+            if(btnPc) btnPc.addEventListener('click', () => startPresentation('pc-mode'));
+
+            if(slider && hint) {
+                slider.addEventListener('scroll', () => {
+                    if(slider.scrollLeft > 50 || slider.scrollTop > 50) {
+                        hint.style.opacity = '0';
+                        hint.style.transition = 'opacity 0.5s ease';
+                    }
+                }, { passive: true });
+            }
+        });
+    </script>
+</body>
+</html>
