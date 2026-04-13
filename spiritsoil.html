@@ -129,6 +129,13 @@
         
         /* Product grid for mobile */
         body.mobile-mode .product-grid { grid-template-columns: 1fr !important; }
+        
+        /* Data Power & Packages grid for mobile */
+        body.mobile-mode .data-power-grid { grid-template-columns: 1fr !important; gap: 10px !important; margin-bottom: 15px !important;}
+        body.mobile-mode .std-output-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+        body.mobile-mode .invest-pkg-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+        body.mobile-mode .invest-card { padding: 15px !important; }
+        body.mobile-mode .data-power-val { font-size: 2.2rem !important; }
 
         .slide {
             flex: 0 0 100vw; height: 100vh; scroll-snap-align: start;
@@ -229,18 +236,6 @@
         .tier-focus-container { display: flex; flex-direction: column; width: 100%; height: 100%; max-width: 1200px; text-align: left; }
         .tier-focus-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
         
-        .table-layout { width: 100%; }
-        .table-layout table { border-collapse: collapse; width: 100%; background-color: #0A0A0A; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
-        .table-layout th, .table-layout td { border-bottom: 1px solid #222; padding: 15px 20px; text-align: left; }
-        .table-layout th { background-color: #050505; color: var(--rg-white); font-size: 16px; font-weight: 700; font-family: 'Urbanist', sans-serif; text-transform: uppercase; }
-        .table-layout td { font-size: 14px; vertical-align: top; color: var(--rg-gray-400); }
-        .table-layout tr:last-child td { border-bottom: none; }
-        .tier-title { font-weight: 800; font-size: 16px; }
-        .price-tag { color: var(--rg-white); font-weight: 700; font-size: 16px; font-family: 'Teko', sans-serif; letter-spacing: 1px;}
-        .benefit-list { list-style: none; padding: 0; margin: 0; }
-        .benefit-item { position: relative; padding-left: 18px; margin-bottom: 6px; font-size: 13px; color: var(--rg-gray-400); }
-        .benefit-item::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--sp-orange); font-size: 12px; }
-
         /* --- TIER SLIDES (NEW DESIGN) --- */
         .tier-slide-wrap { padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background-color: var(--rg-black); }
         .tier-container { max-width: 1200px; width: 100%; display: flex; flex-direction: column; height: 100%; }
@@ -334,6 +329,48 @@
         @media (max-width: 900px), (max-height: 600px) {
             .product-grid { grid-template-columns: 1fr !important; }
         }
+        
+        /* Specific elements for new slides */
+        .data-power-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+        .data-power-box { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px 20px; text-align: center; border-top: 4px solid var(--sp-orange); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .data-power-box.purple-top { border-top-color: var(--sp-purple); }
+        .data-power-box.cyan-top { border-top-color: #06b6d4; }
+        .data-power-val { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; margin-bottom: 10px; }
+        .data-power-label { font-size: 0.9rem; color: var(--rg-white); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;}
+        .data-power-desc { font-size: 0.85rem; color: var(--rg-gray-400); line-height: 1.4;}
+        
+        .std-output-box { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; margin-bottom: 30px; text-align: left;}
+        .std-output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .std-item { display: flex; gap: 15px; align-items: flex-start; }
+        .std-item i { font-size: 1.5rem; margin-top: 3px; color: var(--sp-orange); }
+        .std-item h5 { color: var(--rg-white); font-size: 1rem; margin-bottom: 5px; font-family: 'Prompt', sans-serif;}
+        .std-item p { color: var(--rg-gray-400); font-size: 0.85rem; line-height: 1.4; margin: 0;}
+        
+        .invest-pkg-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; }
+        .invest-card { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; position: relative; text-align: left; display: flex; flex-direction: column;}
+        .invest-card.best-value { border-color: var(--sp-purple); background: linear-gradient(180deg, rgba(138,43,226,0.1) 0%, rgba(17,17,17,0.9) 100%); }
+        .best-value-tag { position: absolute; top: -1px; right: -1px; background: var(--sp-purple); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 5px 15px; border-radius: 0 12px 0 12px; letter-spacing: 1px;}
+        
+        /* VIRAL ALBUM & MODAL */
+        .viral-album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .viral-thumb-wrapper { width: 100%; height: 110px; border-radius: 8px; overflow: hidden; border: 1px solid #333; cursor: pointer; position: relative; transition: all 0.3s ease; }
+        .viral-thumb-wrapper:hover { border-color: var(--sp-orange); transform: scale(1.02); z-index: 2; box-shadow: 0 5px 15px rgba(255,102,0,0.2); }
+        .viral-thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .viral-thumb-wrapper:hover img { transform: scale(1.1); }
+        .viral-thumb-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .viral-thumb-wrapper:hover .viral-thumb-overlay { opacity: 1; }
+        .viral-thumb-overlay i { color: var(--rg-white); font-size: 1.5rem; }
+
+        .invest-card.compact { padding: 15px; }
+        .invest-card.compact h3 { font-size: 1.6rem; margin-bottom: 2px; }
+        .invest-card.compact .compact-price { font-size: 2rem; font-family: 'Teko', sans-serif; font-weight: 700; color: var(--rg-white); line-height: 1; margin-bottom: 10px; }
+        .invest-card.compact ul li { font-size: 0.75rem; margin-bottom: 5px; line-height: 1.4; }
+        
+        /* The Modal (background) */
+        .image-modal { display: none; position: fixed; z-index: 1000000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(5,5,5,0.95); backdrop-filter: blur(5px); }
+        .image-modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid var(--sp-orange); border-radius: 8px; box-shadow: 0 0 30px rgba(255,102,0,0.3); }
+        .image-modal-close { position: absolute; top: 20px; right: 35px; color: var(--rg-gray-400); font-size: 40px; font-weight: bold; transition: 0.3s; z-index: 1000001; }
+        .image-modal-close:hover, .image-modal-close:focus { color: var(--sp-orange); text-decoration: none; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -553,6 +590,7 @@
             </div>
         </div>
 
+        <!-- THE GRAND STAGE (UPDATED) -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
@@ -567,18 +605,38 @@
                     <div class="badge red-badge">National Exposure</div>
                     <h2 style="font-size: 4.5rem; margin-bottom: 15px;">THE GRAND STAGE: <br><span class="highlight-white">TGR 2026</span></h2>
                     <p style="font-size: 1.2rem; color: var(--rg-gray-400); margin-bottom: 25px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                        โลโก้ Spirits Oil จะปรากฏเคียงข้างโนเกียร์ บนเวที One Make Race ที่ใหญ่ที่สุดในอาเซียน นำขบวนทัวร์ 4 ภูมิภาคหลักของไทย (บางแสน, ภูเก็ต, บุรีรัมย์, เชียงใหม่) สู่สายตาผู้ชมกว่า 250,000 คน
+                        โลโก้ Spirits Oil จะปรากฏเคียงข้างโนเกียร์ บนเวที One Make Race ที่ใหญ่ที่สุดในอาเซียน นำขบวนทัวร์ 5 สนาม 4 ภูมิภาคหลักของไทย สู่สายตาผู้ชมกว่า 250,000 คน
                     </p>
-                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
-                            <i class="fa-solid fa-satellite-dish highlight-orange" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">Live Broadcast</h4>
-                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">กอบโกยแอร์ไทม์ฟรีมูลค่ามหาศาลขณะถ่ายทอดสด</p>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 25px;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--sp-orange); font-weight: 700; font-size: 0.8rem;">สนามที่ 1</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">ชลบุรี (บางแสน)</h4>
                         </div>
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
-                            <i class="fa-solid fa-camera highlight-red" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">Media Outlets</h4>
-                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">ภาพถ่ายแบรนด์ในสื่อมวลชนและเพจยานยนต์</p>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--sp-orange); font-weight: 700; font-size: 0.8rem;">สนามที่ 2</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">ภูเก็ต</h4>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--sp-orange); font-weight: 700; font-size: 0.8rem;">สนามที่ 3 และ 4</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">บุรีรัมย์</h4>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--sp-orange); padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--sp-orange); font-weight: 700; font-size: 0.8rem;">สนามที่ 5 (Final)</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">เชียงใหม่</h4>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 15px 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-satellite-dish highlight-orange" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.1rem; margin-bottom: 5px;">Live Broadcast</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.85rem; margin: 0;">กอบโกยแอร์ไทม์ฟรีมูลค่ามหาศาลขณะถ่ายทอดสด</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 15px 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-camera highlight-red" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.1rem; margin-bottom: 5px;">Media Outlets</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.85rem; margin: 0;">ภาพถ่ายแบรนด์ในสื่อมวลชนและเพจยานยนต์</p>
                         </div>
                     </div>
                 </div>
@@ -654,7 +712,7 @@
                         <p>พาเติม Spirits Oil รุ่น Kojin หน้าพิท โชว์ให้เห็นว่ารถแข่งหญิงก็ต้องการการปกป้องสูงสุด</p>
                     </div>
                     <div class="content-list-item white-border" style="width: 100%; text-align: right;">
-                        <h4><i class="fa-solid fa-cart-arrow-down highlight-white" style="margin-right: 8px;"></i> 3. O2O SHOPPERTAINMENT</h4>
+                        <h4><i class="fa-solid fa-cart-arrow-down highlight-white" style="margin-right: 8px;"></i> 3. Online2Offline SHOPPERTAINMENT</h4>
                         <p>ป้ายยาแจกโค้ดส่วนลด ให้แฟนๆ สั่งซื้อ Spirits Oil รุ่น Raijin/Fujin ผ่าน Shopee/Lazada</p>
                     </div>
                     <div class="content-list-item white-border" style="width: 100%; text-align: right;">
@@ -669,7 +727,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 10: BRAND AMBASSADOR -->
+        <!-- BRAND AMBASSADOR -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-content">
@@ -693,10 +751,14 @@
                         <h4><i class="fa-solid fa-handshake-slash highlight-red" style="margin-right: 8px;"></i> NON-COMPETE CLAUSE</h4>
                         <p>ไม่อนุญาตให้รับการสนับสนุน หรือโปรโมทแบรนด์สินค้าคู่แข่งโดยตรงในหมวดหมู่สินค้าดังกล่าว <strong>เว้นแต่จะได้รับอนุญาตจากทาง S9 เป็นกรณีๆ ไป</strong></p>
                     </div>
+                    <div class="content-list-item">
+                        <h4><i class="fa-solid fa-tags highlight-red" style="margin-right: 8px;"></i> MEDIA DISCOUNT PRIVILEGE</h4>
+                        <p>รับสิทธิพิเศษ <strong>ส่วนลดแพ็กเกจสื่อโฆษณา (Media Rate)</strong> บนช่องทางออนไลน์ทั้งหมดของโนเกียร์ (TikTok, Facebook, IG) ในราคาพาร์ทเนอร์</p>
+                    </div>
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder" style="border-color: var(--rg-white);">
-                        <img src="image_32e77f.jpg" alt="Brand Ambassador" onerror="this.style.display='none'">
+                        <img src="spirits_09_brand_am.jpg" alt="Brand Ambassador" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-shield-halved"></i>
                             <span>spirits_09_brand_am.jpg</span>
@@ -707,7 +769,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 11: S9TV SCOOP -->
+        <!-- S9TV SCOOP -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
@@ -745,11 +807,186 @@
             </div>
         </div>
 
+        <!-- THE POWER OF DATA & PRODUCTION (UPDATED GALLERY) -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder" style="background-image: radial-gradient(circle at 50% 50%, #1a0b2e 0%, var(--rg-black) 100%);"></div>
+                <div class="overlay"></div>
+                <div class="content" style="max-width: 1100px;">
+                    <div class="badge purple-badge" style="margin-bottom: 20px;">All-Inclusive Content Package</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 30px;">VIRAL PHOTO SET <span class="highlight-orange">& PUBLISH BY NOKIA</span></h2>
+                    
+                    <!-- DATA SECTION -->
+                    <div class="data-power-grid">
+                        <div class="data-power-box">
+                            <div class="data-power-val" style="color: var(--sp-orange);">1M+</div>
+                            <div class="data-power-label">TOTAL VIEWS / POST</div>
+                            <div class="data-power-desc">พลังการมองเห็นมหาศาล การันตี Brand Awareness ระดับ Mass</div>
+                        </div>
+                        <div class="data-power-box purple-top">
+                            <div class="data-power-val" style="color: var(--sp-purple);">75%</div>
+                            <div class="data-power-label">NON-FOLLOWERS REACH</div>
+                            <div class="data-power-desc">เจาะทะลุเพดานอัลกอริทึม ดึงดูดลูกค้าใหม่เข้าสู่แบรนด์</div>
+                        </div>
+                        <div class="data-power-box cyan-top">
+                            <div class="data-power-val" style="color: #06b6d4;">91%</div>
+                            <div class="data-power-label">MALE (AGE 25-44)</div>
+                            <div class="data-power-desc">กลุ่มเป้าหมายทองคำ (Golden Target) ที่มีศักยภาพการใช้จ่ายสูง</div>
+                        </div>
+                    </div>
+
+                    <!-- OUTPUT SECTION -->
+                    <div class="std-output-box">
+                        <h3 style="font-size: 1.2rem; color: var(--rg-white); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">STANDARD OUTPUT PER SET <span style="font-size: 1rem; color: var(--rg-gray-400); font-weight: 400;">(มาตรฐานชิ้นงานต่อ 1 เซ็ต)</span></h3>
+                        <div class="std-output-grid">
+                            <div class="std-item">
+                                <i class="fa-solid fa-folder-open"></i>
+                                <div>
+                                    <h5>20 Photos Delivered</h5>
+                                    <p>ถ่ายทำและส่งมอบรูปคุณภาพสูง (Retouched) จำนวน 20 ภาพ เพื่อให้แบรนด์นำไปใช้งานต่อในช่องทางออนไลน์</p>
+                                </div>
+                            </div>
+                            <div class="std-item">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                                <div>
+                                    <h5>5 Photos Published</h5>
+                                    <p>คัดเลือก 5 ภาพที่ดีที่สุดเพื่อโพสต์ลงบนช่องทาง Social Media ของ Nokia Sutasinee (Facebook / Instagram)</p>
+                                </div>
+                            </div>
+                            <div class="std-item">
+                                <i class="fa-solid fa-car-side"></i>
+                                <div>
+                                    <h5>Full Production Included</h5>
+                                    <p>รวมค่าตัวนางแบบ (Model), รถยนต์เข้าฉาก (Cars - Standard Tier), และช่างภาพมืออาชีพ (Photography) เรียบร้อยแล้ว</p>
+                                </div>
+                            </div>
+                            <div class="std-item">
+                                <i class="fa-solid fa-triangle-exclamation" style="color: var(--sp-red);"></i>
+                                <div>
+                                    <h5 style="color: var(--sp-red);">Online Usage Only</h5>
+                                    <p>ลิขสิทธิ์ภาพสำหรับการใช้งานบนสื่อ Online ของแบรนด์เท่านั้น (ไม่อนุญาตให้นำไปผลิตสื่อ Offline เช่น ป้ายบิลบอร์ด, สแตนดี้) <br><strong style="color: var(--sp-gold); margin-top: 4px; display: inline-block;"><i class="fa-solid fa-circle-plus"></i> สามารถ Add-on : ซื้อสิทธิ์เพื่อผลิตสื่อ Offline เพิ่มเติมได้</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PACKAGE COMPARISON -->
+                    <div class="invest-pkg-grid">
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <!-- VIRAL PROOF ALBUM -->
+                            <div class="invest-card" style="padding: 20px;">
+                                <h3 style="font-size: 1.2rem; color: var(--rg-white); margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px; font-family: 'Prompt', sans-serif;">
+                                    <i class="fa-solid fa-images" style="color: var(--sp-orange); margin-right: 8px;"></i> VIRAL PROOF GALLERY
+                                </h3>
+                                <div class="viral-album-grid">
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_01.jpg')">
+                                        <img src="viral_proof_01.jpg" alt="Viral Proof 1" onerror="this.src='https://via.placeholder.com/400x300/111/ff6600?text=VIRAL+PROOF+1'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_02.jpg')">
+                                        <img src="viral_proof_02.jpg" alt="Viral Proof 2" onerror="this.src='https://via.placeholder.com/400x300/111/ff6600?text=VIRAL+PROOF+2'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_03.jpg')">
+                                        <img src="viral_proof_03.jpg" alt="Viral Proof 3" onerror="this.src='https://via.placeholder.com/400x300/111/ff6600?text=VIRAL+PROOF+3'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_04.jpg')">
+                                        <img src="viral_proof_04.jpg" alt="Viral Proof 4" onerror="this.src='https://via.placeholder.com/400x300/111/ff6600?text=VIRAL+PROOF+4'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- COMPACT DEMO 1 SET -->
+                            <div class="invest-card compact">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div>
+                                        <div class="badge" style="background: #333; color: #fff; font-size: 0.65rem; padding: 3px 10px; margin-bottom: 5px;">TRIAL OPTION</div>
+                                        <h3 style="color: var(--rg-white);">DEMO 1 SET</h3>
+                                        <p style="font-size: 0.75rem; color: var(--rg-gray-400); margin-bottom: 5px;">สำหรับทดสอบประสิทธิภาพเข้าถึงกลุ่มเป้าหมาย</p>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <p style="font-size: 0.7rem; color: var(--rg-gray-400); text-transform: uppercase; margin-bottom: 0;">STARTS AT</p>
+                                        <div class="compact-price">30,000 <span style="font-size: 0.9rem; color: var(--rg-gray-400);">THB</span></div>
+                                    </div>
+                                </div>
+                                <ul style="list-style: none; padding: 0; color: var(--rg-gray-400);">
+                                    <li><i class="fa-solid fa-check" style="color: #10b981; margin-right: 6px;"></i> รวม Full Production (Model, Cars, Photo)</li>
+                                    <li><i class="fa-solid fa-check" style="color: #10b981; margin-right: 6px;"></i> Social Publish (FB / IG) 5 รูป / มอบ 20 รูป</li>
+                                    <li><i class="fa-solid fa-plus" style="color: #06b6d4; margin-right: 6px;"></i> <b>6-Month Usage Right</b> | <b>1-Month Ads Asset</b></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="invest-card best-value">
+                            <div class="best-value-tag">BEST VALUE</div>
+                            <div class="badge" style="background: var(--sp-purple); color: #fff; align-self: flex-start; font-size: 0.7rem;">STRATEGIC PARTNER</div>
+                            <h3 style="font-size: 2.5rem; margin-bottom: 5px; color: var(--rg-white);">BRAND AM <span style="font-size: 1.2rem; color: var(--sp-purple); font-family: 'Prompt', sans-serif; font-weight: 500;">(INCLUDED IN TIERS)</span></h3>
+                            <p style="font-size: 0.85rem; color: var(--rg-gray-400); margin-bottom: 15px;">แพ็กเกจแอมบาสเดอร์ 1 ปี (สัญญาผูกขาด) พร้อมเรทค่าผลิตคอนเทนต์สุดพิเศษ</p>
+                            
+                            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                                <p style="font-size: 0.75rem; color: var(--rg-gray-400); text-transform: uppercase; margin-bottom: 2px;">YEARLY RETAINER FEE</p>
+                                <div style="font-size: 2.5rem; font-family: 'Teko', sans-serif; font-weight: 700; color: var(--rg-white); line-height: 1; margin-bottom: 10px;">150,000 <span style="font-size: 1.2rem; color: var(--rg-gray-400);">THB</span></div>
+                                
+                                <p style="font-size: 0.75rem; color: var(--sp-purple); font-weight: 600; text-transform: uppercase; margin-bottom: 2px;">PRODUCTION FEE / SET (MIN. 6 SETS)</p>
+                                <div style="font-size: 1.8rem; font-family: 'Teko', sans-serif; font-weight: 700; color: var(--rg-white); line-height: 1;">15,000 <span style="font-size: 1rem; color: var(--rg-gray-400);">THB</span> <span style="font-size: 1rem; color: #666; text-decoration: line-through; margin-left: 10px;">30,000 THB</span></div>
+                            </div>
+
+                            <ul style="list-style: none; padding: 0; color: var(--rg-gray-400); font-size: 0.85rem; line-height: 1.6;">
+                                <li><i class="fa-solid fa-star" style="color: var(--sp-purple); margin-right: 8px;"></i> <b>12-Month Config Brand</b> <br><span style="font-size: 0.75rem; margin-left: 22px;">(สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่งในหมวดหมู่เดียวกัน)</span></li>
+                                <li><i class="fa-solid fa-check" style="color: #10b981; margin-right: 8px;"></i> รวม Full Production และสิทธิ์การโพสต์ 5 รูป / ส่งมอบ 20 รูป</li>
+                                <li><i class="fa-solid fa-plus" style="color: #06b6d4; margin-right: 8px;"></i> <b>12-Month Usage Right</b> <span style="font-size: 0.75rem;">(Start date at publish)</span></li>
+                                <li><i class="fa-solid fa-plus" style="color: #06b6d4; margin-right: 8px;"></i> <b>3-Month Ads Asset</b> <span style="font-size: 0.75rem;">(Start date at publish)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MERCH COLLECTION (UPDATED) -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--sp-orange);">
+                        <img src="nokia_merch01.jpg" alt="Merch Collection" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-shirt"></i>
+                            <span>nokia_merch01.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-tags"></i> EXCLUSIVE COLLAB</div>
+                    </div>
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right; background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(10,10,10,0.95) 100%);">
+                    <div class="badge orange-badge">Lifestyle Integration</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">SPIRITS OIL x NOKIA <br><span class="highlight-white">MERCH COLLECTION</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">ขยายแบรนด์สู่ไลฟ์สไตล์ด้วยสินค้าแฟชั่นและของใช้ประจำรถ</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        สร้างความผูกพันกับแบรนด์ (Brand Engagement) ในชีวิตประจำวัน ผ่านสินค้าลิมิเต็ดอิดิชัน (Limited Edition) ที่ออกแบบร่วมกันระหว่าง Spirits Oil และ Nokia Sutasinee 
+                    </p>
+
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-shirt highlight-white" style="margin-right: 8px;"></i> เสื้อยืด (T-Shirts) - Main Product</h4>
+                        <p>แฟชั่นสตรีทแวร์ ใส่สบาย ดีไซน์เท่แบบ JDM ใส่ไปเชียร์ที่สนามแข่งหรือเดินห้างก็ดูคูล พร้อมประทับโลโก้แบรนด์สร้างการรับรู้ทุกที่ที่ไป</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-leaf highlight-white" style="margin-right: 8px;"></i> แผ่นน้ำหอมปรับอากาศในรถ "RACEGO"</h4>
+                        <p>ไอเทมติดรถสุดชิค (Secondary Product) เปลี่ยนบรรยากาศในห้องโดยสารให้หอมสดชื่น พร้อมโลโก้ที่เตะตาทุกครั้งที่ลูกค้าสตาร์ทรถขับขี่</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-gift highlight-white" style="margin-right: 8px;"></i> THE PREMIUM GIVEAWAY</h4>
+                        <p>นำสินค้าคอลเลกชันนี้ไปใช้จัดกิจกรรมแจกแฟนคลับ (Giveaways) บนหน้าเพจ หรือเป็นของแถมกระตุ้นยอดขาย (GWP) ให้กับ Spirits Oil</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ========================================== -->
         <!-- SPONSORSHIP TIERS (BRONZE -> PLATINUM)     -->
         <!-- ========================================== -->
 
-        <!-- SLIDE 12: BRONZE TIER -->
+        <!-- SLIDE 14: BRONZE TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
@@ -787,7 +1024,7 @@
                         <div class="tier-box">
                             <h4 style="color: #b45309;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check" style="color: #b45309;"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) ตำแหน่งเสริม (มุมกระจกบานหน้า) บนรถแข่งโนเกียร์ 1 คัน</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #b45309;"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) 2 จุดบนรถแข่งโนเกียร์ 1 คัน</div></li>
                                 <li><i class="fa-solid fa-shirt" style="color: #b45309;"></i> <div><b>Collab Collection:</b> Spirit Oil x Nokia 122 T-Shirts Limited Edition 50 Pcs</div></li>
                             </ul>
                         </div>
@@ -795,7 +1032,8 @@
                         <div class="tier-box">
                             <h4 style="color: #b45309;"><i class="fa-solid fa-video"></i> 2. RACEGO MEDIA</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-users"></i> <div><b>RaceGO Media (1 คอนเทนต์):</b> คอนเทนต์ภาพรวมทีม</div></li>
+                                <li><i class="fa-solid fa-users"></i> <div><b>RaceGO Media (5 คอนเทนต์):</b> คอนเทนต์ภาพรวมทีม</div></li>
+                                <li><i class="fa-solid fa-video"></i> <div><b>Nokia's Media (1 คอนเทนต์):</b> คอนเทนต์โปรโมทสินค้าแบบ Soft-sell</div></li>
                                 <li><i class="fa-solid fa-handshake"></i> <div><b>Flexible Payment:</b> เปิดรับออปชัน Barter (สนับสนุนผลิตภัณฑ์) สำหรับส่วน Sponsorship Fee</div></li>
                             </ul>
                         </div>
@@ -806,7 +1044,7 @@
                                 <li><i class="fa-solid fa-check"></i> <div><b>General Visibility:</b> โลโก้เห็นแบบภาพรวม (บรรยากาศ) ในสนาม</div></li>
                             </ul>
                         </div>
-                        <!-- Box 4 (NEW: BRAND AM) -->
+                        <!-- Box 4 -->
                         <div class="tier-box" style="border-color: var(--mt-red);">
                             <h4 style="color: var(--mt-red);"><i class="fa-solid fa-user-shield"></i> 4. S9 BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
@@ -824,7 +1062,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 13: SILVER TIER -->
+        <!-- SLIDE 15: SILVER TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
@@ -862,10 +1100,10 @@
                         <div class="tier-box">
                             <h4 style="color: #cbd5e1;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Car Branding:</b> โลโก้ขนาดกลาง (M) บนรถแข่งโนเกียร์ 1 คัน</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Car Branding:</b> โลโก้ขนาดกลาง (M) 2 จุดบนรถแข่งโนเกียร์ 1 คัน</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Apparel:</b> โลโก้บนชุดแข่งนักแข่งขนาด S 1 จุด</div></li>
                                 <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Pit & PR:</b> โลโก้ป้าย Sponsor หน้าพิท</div></li>
                                 <li><i class="fa-solid fa-shirt" style="color: #cbd5e1;"></i> <div><b>Collab Collection:</b> Spirit Oil x Nokia 122 T-Shirts Limited Edition 100 Pcs</div></li>
-                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้เสริมรถแข่ง (S) <span class="badge-sm bronze">BRZ</span></div></li>
                             </ul>
                         </div>
                         <!-- Box 2 -->
@@ -884,7 +1122,7 @@
                                 <li><i class="fa-solid fa-check"></i> <div><b>Background Visibility:</b> โลโก้ปรากฏเป็นฉากหลังตอนถ่ายทอดสด TGR Live</div></li>
                             </ul>
                         </div>
-                        <!-- Box 4 (NEW: BRAND AM) -->
+                        <!-- Box 4 -->
                         <div class="tier-box" style="border-color: var(--mt-red);">
                             <h4 style="color: var(--mt-red);"><i class="fa-solid fa-user-shield"></i> 4. S9 BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
@@ -902,7 +1140,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 14: GOLD TIER -->
+        <!-- SLIDE 16: GOLD TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
@@ -940,11 +1178,11 @@
                         <div class="tier-box">
                             <h4 style="color: #facc15;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check" style="color: #facc15;"></i> <div><b>Car Branding:</b> โลโก้ขนาดใหญ่ (L) บนรถแข่งโนเกียร์ 1 คัน</div></li>
-                                <li><i class="fa-solid fa-check" style="color: #facc15;"></i> <div><b>Apparel:</b> โลโก้อกเสื้อนักแข่ง, ร่ม และชุด Race Queen</div></li>
-                                <li><i class="fa-solid fa-check" style="color: #facc15;"></i> <div><b>Pit Visibility:</b> ป้าย Sponsor หลัก และโซนโชว์เคสผลิตภัณฑ์ (Showcase)</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #facc15;"></i> <div><b>Car Branding:</b> โลโก้ขนาดเล็ก ( S ) 2 จุด และขนาดกลาง (M) 2 จุดบนรถแข่งโนเกียร์ 1 คัน</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #facc15;"></i> <div><b>Apparel:</b> โลโก้บนชุดแข่ง, ร่ม และชุด Race Queen ของทีม</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #facc15;"></i> <div><b>Pit Visibility:</b> ป้าย Sponsor หลัก </div></li>
                                 <li><i class="fa-solid fa-shirt" style="color: #facc15;"></i> <div><b>Collab Collection:</b> Spirit Oil x Nokia 122 T-Shirts Limited Edition 150 Pcs</div></li>
-                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้เสริม, ธงญี่ปุ่น, เสื้อแฟนคลับ <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>ธงญี่ปุ่น, เสื้อแฟนคลับ <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
                             </ul>
                         </div>
                         <!-- Box 2 -->
@@ -961,10 +1199,10 @@
                             <h4 style="color: var(--mt-red);"><i class="fa-solid fa-tower-broadcast"></i> 3. TGR EARNED MEDIA</h4>
                             <ul class="tier-list">
                                 <li><i class="fa-solid fa-check"></i> <div><b>Live Camera:</b> โลโก้ชัดเจนช่วงกล้องแพนบน Grid ก่อนแข่ง</div></li>
-                                <li><i class="fa-solid fa-check"></i> <div><b>Official Photos:</b> ภาพ Action Shots โนเกียร์ในอัลบั้ม TGR</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Official Photos:</b> ภาพ Action Shots โนเกียร์ในอัลบั้ม TGR แยกแต่ละสนามทั้งช่องทางทีม และ โนเกียร์</div></li>
                             </ul>
                         </div>
-                        <!-- Box 4 (NEW: BRAND AM) -->
+                        <!-- Box 4 -->
                         <div class="tier-box" style="border-color: var(--mt-red);">
                             <h4 style="color: var(--mt-red);"><i class="fa-solid fa-user-shield"></i> 4. S9 BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
@@ -982,7 +1220,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 15: PLATINUM TIER -->
+        <!-- SLIDE 17: PLATINUM TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
@@ -1020,11 +1258,12 @@
                         <div class="tier-box" style="border-color: var(--mt-red);">
                             <h4 style="color: var(--sp-orange);"><i class="fa-solid fa-flag-checkered" style="color: var(--sp-orange);"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check"></i> <div><b>Car Livery & Naming:</b> คุมโทนสีรถโนเกียร์ (XL) เป็นสี Spirits Oil ทั้งคัน</div></li>
-                                <li><i class="fa-solid fa-check"></i> <div><b>Pit Experience:</b> ตกแต่งพิท + RaceQueen ประจำแบรนด์</div></li>
-                                <li><i class="fa-solid fa-check"></i> <div><b>Exclusive Gear:</b> แถบคาดหมวกกันน็อกนักแข่ง (Visor Strip & Helmet)</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Car Livery & Naming:</b> คุมโทนสีรถโนเกียร์ (XL) เป็นสี Spirits Oil ทั้งคัน </div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Apparel:</b> โลโก้บนชุดแข่ง, ร่ม และชุด Race Queen ของทีม</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Pit Experience:</b> ตกแต่งพิท และ RaceQueen ประจำแบรนด์</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Exclusive Gear:</b> แถบคาดหมวกกันน็อกนักแข่ง (Visor Strip )</div></li>
                                 <li><i class="fa-solid fa-shirt"></i> <div><b>Collab Collection:</b> Spirit Oil x Nokia 122 T-Shirts Limited Edition 200 Pcs</div></li>
-                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้จุดเล็ก-ใหญ่ (L,M,S), ป้ายพิท <span class="badge-sm gold">GLD</span> <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>ป้ายพิท, ธงญี่ปุ่น, เสื้อแฟนคลับ <span class="badge-sm gold">GLD</span> <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
                             </ul>
                         </div>
                         <!-- Box 2 -->
@@ -1042,10 +1281,10 @@
                             <h4 style="color: var(--mt-red);"><i class="fa-solid fa-tower-broadcast"></i> 3. TGR EARNED MEDIA</h4>
                             <ul class="tier-list">
                                 <li><i class="fa-solid fa-check"></i> <div><b>Live Broadcast:</b> แอร์ไทม์เด่นสุดช่วงจุดสตาร์ทและถ่ายทอดสด (รถสีเด่นสะดุดตา)</div></li>
-                                <li><i class="fa-solid fa-check"></i> <div><b>Official PR:</b> รถแข่ง Spirits Oil ปรากฏในคอนเทนต์ VOD ย้อนหลังและภาพ PR</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Official PR:</b> รถแข่ง Spirits Oil ปรากฏในคอนเทนต์ VDO ย้อนหลังและภาพ PR ของรายการ</div></li>
                             </ul>
                         </div>
-                        <!-- Box 4 (NEW: BRAND AM) -->
+                        <!-- Box 4 -->
                         <div class="tier-box" style="border-color: var(--mt-red);">
                             <h4 style="color: var(--mt-red);"><i class="fa-solid fa-user-shield"></i> 4. S9 BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
@@ -1063,7 +1302,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 16: CLOSING -->
+        <!-- SLIDE 18: CLOSING -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
@@ -1095,6 +1334,12 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="image-modal-close" onclick="closeModal()">&times;</span>
+        <img class="image-modal-content" id="modalImage">
     </div>
 
     <script>
@@ -1172,6 +1417,25 @@
                         hint.style.transition = 'opacity 0.5s ease';
                     }
                 }, { passive: true });
+            }
+        });
+
+        // Modal Functions
+        window.openModal = function(src) {
+            document.getElementById("imageModal").style.display = "block";
+            document.getElementById("modalImage").src = src;
+        }
+        window.closeModal = function() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+        document.getElementById("imageModal").addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
             }
         });
     </script>
