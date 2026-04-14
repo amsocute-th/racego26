@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MUEK GROOB x NOKIA: The Ultimate Sponsorship</title>
+    <title>MUEK GROOB x NOKIA & PONDTECH: The Ultimate Sponsorship</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,6 @@
             --mg-red: #E61E1E;      
             --mg-red-dark: #990A0A;
             --mg-yellow: #FFB800;   
-            --mg-yellow-dark: #cc9200;
             --rg-black: #050505;    
             --rg-gray-900: #111111;
             --rg-gray-800: #1a1a1a;
@@ -129,7 +128,13 @@
         
         /* Product grid for mobile */
         body.mobile-mode .product-grid { grid-template-columns: 1fr 1fr !important; }
-        body.mobile-mode .stat-box-mobile { flex-direction: column !important; gap: 10px !important; }
+        
+        /* Data Power & Packages grid for mobile */
+        body.mobile-mode .data-power-grid { grid-template-columns: 1fr !important; gap: 10px !important; margin-bottom: 15px !important;}
+        body.mobile-mode .std-output-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+        body.mobile-mode .invest-pkg-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+        body.mobile-mode .invest-card { padding: 15px !important; }
+        body.mobile-mode .data-power-val { font-size: 2.2rem !important; }
 
         .slide {
             flex: 0 0 100vw; height: 100vh; scroll-snap-align: start;
@@ -194,7 +199,7 @@
         .layout-full .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 0; }
         .layout-full .content { z-index: 2; max-width: 1000px; width: 100%; max-height: 95vh; overflow-y: auto; padding: 10px; }
 
-        .badge { background: var(--mg-red); color: var(--rg-white); padding: 5px 15px; font-weight: 700; font-size: 0.9rem; border-radius: 4px; display: inline-block; margin-bottom: 15px; letter-spacing: 2px; }
+        .badge { background: var(--mg-red); color: var(--rg-white); padding: 5px 15px; font-weight: 700; font-size: 0.9rem; border-radius: 4px; display: inline-block; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; }
         .badge.yellow-badge { background: var(--mg-yellow); color: var(--rg-black);}
 
         .proof-stat-box { background: rgba(230,30,30,0.05); border: 1px solid rgba(230,30,30,0.2); border-radius: 8px; padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: center;}
@@ -227,11 +232,12 @@
         .tier-focus-container { display: flex; flex-direction: column; width: 100%; height: 100%; max-width: 1200px; text-align: left; }
         .tier-focus-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
         
+        /* --- TIER SLIDES (NEW DESIGN) --- */
         .tier-slide-wrap { padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background-color: var(--rg-black); }
         .tier-container { max-width: 1200px; width: 100%; display: flex; flex-direction: column; height: 100%; }
         .tier-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; }
         .tier-header-left { display: flex; flex-direction: column; align-items: flex-start; }
-        .tier-badge { color: var(--rg-black); padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 800; display: inline-block; margin-bottom: 10px; text-transform: uppercase; }
+        .tier-badge { color: white; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 800; display: inline-block; margin-bottom: 10px; text-transform: uppercase; }
         .tier-title-wrap { display: flex; align-items: center; gap: 15px; }
         .tier-icon { font-size: 3rem; }
         .tier-name { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; text-transform: uppercase; color: white; display: flex; align-items: flex-end; gap: 15px; }
@@ -239,14 +245,50 @@
         .tier-price-wrap { text-align: right; min-width: 320px; }
         
         /* New Price Breakdown Styles */
-        .price-breakdown { font-family: 'Prompt', sans-serif; font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 5px; width: 100%; }
-        .price-breakdown .row { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 6px; }
-        .price-breakdown .row span:last-child { color: var(--rg-white); font-weight: 600; font-family: 'Teko', sans-serif; font-size: 1.3rem; letter-spacing: 1px; }
+        .price-breakdown {
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.95rem;
+            color: var(--rg-gray-400);
+            margin-bottom: 5px;
+            width: 100%;
+        }
+        .price-breakdown .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 6px;
+        }
+        .price-breakdown .row span:last-child {
+            color: var(--rg-white);
+            font-weight: 600;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
         
-        .tier-price-val { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; margin-bottom: 5px; color: white; display: flex; justify-content: space-between; align-items: flex-end; }
+        .tier-price-val {
+            font-size: 3.5rem;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
         .tier-price-val span { font-size: 1.5rem; color: var(--rg-gray-400); }
         .tier-price-val.text-price { font-size: 1.8rem; font-family: 'Prompt', sans-serif; padding-bottom: 8px;}
-        .tier-value-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .tier-value-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         .tier-value-box span { font-size: 0.9rem; color: var(--rg-gray-400); }
         .tier-value-box strong { font-size: 1.2rem; font-family: 'Teko', sans-serif; margin-left: 10px; }
 
@@ -273,11 +315,59 @@
         .content-list-item h4 { color: var(--rg-white); font-size: 1.1rem; margin-bottom: 5px; }
         .content-list-item p { color: var(--rg-gray-400); font-size: 0.9rem; margin: 0; line-height: 1.4; }
 
-        /* Product Grid */
-        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; flex: 1; margin-top: 20px;}
+        /* Product Grid (Slide 5) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            flex: 1;
+            margin-top: 20px;
+        }
         @media (max-width: 900px), (max-height: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr !important; }
         }
+        
+        /* Specific elements for new slides */
+        .data-power-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+        .data-power-box { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px 20px; text-align: center; border-top: 4px solid var(--mg-yellow); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .data-power-box.red-top { border-top-color: var(--mg-red); }
+        .data-power-box.cyan-top { border-top-color: #06b6d4; }
+        .data-power-val { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; margin-bottom: 10px; }
+        .data-power-label { font-size: 0.9rem; color: var(--rg-white); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;}
+        .data-power-desc { font-size: 0.85rem; color: var(--rg-gray-400); line-height: 1.4;}
+        
+        .std-output-box { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; margin-bottom: 30px; text-align: left;}
+        .std-output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .std-item { display: flex; gap: 15px; align-items: flex-start; }
+        .std-item i { font-size: 1.5rem; margin-top: 3px; color: var(--mg-red); }
+        .std-item h5 { color: var(--rg-white); font-size: 1rem; margin-bottom: 5px; font-family: 'Prompt', sans-serif;}
+        .std-item p { color: var(--rg-gray-400); font-size: 0.85rem; line-height: 1.4; margin: 0;}
+        
+        .invest-pkg-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; }
+        .invest-card { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; position: relative; text-align: left; display: flex; flex-direction: column;}
+        .invest-card.best-value { border-color: var(--mg-red); background: linear-gradient(180deg, rgba(230,30,30,0.1) 0%, rgba(17,17,17,0.9) 100%); }
+        .best-value-tag { position: absolute; top: -1px; right: -1px; background: var(--mg-red); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 5px 15px; border-radius: 0 12px 0 12px; letter-spacing: 1px;}
+        
+        /* VIRAL ALBUM & MODAL */
+        .viral-album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .viral-thumb-wrapper { width: 100%; height: 110px; border-radius: 8px; overflow: hidden; border: 1px solid #333; cursor: pointer; position: relative; transition: all 0.3s ease; }
+        .viral-thumb-wrapper:hover { border-color: var(--mg-yellow); transform: scale(1.02); z-index: 2; box-shadow: 0 5px 15px rgba(255,184,0,0.2); }
+        .viral-thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .viral-thumb-wrapper:hover img { transform: scale(1.1); }
+        .viral-thumb-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .viral-thumb-wrapper:hover .viral-thumb-overlay { opacity: 1; }
+        .viral-thumb-overlay i { color: var(--rg-white); font-size: 1.5rem; }
+
+        .invest-card.compact { padding: 15px; }
+        .invest-card.compact h3 { font-size: 1.6rem; margin-bottom: 2px; }
+        .invest-card.compact .compact-price { font-size: 2rem; font-family: 'Teko', sans-serif; font-weight: 700; color: var(--rg-white); line-height: 1; margin-bottom: 10px; }
+        .invest-card.compact ul li { font-size: 0.75rem; margin-bottom: 5px; line-height: 1.4; }
+        
+        /* The Modal (background) */
+        .image-modal { display: none; position: fixed; z-index: 1000000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(5,5,5,0.95); backdrop-filter: blur(5px); }
+        .image-modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid var(--mg-yellow); border-radius: 8px; box-shadow: 0 0 30px rgba(255,184,0,0.3); }
+        .image-modal-close { position: absolute; top: 20px; right: 35px; color: var(--rg-gray-400); font-size: 40px; font-weight: bold; transition: 0.3s; z-index: 1000001; }
+        .image-modal-close:hover, .image-modal-close:focus { color: var(--mg-yellow); text-decoration: none; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -328,9 +418,9 @@
             <div class="slide-inner layout-split">
                 <div class="split-content">
                     <div class="badge">Strategic Partnership 2026</div>
-                    <h1 style="font-size: 4.5rem; margin-bottom: 10px;">MUEK GROOB <br><span style="font-size: 2.5rem; color: var(--rg-gray-400);">x</span> <span class="highlight-red">NOKIA</span></h1>
+                    <h1 style="font-size: 4.5rem; margin-bottom: 10px;">MUEK GROOB <br><span style="font-size: 2.5rem; color: var(--rg-gray-400);">x</span> <span class="highlight-red">NOKIA & PONDTECH</span></h1>
                     <p style="font-size: 1.2rem; color: var(--rg-gray-400); margin-bottom: 20px; max-width: 90%;">
-                        The Ultimate Guilt-Free Motorsport Phenomenon. บูรณาการ <strong>"หมึกกรุบ"</strong> สู่ไลฟ์สไตล์มอเตอร์สปอร์ต ผ่านอิทธิพลสื่อดิจิทัล 3.7 ล้านผู้ติดตาม
+                        The Ultimate Guilt-Free Motorsport Phenomenon. บูรณาการ <strong>"หมึกกรุบ"</strong> สู่ไลฟ์สไตล์มอเตอร์สปอร์ต ผ่านอิทธิพลสื่อดิจิทัลและความน่าเชื่อถือระดับประเทศ
                     </p>
                     <div style="border-left: 3px solid var(--mg-yellow); padding-left: 15px;">
                         <p style="color: var(--rg-white); font-size: 1rem; margin: 0; font-weight: 500;">PRESENTED TO: SUNSU EXECUTIVE BOARD</p>
@@ -383,13 +473,13 @@
                         <img src="mg_04_nokia.jpg" alt="Nokia Sutasinee" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-star"></i>
-                            <span>mg_04_nokia.jpg</span>
+                            <span>racego_03_synergy.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-crown"></i> THE RACING IDOL</div>
                     </div>
                 </div>
                 <div class="split-content" style="align-items: flex-end; text-align: right;">
-                    <div class="badge yellow-badge" style="color: var(--rg-black);">The Brand Ambassador</div>
+                    <div class="badge yellow-badge">The Brand Ambassador</div>
                     <h2 style="font-size: 3.5rem; margin-bottom: 5px;">THE PERFECT <br><span class="highlight-red">AMBASSADOR</span></h2>
                     <h3 style="font-size: 1.5rem; color: var(--rg-white); margin-bottom: 20px;">NOKIA SUTASINEE</h3>
                     
@@ -417,7 +507,49 @@
             </div>
         </div>
 
-        <!-- SLIDE 4: THE STRATEGIC INTERSECTION -->
+        <!-- NEW SLIDE 4: THE TECHNICAL EXPERT (PONDTECH) -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge yellow-badge">The Technical Expert</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">PONDTECH <br><span class="highlight-red">THE RACING MASTER</span></h2>
+                    <h3 style="font-size: 1.5rem; color: var(--rg-white); margin-bottom: 20px;">กูรูด้านเครื่องยนต์และนักแข่งระดับโปร</h3>
+                    
+                    <ul style="list-style: none; padding: 0; color: var(--rg-gray-400); font-size: 1rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px;">
+                            <i class="fa-solid fa-microchip highlight-red" style="margin-top: 5px;"></i>
+                            <div>
+                                <strong style="color: var(--rg-white);">Technical Credibility:</strong> ผู้อยู่เบื้องหลังความแรงและการปรับจูน (ECU/Tuning) ที่ได้รับการยอมรับระดับท็อปของประเทศ
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px;">
+                            <i class="fa-solid fa-gauge-high highlight-yellow" style="margin-top: 5px;"></i>
+                            <div>
+                                <strong style="color: var(--rg-white);">Performance Validation:</strong> นำความรู้ด้านวิศวกรรมยานยนต์มาพิสูจน์ขีดจำกัดของแบรนด์บนสนามแข่งจริง สร้างความเชื่อมั่นขั้นสุด
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 10px;">
+                            <i class="fa-solid fa-people-group highlight-red" style="margin-top: 5px;"></i>
+                            <div>
+                                <strong style="color: var(--rg-white);">The Perfect Duo:</strong> ผนึกกำลังกับโนเกียร์ สร้างความสมดุลระหว่าง "อิทธิพลสื่อ (Media Power)" และ "ความน่าเชื่อถือเชิงลึก (Technical Trust)" ให้กับทีม RaceGO
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder" style="border-color: var(--mg-yellow);">
+                        <img src="racego_03_synergy.jpg" alt="Pondtech Racer" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-wrench"></i>
+                            <span>mg_04_pondtech.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-flag-checkered"></i> PRO RACER & TUNER</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: THE STRATEGIC INTERSECTION -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-content">
@@ -452,7 +584,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 5: MULTI-POSITIONING STRATEGY -->
+        <!-- SLIDE 6: MULTI-POSITIONING STRATEGY -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder"></div>
@@ -490,15 +622,15 @@
             </div>
         </div>
 
-        <!-- SLIDE 6: O2O TRACKSIDE -->
+        <!-- SLIDE 7: O2O TRACKSIDE -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--mg-yellow);">
-                        <img src="mg_09_o2o.jpg" alt="Trackside Sampling" onerror="this.style.display='none'">
+                        <img src="nokia_o2o.jpg" alt="Trackside Sampling" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-truck-fast"></i>
-                            <span>mg_09_o2o.jpg</span>
+                            <span>nokia_o2o.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-gift"></i> TRACKSIDE SAMPLING</div>
                     </div>
@@ -509,50 +641,210 @@
                     <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">ยุทธการ "หมึกกรุบบุกแทร็ก"</h3>
                     
                     <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
-                        แปรเปลี่ยนสแตนด์เชียร์ที่ร้อนระอุ ให้เป็นพื้นที่แห่งความเผ็ดชา! ทีมงานโนเกียร์เดินแจก <b>Sampling</b> กระตุ้น Sensory Marketing กลางสนามแข่ง
+                        แปรเปลี่ยนสแตนด์เชียร์ที่ร้อนระอุ ให้เป็นพื้นที่แห่งความเผ็ดชา! ทีมนักแข่งเดินแจก <b>Sampling</b> กระตุ้น Sensory Marketing กลางสนามแข่ง
                     </p>
                     <div style="background: rgba(255,184,0,0.05); padding: 15px; border-right: 3px solid var(--mg-yellow); border-radius: 4px; text-align: right; width: 100%;">
                         <p style="color: var(--mg-yellow); font-weight: 600; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-cart-arrow-down"></i> Direct Conversion</p>
-                        <p style="font-size: 0.9rem; color: var(--rg-gray-400); margin: 0;">แจก Affiliate Link หรือ โค้ดส่วนลด <b>"NOKIAxMUEKGROOB"</b> เพื่อให้ผู้ชมสั่งซื้อผ่าน Shopee/Lazada หรือ TikTok Shop ทันที สร้าง ROI ที่วัดผลได้จริงระดับหน่วยขาย</p>
+                        <p style="font-size: 0.9rem; color: var(--rg-gray-400); margin: 0;">แจก Affiliate Link หรือ โค้ดส่วนลด <b>"RACEGOxMUEKGROOB"</b> เพื่อให้ผู้ชมสั่งซื้อผ่าน Shopee/Lazada หรือ TikTok Shop ทันที สร้าง ROI ที่วัดผลได้จริงระดับหน่วยขาย</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 7: THE GRAND STAGE (TGR) -->
+        <!-- SLIDE 8: THE GRAND STAGE (TGR OVERVIEW) -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <img src="mg_06_tgr.jpg" alt="TGR Overview" onerror="this.style.display='none'">
+                    <img src="racego_08_tgr_overview.jpg" alt="TGR Overview" onerror="this.style.display='none'">
                     <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                         <i class="fa-solid fa-flag-checkered"></i>
-                        <span>mg_06_tgr.jpg</span>
+                        <span>racego_08_tgr_overview.jpg</span>
                     </div>
                 </div>
                 <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
                 <div class="content">
-                    <div class="badge">The Grand Stage</div>
+                    <div class="badge">National Exposure</div>
                     <h2 style="font-size: 4.5rem; margin-bottom: 15px;">TOYOTA GAZOO RACING <br><span class="highlight-red">THAILAND 2026</span></h2>
                     <p style="font-size: 1.2rem; color: var(--rg-gray-400); margin-bottom: 25px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                        เวทีมอเตอร์สปอร์ตแบบ One Make Race ที่ยิ่งใหญ่ที่สุดในอาเซียน <br>บุก 5 สนาม 4 หัวเมืองใหญ่ (ชลบุรี, ภูเก็ต, บุรีรัมย์, เชียงใหม่) พร้อมผู้ชมกว่า <b>250,000 คน</b>
+                        เวทีมอเตอร์สปอร์ตแบบ One Make Race ที่ยิ่งใหญ่ที่สุดในอาเซียน นำขบวนทัวร์ 5 สนาม 4 ภูมิภาคหลักของไทย สู่สายตาผู้ชมกว่า <b>250,000 คน</b>
                     </p>
-                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
-                            <i class="fa-solid fa-satellite-dish highlight-yellow" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">Live Broadcast</h4>
-                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">กอบโกยแอร์ไทม์ฟรีมูลค่ามหาศาลขณะถ่ายทอดสด</p>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 25px;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--mg-yellow); font-weight: 700; font-size: 0.8rem;">สนามที่ 1</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">ชลบุรี (บางแสน)</h4>
                         </div>
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
-                            <i class="fa-solid fa-camera highlight-red" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                            <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">Media Outlets</h4>
-                            <p style="color: var(--rg-gray-400); font-size: 0.9rem; margin: 0;">ภาพถ่ายแบรนด์ในสื่อมวลชนและเพจยานยนต์</p>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--mg-yellow); font-weight: 700; font-size: 0.8rem;">สนามที่ 2</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">ภูเก็ต</h4>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--mg-yellow); font-weight: 700; font-size: 0.8rem;">สนามที่ 3 และ 4</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">บุรีรัมย์</h4>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--mg-red); padding: 10px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: var(--mg-red); font-weight: 700; font-size: 0.8rem;">สนามที่ 5 (Final)</div>
+                            <h4 style="color: var(--rg-white); font-size: 1rem; margin: 0;">เชียงใหม่</h4>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 15px 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-satellite-dish highlight-yellow" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.1rem; margin-bottom: 5px;">Live Broadcast</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.85rem; margin: 0;">กอบโกยแอร์ไทม์ฟรีมูลค่ามหาศาลขณะถ่ายทอดสด</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--rg-gray-800); padding: 15px 20px; border-radius: 8px; width: 250px; text-align: center;">
+                            <i class="fa-solid fa-camera highlight-red" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.1rem; margin-bottom: 5px;">Media Outlets</h4>
+                            <p style="color: var(--rg-gray-400); font-size: 0.85rem; margin: 0;">ภาพถ่ายแบรนด์ในสื่อมวลชนและเพจยานยนต์</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 8: RACEGO OFFICIAL MEDIA CONTENT -->
+        <!-- NEW SLIDE 9: VENUE 1 - BANGSAEN -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge yellow-badge" style="color: var(--rg-black);">Strategic Hub 1: Eastern Seaboard</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">BANGSAEN <br><span class="highlight-red">GRAND PRIX</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">มหกรรมสตรีทเซอร์กิตริมชายหาดระดับโลก จ.ชลบุรี</h3>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-shoe-prints highlight-yellow"></i> Est. Footfall</div>
+                            <div style="color: #fff; font-size: 2.2rem; font-family: 'Teko'; font-weight: 700; line-height: 1; margin-top: 5px;">100,000+</div>
+                        </div>
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-bullseye highlight-yellow"></i> Target Demo</div>
+                            <div style="color: #fff; font-size: 0.9rem; font-weight: 600; margin-top: 5px;">วัยรุ่น กทม., นทท. มหาศาล</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 0; line-height: 1.6;">
+                        <strong>แนวทางการตลาด (Activation):</strong> สนามที่มีทราฟฟิกคนเดินเยอะที่สุดแห่งปี เหมาะสมที่สุดในการตั้งบูธ Pop-up Store ใหญ่สุด แจก Sampling หมึกกรุบแบบจัดเต็ม และสร้าง Viral คลิปคนต่อแถวริมหาด!
+                    </p>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder">
+                        <img src="racego_12_bangsaen.jpg" alt="Bangsaen Grand Prix" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-umbrella-beach"></i>
+                            <span>racego_12_bangsaen.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-flag"></i> MASSIVE CROWD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 10: VENUE 2 - PHUKET -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--mg-yellow);">
+                        <img src="racego_13_phuket.jpg" alt="Phuket Street Circuit" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-plane"></i>
+                            <span>racego_13_phuket.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-globe"></i> GLOBAL REACH</div>
+                    </div>
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right; background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(10,10,10,0.95) 100%);">
+                    <div class="badge">Strategic Hub 2: The South</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">PHUKET <br><span class="highlight-yellow">STREET CIRCUIT</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">บุกตลาดภาคใต้ ศูนย์กลางการท่องเที่ยวระดับโลก</h3>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px; justify-content: flex-end; width: 100%;">
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1; text-align: left;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-bullseye highlight-yellow"></i> Target Demo</div>
+                            <div style="color: #fff; font-size: 0.9rem; font-weight: 600; margin-top: 5px;">นทท.ต่างชาติ, กำลังซื้อสูง</div>
+                        </div>
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1; text-align: left;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-shoe-prints highlight-yellow"></i> Est. Footfall</div>
+                            <div style="color: #fff; font-size: 2.2rem; font-family: 'Teko'; font-weight: 700; line-height: 1; margin-top: 5px;">30,000+</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 0; line-height: 1.6;">
+                        <strong>แนวทางการตลาด (Activation):</strong> สร้าง Brand Awareness สู่สายตาอินเตอร์ จัดกิจกรรมแจกชิมหมึกกรุบกับชาวต่างชาติ สร้างคอนเทนต์ Reaction ฝรั่งกินเผ็ดเพื่อนำไปทำ Viral ลง TikTok ระดับโกลบอล!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 11: VENUE 3 & 4 - BURIRAM -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge yellow-badge" style="color: var(--rg-black);">Strategic Hub 3: The Northeast</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">BURIRAM <br><span class="highlight-white">CIRCUIT</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">สนามแข่งระดับโลก FIA Grade 1 (แข่ง 2 สนาม)</h3>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-shoe-prints highlight-yellow"></i> Est. Footfall</div>
+                            <div style="color: #fff; font-size: 2.2rem; font-family: 'Teko'; font-weight: 700; line-height: 1; margin-top: 5px;">50,000+</div>
+                        </div>
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-bullseye highlight-yellow"></i> Target Demo</div>
+                            <div style="color: #fff; font-size: 0.9rem; font-weight: 600; margin-top: 5px;">สายมอเตอร์สปอร์ต, วัยรุ่นอีสาน</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 0; line-height: 1.6;">
+                        <strong>แนวทางการตลาด (Activation):</strong> จัดบูธกิจกรรมเล่นเกมคู่กับทีมแข่ง ใช้ความดุดันของปอนด์เทคผสมความขี้เล่นของโนเกียร์ แจกหมึกกรุบคู่กับเครื่องดื่มเย็นๆ กระตุ้น Consumption Occasion สำหรับสายปาร์ตี้หลังจบเรซแข่ง!
+                    </p>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder" style="border-color: var(--mg-yellow);">
+                        <img src="racego_14_buriram.jpg" alt="Buriram Circuit" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-stopwatch"></i>
+                            <span>racego_14_buriram.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-fire-flame-curved"></i> HARDCORE RACING FANS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 12: VENUE 5 - CHIANG MAI -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--mg-red);">
+                        <img src="racego_15_chiangmai.jpg" alt="Chiang Mai" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-mug-hot"></i>
+                            <span>racego_15_chiangmai.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-bolt"></i> YOUTH CULTURE HUB</div>
+                    </div>
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right; background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(10,10,10,0.95) 100%);">
+                    <div class="badge">Strategic Hub 4: The North</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">CHIANG MAI <br><span class="highlight-yellow">700 YEARS</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">ศูนย์กลางภาคเหนือ เจาะกลุ่มวัยรุ่นและนักศึกษา</h3>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px; justify-content: flex-end; width: 100%;">
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1; text-align: left;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-bullseye highlight-yellow"></i> Target Demo</div>
+                            <div style="color: #fff; font-size: 0.9rem; font-weight: 600; margin-top: 5px;">นักศึกษา มช., Gen Z, สายแฟชั่น</div>
+                        </div>
+                        <div style="background: #111; border: 1px solid #333; padding: 15px; border-radius: 8px; flex: 1; text-align: left;">
+                            <div style="color: var(--rg-white); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-shoe-prints highlight-yellow"></i> Est. Footfall</div>
+                            <div style="color: #fff; font-size: 2.2rem; font-family: 'Teko'; font-weight: 700; line-height: 1; margin-top: 5px;">40,000+</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 0; line-height: 1.6;">
+                        <strong>แนวทางการตลาด (Activation):</strong> สนามศูนย์รวมวัยรุ่นภาคเหนือ เมืองแห่งเทรนด์ เหมาะมากในการตั้งบูธโปรโมท <strong>Muek Groob x Nokia Merch Collection</strong> พร้อมให้โนเกียร์นำเต้น TikTok Challenge สุดไวรัลหน้าบูธ!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 (Old 9): RACEGO OFFICIAL MEDIA CONTENT -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-content">
@@ -562,23 +854,23 @@
                     
                     <div class="content-list-item">
                         <h4><i class="fa-solid fa-video highlight-red" style="margin-right: 8px;"></i> 1. RACE HIGHLIGHT (VLOG)</h4>
-                        <p>ประมวลภาพไฮไลต์การแข่งขัน Yaris Ativ OMR แต่ละสนาม โชว์ความมันส์และสปีด</p>
+                        <p>ประมวลภาพไฮไลต์การแข่งขัน Yaris Ativ OMR แต่ละสนาม โชว์สปีดและความดุดันของนักแข่ง</p>
                     </div>
                     <div class="content-list-item">
                         <h4><i class="fa-solid fa-car highlight-red" style="margin-right: 8px;"></i> 2. BEHIND THE WHEEL</h4>
-                        <p>เบื้องหลังการทำงานร่วมกันระหว่างโนเกียร์และทีม RaceGO Crew</p>
+                        <p>เบื้องหลังการทำงานร่วมกันระหว่างนักแข่งและทีม RaceGO Crew ก่อนลงสมรภูมิความเร็ว</p>
                     </div>
                     <div class="content-list-item">
                         <h4><i class="fa-solid fa-stopwatch highlight-red" style="margin-right: 8px;"></i> 3. PIT STOP & MECHANICS</h4>
-                        <p>วินาทีซ่อมบำรุงหน้าพิทที่ต้องแข่งกับเวลา ซดหมึกกรุบเพิ่มพลังให้ช่าง</p>
+                        <p>วินาทีซ่อมบำรุงหน้าพิทที่ต้องแข่งกับเวลา และการทำงานของช่างยนต์ระดับโปร</p>
                     </div>
                     <div class="content-list-item">
                         <h4><i class="fa-solid fa-ticket highlight-red" style="margin-right: 8px;"></i> 4. EVENT VIBE & LIFESTYLE</h4>
-                        <p>บรรยากาศงาน TGR สัมภาษณ์แฟนคลับ กิจกรรมบูธหมึกกรุบ และไลฟ์สไตล์ผู้ชมรอบสนาม</p>
+                        <p>บรรยากาศงาน TGR สัมภาษณ์แฟนคลับ กิจกรรมบูธ และไลฟ์สไตล์ผู้ชมรอบสนาม</p>
                     </div>
                     <div class="content-list-item">
                         <h4><i class="fa-solid fa-trophy highlight-red" style="margin-right: 8px;"></i> 5. PODIUM CELEBRATION</h4>
-                        <p>ฉลองชัยชนะของทีมร่วมกับสปอนเซอร์อย่าง หมึกกรุบ (SUNSU)</p>
+                        <p>บรรยากาศการรับรางวัล ความสำเร็จของทีมร่วมกับสปอนเซอร์อย่าง หมึกกรุบ (SUNSU)</p>
                     </div>
                 </div>
                 <div class="split-image">
@@ -594,7 +886,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 9: NOKIA'S MEDIA CONTENT -->
+        <!-- SLIDE 14 (Old 10): NOKIA'S MEDIA CONTENT -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
@@ -604,7 +896,7 @@
                             <i class="fa-solid fa-camera-retro"></i>
                             <span>spirits_09_media_nokia.jpg</span>
                         </div>
-                        <div class="car-label"><i class="fa-solid fa-mobile-screen"></i> TIKTOK CENTRIC</div>
+                        <div class="car-label"><i class="fa-solid fa-mobile-screen"></i> INFLUENCER CONTENT</div>
                     </div>
                 </div>
                 <div class="split-content" style="align-items: flex-end; text-align: right; background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(10,10,10,0.95) 100%);">
@@ -614,7 +906,7 @@
                     
                     <div class="content-list-item white-border" style="width: 100%; text-align: right;">
                         <h4><i class="fa-solid fa-helmet-safety highlight-white" style="margin-right: 8px;"></i> 1. FUNCTIONAL AUTHENTICITY</h4>
-                        <p>Vlog หลังพวงมาลัย โชว์การพักเบรกฉีกซองหมึกกรุบ ตอกย้ำ 4 kcal คีปลุคสวยเป๊ะ</p>
+                        <p>Vlog หลังพวงมาลัย โชว์การพักเบรกฉีกซองหมึกกรุบ ตอกย้ำ 4 kcal คีปลุคสวยเป๊ะแม้อยู่ในสนาม</p>
                     </div>
                     <div class="content-list-item white-border" style="width: 100%; text-align: right;">
                         <h4><i class="fa-solid fa-martini-glass-citrus highlight-white" style="margin-right: 8px;"></i> 2. SYNERGY EXPANSION</h4>
@@ -636,13 +928,13 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 10: BRAND AMBASSADOR -->
+        <!-- SLIDE 11: BRAND AMBASSADOR -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-content">
                     <div class="badge red-badge">Exclusive Ambassador</div>
                     <h2 style="font-size: 3rem; margin-bottom: 5px;">THE SUNSU <br><span class="highlight-white">AMBASSADOR</span></h2>
-                    <h3 style="font-size: 1.1rem; color: var(--mg-yellow); margin-bottom: 20px;">สิทธิประโยชน์พื้นฐานที่รวมอยู่ใน "ทุกแพ็กเกจ" (มูลค่า 100,000 บาท/ปี)</h3>
+                    <h3 style="font-size: 1.1rem; color: var(--mg-yellow); margin-bottom: 20px;">สิทธิประโยชน์พื้นฐานที่รวมอยู่ใน "ทุกแพ็กเกจ" (มูลค่า 150,000 บาท/ปี)</h3>
                     
                     <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
                         เพื่อสร้างภาพลักษณ์ที่แข็งแกร่ง โนเกียร์จะทำหน้าที่เป็น Brand Ambassador ให้กับหมึกกรุบ (SUNSU) อย่างเป็นทางการ โดยมีเงื่อนไขความรับผิดชอบครอบคลุมในทุกแพ็กเกจ ดังนี้:
@@ -660,13 +952,17 @@
                         <h4><i class="fa-solid fa-handshake-slash highlight-red" style="margin-right: 8px;"></i> NON-COMPETE CLAUSE</h4>
                         <p>ไม่อนุญาตให้รับการสนับสนุน หรือโปรโมทแบรนด์ขนมขบเคี้ยวคู่แข่งโดยตรง <strong>เว้นแต่จะได้รับอนุญาตจากทาง SUNSU เป็นกรณีๆ ไป</strong></p>
                     </div>
+                    <div class="content-list-item">
+                        <h4><i class="fa-solid fa-tags highlight-red" style="margin-right: 8px;"></i> MEDIA DISCOUNT PRIVILEGE</h4>
+                        <p>รับสิทธิพิเศษ <strong>ส่วนลดแพ็กเกจสื่อโฆษณา (Media Rate)</strong> บนช่องทางออนไลน์ทั้งหมดของโนเกียร์ (TikTok, Facebook, IG) ในราคาพาร์ทเนอร์</p>
+                    </div>
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder" style="border-color: var(--rg-white);">
-                        <img src="spirits_09_brand_am.jpg" alt="Brand Ambassador" onerror="this.style.display='none'">
+                        <img src="mg__brand_am.jpg" alt="Brand Ambassador" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-shield-halved"></i>
-                            <span>mg_11_ambassador.jpg</span>
+                            <span>mg_brand_am.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-star"></i> OFFICIAL BRAND AMBASSADOR</div>
                     </div>
@@ -674,7 +970,7 @@
             </div>
         </div>
 
-        <!-- NEW SLIDE 11: MUEK GROOB ON TOUR -->
+        <!-- MUEK GROOB ON TOUR -->
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
@@ -702,7 +998,7 @@
                     </div>
                     <div class="content-list-item white-border" style="width: 100%; text-align: right;">
                         <h4><i class="fa-solid fa-flag-checkered highlight-white" style="margin-right: 8px;"></i> 5 โซนพื้นที่สนามแข่ง TGR</h4>
-                        <p>ลงพื้นที่ 5 โซน (ชลบุรี, ภูเก็ต, บุรีรัมย์ 2 สนาม, เชียงใหม่) นำหมึกกรุบไปแจกให้ผู้ชมและทีมแข่งอื่นๆ ท้าลองความเผ็ดชาระหว่างงานแข่ง</p>
+                        <p>ลงพื้นที่ 5 โซน (ชลบุรี, ภูเก็ต, บุรีรัมย์ 2 สนาม, เชียงใหม่) ในช่วงที่มีการจัดแข่ง TGR นำหมึกกรุบไปแจกให้ผู้ชมและทีมแข่งอื่นๆ ท้าลองความเผ็ดชา</p>
                     </div>
                     <div class="content-list-item white-border" style="width: 100%; text-align: right;">
                         <h4><i class="fa-solid fa-users-viewfinder highlight-white" style="margin-right: 8px;"></i> VIRAL CHALLENGE</h4>
@@ -712,17 +1008,192 @@
             </div>
         </div>
 
+        <!-- SLIDE 17 (Old 13): THE POWER OF DATA & PRODUCTION -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder" style="background-image: radial-gradient(circle at 50% 50%, #1a0b2e 0%, var(--rg-black) 100%);"></div>
+                <div class="overlay"></div>
+                <div class="content" style="max-width: 1100px;">
+                    <div class="badge" style="margin-bottom: 20px;">All-Inclusive Content Package</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 30px;">VIRAL PHOTO SET <span class="highlight-yellow">& PUBLISH BY NOKIA</span></h2>
+                    
+                    <!-- DATA SECTION -->
+                    <div class="data-power-grid">
+                        <div class="data-power-box red-top">
+                            <div class="data-power-val" style="color: var(--mg-red);">1M+</div>
+                            <div class="data-power-label">TOTAL VIEWS / POST</div>
+                            <div class="data-power-desc">พลังการมองเห็นมหาศาล การันตี Brand Awareness ระดับ Mass</div>
+                        </div>
+                        <div class="data-power-box" style="border-top-color: var(--mg-yellow);">
+                            <div class="data-power-val" style="color: var(--mg-yellow);">75%</div>
+                            <div class="data-power-label">NON-FOLLOWERS REACH</div>
+                            <div class="data-power-desc">เจาะทะลุเพดานอัลกอริทึม ดึงดูดลูกค้าใหม่เข้าสู่แบรนด์</div>
+                        </div>
+                        <div class="data-power-box cyan-top">
+                            <div class="data-power-val" style="color: #06b6d4;">91%</div>
+                            <div class="data-power-label">MALE (AGE 25-44)</div>
+                            <div class="data-power-desc">กลุ่มเป้าหมาย "สายดื่ม" ที่มีศักยภาพการใช้จ่ายสูง</div>
+                        </div>
+                    </div>
+
+                    <!-- OUTPUT SECTION -->
+                    <div class="std-output-box">
+                        <h3 style="font-size: 1.2rem; color: var(--rg-white); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">STANDARD OUTPUT PER SET <span style="font-size: 1rem; color: var(--rg-gray-400); font-weight: 400;">(มาตรฐานชิ้นงานต่อ 1 เซ็ต)</span></h3>
+                        <div class="std-output-grid">
+                            <div class="std-item">
+                                <i class="fa-solid fa-folder-open" style="color: var(--mg-red);"></i>
+                                <div>
+                                    <h5>20 Photos Delivered</h5>
+                                    <p>ถ่ายทำและส่งมอบรูปคุณภาพสูง (Retouched) จำนวน 20 ภาพ เพื่อให้แบรนด์นำไปใช้งานต่อในช่องทางออนไลน์</p>
+                                </div>
+                            </div>
+                            <div class="std-item">
+                                <i class="fa-solid fa-mobile-screen" style="color: var(--mg-red);"></i>
+                                <div>
+                                    <h5>5 Photos Published</h5>
+                                    <p>คัดเลือก 5 ภาพที่ดีที่สุดเพื่อโพสต์ลงบนช่องทาง Social Media ของ Nokia Sutasinee (Facebook / Instagram)</p>
+                                </div>
+                            </div>
+                            <div class="std-item">
+                                <i class="fa-solid fa-car-side" style="color: var(--mg-red);"></i>
+                                <div>
+                                    <h5>Full Production Included</h5>
+                                    <p>รวมค่าตัวนางแบบ (Model), รถยนต์เข้าฉาก (Cars - Standard Tier), และช่างภาพมืออาชีพ (Photography) เรียบร้อยแล้ว</p>
+                                </div>
+                            </div>
+                            <div class="std-item">
+                                <i class="fa-solid fa-triangle-exclamation" style="color: var(--mg-yellow);"></i>
+                                <div>
+                                    <h5 style="color: var(--mg-yellow);">Online Usage Only</h5>
+                                    <p>ลิขสิทธิ์ภาพสำหรับการใช้งานบนสื่อ Online ของแบรนด์เท่านั้น (ไม่อนุญาตให้นำไปผลิตสื่อ Offline เช่น ป้ายบิลบอร์ด, สแตนดี้) <br><strong style="color: var(--rg-white); margin-top: 4px; display: inline-block;"><i class="fa-solid fa-circle-plus" style="color: var(--mg-red);"></i> สามารถ Add-on : ซื้อสิทธิ์เพื่อผลิตสื่อ Offline เพิ่มเติมได้</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PACKAGE COMPARISON -->
+                    <div class="invest-pkg-grid">
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <!-- VIRAL PROOF ALBUM -->
+                            <div class="invest-card" style="padding: 20px;">
+                                <h3 style="font-size: 1.2rem; color: var(--rg-white); margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px; font-family: 'Prompt', sans-serif;">
+                                    <i class="fa-solid fa-images" style="color: var(--mg-red); margin-right: 8px;"></i> VIRAL PROOF GALLERY
+                                </h3>
+                                <div class="viral-album-grid">
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_01.jpg')">
+                                        <img src="viral_proof_01.jpg" alt="Viral Proof 1" onerror="this.src='https://via.placeholder.com/400x300/111/e61e1e?text=VIRAL+PROOF+1'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_02.jpg')">
+                                        <img src="viral_proof_02.jpg" alt="Viral Proof 2" onerror="this.src='https://via.placeholder.com/400x300/111/e61e1e?text=VIRAL+PROOF+2'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_03.jpg')">
+                                        <img src="viral_proof_03.jpg" alt="Viral Proof 3" onerror="this.src='https://via.placeholder.com/400x300/111/e61e1e?text=VIRAL+PROOF+3'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                    <div class="viral-thumb-wrapper" onclick="openModal('viral_proof_04.jpg')">
+                                        <img src="viral_proof_04.jpg" alt="Viral Proof 4" onerror="this.src='https://via.placeholder.com/400x300/111/e61e1e?text=VIRAL+PROOF+4'">
+                                        <div class="viral-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- COMPACT DEMO 1 SET -->
+                            <div class="invest-card compact">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div>
+                                        <div class="badge" style="background: #333; color: #fff; font-size: 0.65rem; padding: 3px 10px; margin-bottom: 5px;">TRIAL OPTION</div>
+                                        <h3 style="color: var(--rg-white);">DEMO 1 SET</h3>
+                                        <p style="font-size: 0.75rem; color: var(--rg-gray-400); margin-bottom: 5px;">สำหรับทดสอบประสิทธิภาพเข้าถึงกลุ่มเป้าหมาย</p>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <p style="font-size: 0.7rem; color: var(--rg-gray-400); text-transform: uppercase; margin-bottom: 0;">STARTS AT</p>
+                                        <div class="compact-price">30,000 <span style="font-size: 0.9rem; color: var(--rg-gray-400);">THB</span></div>
+                                    </div>
+                                </div>
+                                <ul style="list-style: none; padding: 0; color: var(--rg-gray-400);">
+                                    <li><i class="fa-solid fa-check" style="color: #10b981; margin-right: 6px;"></i> รวม Full Production (Model, Cars, Photo)</li>
+                                    <li><i class="fa-solid fa-check" style="color: #10b981; margin-right: 6px;"></i> Social Publish (FB / IG) 5 รูป / มอบ 20 รูป</li>
+                                    <li><i class="fa-solid fa-plus" style="color: #06b6d4; margin-right: 6px;"></i> <b>6-Month Usage Right</b> | <b>1-Month Ads Asset</b></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="invest-card best-value">
+                            <div class="best-value-tag" style="background: var(--mg-red);">BEST VALUE</div>
+                            <div class="badge" style="background: var(--mg-red); color: #fff; align-self: flex-start; font-size: 0.7rem;">STRATEGIC PARTNER</div>
+                            <h3 style="font-size: 2.5rem; margin-bottom: 5px; color: var(--rg-white);">BRAND AM <span style="font-size: 1.2rem; color: var(--mg-red); font-family: 'Prompt', sans-serif; font-weight: 500;">(เฉพาะ NOKIA)</span></h3>
+                            <p style="font-size: 0.85rem; color: var(--rg-gray-400); margin-bottom: 15px;">แพ็กเกจแอมบาสเดอร์ 1 ปี (สัญญาผูกขาด) พร้อมเรทค่าผลิตคอนเทนต์สุดพิเศษ</p>
+                            
+                            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                                <p style="font-size: 0.75rem; color: var(--rg-gray-400); text-transform: uppercase; margin-bottom: 2px;">YEARLY RETAINER FEE</p>
+                                <div style="font-size: 2.5rem; font-family: 'Teko', sans-serif; font-weight: 700; color: var(--rg-white); line-height: 1; margin-bottom: 10px;">150,000 <span style="font-size: 1.2rem; color: var(--rg-gray-400);">THB</span></div>
+                                
+                                <p style="font-size: 0.75rem; color: var(--mg-yellow); font-weight: 600; text-transform: uppercase; margin-bottom: 2px;">PRODUCTION FEE / SET (MIN. 6 SETS)</p>
+                                <div style="font-size: 1.8rem; font-family: 'Teko', sans-serif; font-weight: 700; color: var(--rg-white); line-height: 1;">15,000 <span style="font-size: 1rem; color: var(--rg-gray-400);">THB</span> <span style="font-size: 1rem; color: #666; text-decoration: line-through; margin-left: 10px;">30,000 THB</span></div>
+                            </div>
+
+                            <ul style="list-style: none; padding: 0; color: var(--rg-gray-400); font-size: 0.85rem; line-height: 1.6;">
+                                <li><i class="fa-solid fa-star" style="color: var(--mg-yellow); margin-right: 8px;"></i> <b>12-Month Config Brand</b> <br><span style="font-size: 0.75rem; margin-left: 22px;">(สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่งในหมวดหมู่เดียวกัน)</span></li>
+                                <li><i class="fa-solid fa-check" style="color: #10b981; margin-right: 8px;"></i> รวม Full Production และสิทธิ์การโพสต์ 5 รูป / ส่งมอบ 20 รูป</li>
+                                <li><i class="fa-solid fa-plus" style="color: #06b6d4; margin-right: 8px;"></i> <b>12-Month Usage Right</b> <span style="font-size: 0.75rem;">(Start date at publish)</span></li>
+                                <li><i class="fa-solid fa-plus" style="color: #06b6d4; margin-right: 8px;"></i> <b>3-Month Ads Asset</b> <span style="font-size: 0.75rem;">(Start date at publish)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MERCH COLLECTION -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="img-placeholder" style="border-color: var(--mg-yellow);">
+                        <img src="nokia_merch02.jpg" alt="Merch Collection" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-shirt"></i>
+                            <span>nokia_merch02.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-tags"></i> EXCLUSIVE COLLAB</div>
+                    </div>
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right; background: linear-gradient(-90deg, var(--rg-black) 0%, rgba(10,10,10,0.95) 100%);">
+                    <div class="badge yellow-badge" style="color: var(--rg-black);">Lifestyle Integration</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">MUEK GROOB x RACEGO <br><span class="highlight-white">MERCH COLLECTION</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">ขยายแบรนด์สู่ไลฟ์สไตล์ด้วยสินค้าแฟชั่นและของใช้ประจำรถ</h3>
+                    
+                    <p style="font-size: 1rem; color: var(--rg-white); margin-bottom: 15px; line-height: 1.6;">
+                        สร้างความผูกพันกับแบรนด์ (Brand Engagement) ในชีวิตประจำวัน ผ่านสินค้าลิมิเต็ดอิดิชัน (Limited Edition) ที่ออกแบบร่วมกันระหว่าง SUNSU (หมึกกรุบ) และทีมนักแข่ง RaceGO 
+                    </p>
+
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-shirt highlight-white" style="margin-right: 8px;"></i> เสื้อยืด (T-Shirts) - Main Product</h4>
+                        <p>แฟชั่นสตรีทแวร์ ใส่สบาย ดีไซน์เท่แบบ JDM ใส่ไปเชียร์ที่สนามแข่งหรือเดินห้างก็ดูคูล พร้อมประทับโลโก้หมึกกรุบสร้างการรับรู้ทุกที่ที่ไป</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-leaf highlight-white" style="margin-right: 8px;"></i> แผ่นน้ำหอมปรับอากาศในรถ "MUEK GROOB"</h4>
+                        <p>ไอเทมติดรถสุดชิค (Secondary Product) สร้างจุดสนใจในห้องโดยสาร พร้อมโลโก้ที่เตะตาทุกครั้งที่ลูกค้าสตาร์ทรถขับขี่</p>
+                    </div>
+                    <div class="content-list-item white-border" style="width: 100%; text-align: right;">
+                        <h4><i class="fa-solid fa-gift highlight-white" style="margin-right: 8px;"></i> THE PREMIUM GIVEAWAY</h4>
+                        <p>นำสินค้าคอลเลกชันนี้ไปใช้จัดกิจกรรมแจกแฟนคลับ (Giveaways) บนหน้าเพจ หรือแจกหน้าพิทเพื่อกระตุ้น Footfall ในสนามแข่ง</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ========================================== -->
         <!-- SPONSORSHIP TIERS (BRONZE -> PLATINUM)     -->
         <!-- ========================================== -->
 
-        <!-- SLIDE 12: BRONZE TIER -->
+        <!-- SLIDE 19 (Old 15): BRONZE TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
                     <div class="tier-header">
                         <div class="tier-header-left">
-                            <div class="tier-badge" style="background: #cd7f32; color: #fff;">SUPPORTING PARTNER</div>
+                            <div class="tier-badge" style="background: #cd7f32; color: #fff;">PRODUCT PARTNER</div>
                             <div class="tier-title-wrap">
                                 <i class="fa-solid fa-medal tier-icon" style="color: #cd7f32;"></i>
                                 <div class="tier-name">BRONZE <span class="tier-sub">(SUPPORTING)</span></div>
@@ -730,21 +1201,24 @@
                         </div>
                         <div class="tier-price-wrap">
                             <div class="price-breakdown">
-                                <div class="row">
+                                <div class="row" style="align-items: flex-start;">
                                     <span>Sponsorship Fee:</span>
-                                    <span>50,000 ฿</span>
+                                    <div style="text-align: right; display: flex; flex-direction: column; gap: 2px;">
+                                        <span style="font-size: 1.1rem; color: var(--rg-white);">1 คัน: 90,000 ฿</span>
+                                        <span style="font-size: 1.1rem; color: var(--mg-yellow);">2 คัน: 150,000 ฿</span>
+                                    </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (Exclusive):</span>
-                                    <span style="color: #cd7f32;">100,000 ฿</span>
+                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span style="color: #cd7f32;">150,000 ฿</span>
                                 </div>
                             </div>
-                            <div class="tier-price-val" style="border-top: 1px dashed #333; padding-top: 5px; justify-content: flex-end;">
-                                150,000&nbsp;<span style="font-size: 1.5rem; color: var(--rg-gray-400);">THB</span>
+                            <div class="tier-price-val" style="border-top: 1px dashed #333; padding-top: 5px; justify-content: flex-end; font-size: 3rem;">
+                                240K - 300K&nbsp;<span style="font-size: 1.5rem; color: var(--rg-gray-400);">THB</span>
                             </div>
                             <div class="tier-value-box" style="border-color: #333; margin-top: 5px;">
                                 <span>Total Est. Media Value:</span>
-                                <strong style="color: #cd7f32;">~500,000 THB</strong>
+                                <strong style="color: #cd7f32;">~1,000,000 THB</strong>
                             </div>
                         </div>
                     </div>
@@ -754,8 +1228,8 @@
                         <div class="tier-box">
                             <h4 style="color: #cd7f32;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check" style="color: #cd7f32;"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) ตำแหน่งเสริม (มุมกระจกบานหน้า) บนรถแข่งโนเกียร์ 1 คัน</div></li>
-                                <li><i class="fa-solid fa-shirt" style="color: #cd7f32;"></i> <div><b>Collab Collection:</b> Muek Groob x Nokia T-Shirts Limited Edition 50 Pcs</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #cd7f32;"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) ตำแหน่งเสริม บนรถแข่ง <b>(เลือก 1 คัน หรือ 2 คัน)</b></div></li>
+                                <li><i class="fa-solid fa-shirt" style="color: #cd7f32;"></i> <div><b>Collab Collection:</b> Muek Groob x RACEGO T-Shirts Limited Edition 50 Pcs</div></li>
                             </ul>
                         </div>
                         <!-- Box 2 -->
@@ -791,7 +1265,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 13: SILVER TIER -->
+        <!-- SLIDE 20 (Old 16): SILVER TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
@@ -805,21 +1279,24 @@
                         </div>
                         <div class="tier-price-wrap">
                             <div class="price-breakdown">
-                                <div class="row">
+                                <div class="row" style="align-items: flex-start;">
                                     <span>Sponsorship Fee:</span>
-                                    <span>150,000 ฿</span>
+                                    <div style="text-align: right; display: flex; flex-direction: column; gap: 2px;">
+                                        <span style="font-size: 1.1rem; color: var(--rg-white);">1 คัน: 240,000 ฿</span>
+                                        <span style="font-size: 1.1rem; color: var(--mg-yellow);">2 คัน: 400,000 ฿</span>
+                                    </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (Exclusive):</span>
-                                    <span style="color: #cbd5e1;">100,000 ฿</span>
+                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span style="color: #cbd5e1;">150,000 ฿</span>
                                 </div>
                             </div>
-                            <div class="tier-price-val" style="border-top: 1px dashed #333; padding-top: 5px; justify-content: flex-end;">
-                                250,000&nbsp;<span style="font-size: 1.5rem; color: var(--rg-gray-400);">THB</span>
+                            <div class="tier-price-val" style="border-top: 1px dashed #333; padding-top: 5px; justify-content: flex-end; font-size: 3rem;">
+                                390K - 550K&nbsp;<span style="font-size: 1.5rem; color: var(--rg-gray-400);">THB</span>
                             </div>
                             <div class="tier-value-box" style="border-color: #333; margin-top: 5px;">
                                 <span>Total Est. Media Value:</span>
-                                <strong style="color: #cbd5e1;">~1,000,000 THB</strong>
+                                <strong style="color: #cbd5e1;">~1,500,000 THB</strong>
                             </div>
                         </div>
                     </div>
@@ -829,10 +1306,10 @@
                         <div class="tier-box">
                             <h4 style="color: #cbd5e1;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Car Branding:</b> โลโก้ขนาดกลาง (M) บนรถแข่งโนเกียร์ 1 คัน</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Car Branding:</b> โลโก้ขนาดกลาง (M) บนรถแข่ง <b>(เลือก 1 คัน หรือ 2 คัน)</b></div></li>
+                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Apparel:</b> โลโก้บนชุดแข่งนักแข่ง</div></li>
                                 <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Pit & PR:</b> โลโก้ป้าย Sponsor หน้าพิท</div></li>
-                                <li><i class="fa-solid fa-shirt" style="color: #cbd5e1;"></i> <div><b>Collab Collection:</b> Muek Groob x Nokia T-Shirts Limited Edition 100 Pcs</div></li>
-                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้เสริมรถแข่ง (S) <span class="badge-sm bronze">BRZ</span></div></li>
+                                <li><i class="fa-solid fa-shirt" style="color: #cbd5e1;"></i> <div><b>Collab Collection:</b> Muek Groob x RACEGO T-Shirts Limited Edition 100 Pcs</div></li>
                             </ul>
                         </div>
                         <!-- Box 2 -->
@@ -851,12 +1328,12 @@
                                 <li><i class="fa-solid fa-check"></i> <div><b>Background Visibility:</b> โลโก้ปรากฏเป็นฉากหลังตอนถ่ายทอดสด TGR Live</div></li>
                             </ul>
                         </div>
-                        <!-- Box 4 (BRAND AM) -->
+                        <!-- Box 4 -->
                         <div class="tier-box" style="border-color: var(--mg-red);">
                             <h4 style="color: var(--mg-red);"><i class="fa-solid fa-user-shield"></i> 4. SUNSU BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
                                 <li><i class="fa-solid fa-check"></i> <div><b>Included:</b> รวมสิทธิ์ SUNSU Ambassador Package เรียบร้อยแล้ว</div></li>
-                                <li><i class="fa-solid fa-lock" style="color: var(--mt-red);"></i> <div><b>Exclusive Partner:</b> ระบุให้หมึกกรุบเป็น Official Snack ของทีมตลอดฤดูกาล</div></li>
+                                <li><i class="fa-solid fa-lock" style="color: var(--mg-red);"></i> <div><b>Exclusive Partner:</b> ระบุให้หมึกกรุบเป็น Official Snack ของทีมตลอดฤดูกาล</div></li>
                                 <li><i class="fa-solid fa-handshake-slash" style="color: var(--mg-red);"></i> <div><b>Non-Compete:</b> งดรับสปอนเซอร์แบรนด์ขนมขบเคี้ยวคู่แข่งตลอดสัญญา 1 ปี</div></li>
                             </ul>
                         </div>
@@ -869,7 +1346,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 14: GOLD TIER -->
+        <!-- SLIDE 21 (Old 17): GOLD TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
@@ -888,8 +1365,8 @@
                                     <span class="text-price" style="font-size: 1.2rem;">ติดต่อทีมงาน</span>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (Exclusive):</span>
-                                    <span style="color: var(--mg-yellow);">100,000 ฿</span>
+                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span style="color: var(--mg-yellow);">150,000 ฿</span>
                                 </div>
                             </div>
                             <div class="tier-price-val text-price" style="border-top: 1px dashed #333; padding-top: 8px; justify-content: flex-end;">
@@ -907,11 +1384,11 @@
                         <div class="tier-box">
                             <h4 style="color: var(--mg-yellow);"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check" style="color: var(--mg-yellow);"></i> <div><b>Car Branding:</b> โลโก้ขนาดใหญ่ (L) บนรถแข่งโนเกียร์ 1 คัน</div></li>
+                                <li><i class="fa-solid fa-check" style="color: var(--mg-yellow);"></i> <div><b>Car Branding:</b> โลโก้ขนาดใหญ่ (L) บนรถแข่ง <b>(เลือก 1 คัน หรือ 2 คัน)</b></div></li>
                                 <li><i class="fa-solid fa-check" style="color: var(--mg-yellow);"></i> <div><b>Apparel:</b> โลโก้อกเสื้อนักแข่ง, ร่ม และชุด Race Queen</div></li>
                                 <li><i class="fa-solid fa-check" style="color: var(--mg-yellow);"></i> <div><b>Pit Visibility:</b> ป้าย Sponsor หลัก และมุมแจก Sampling หน้าพิท</div></li>
-                                <li><i class="fa-solid fa-shirt" style="color: var(--mg-yellow);"></i> <div><b>Collab Collection:</b> Muek Groob x Nokia T-Shirts Limited Edition 150 Pcs</div></li>
-                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้เสริม, ธงญี่ปุ่น <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
+                                <li><i class="fa-solid fa-shirt" style="color: var(--mg-yellow);"></i> <div><b>Collab Collection:</b> Muek Groob x RACEGO T-Shirts Limited Edition 150 Pcs</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>ธงญี่ปุ่น, เสื้อแฟนคลับ <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
                             </ul>
                         </div>
                         <!-- Box 2 -->
@@ -931,7 +1408,7 @@
                                 <li><i class="fa-solid fa-check"></i> <div><b>Official Photos:</b> ภาพ Action Shots โนเกียร์ในอัลบั้ม TGR</div></li>
                             </ul>
                         </div>
-                        <!-- Box 4 (BRAND AM) -->
+                        <!-- Box 4 -->
                         <div class="tier-box" style="border-color: var(--mg-red);">
                             <h4 style="color: var(--mg-red);"><i class="fa-solid fa-user-shield"></i> 4. SUNSU BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
@@ -949,7 +1426,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 15: PLATINUM TIER -->
+        <!-- SLIDE 22 (Old 18): PLATINUM TIER -->
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container">
@@ -968,8 +1445,8 @@
                                     <span class="text-price" style="font-size: 1.2rem;">ติดต่อทีมงาน</span>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (Exclusive):</span>
-                                    <span style="color: var(--mg-red);">100,000 ฿</span>
+                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span style="color: var(--mg-red);">150,000 ฿</span>
                                 </div>
                             </div>
                             <div class="tier-price-val text-price" style="border-top: 1px dashed #333; padding-top: 8px; justify-content: flex-end;">
@@ -987,10 +1464,11 @@
                         <div class="tier-box" style="border-color: var(--mg-red);">
                             <h4 style="color: var(--mg-red);"><i class="fa-solid fa-flag-checkered" style="color: var(--mg-red);"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check"></i> <div><b>Car Livery & Naming:</b> คุมโทนสีรถโนเกียร์ (XL) เป็นสี Muek Groob Vibe ทั้งคัน</div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Car Livery & Naming:</b> คุมโทนสีรถแข่ง 2 คัน เป็นสี Muek Groob Vibe ทั้งคัน</div></li>
                                 <li><i class="fa-solid fa-check"></i> <div><b>Pit Experience:</b> ตกแต่งพิทเป็น Pop-up Store แจกชิมหมึกกรุบแบบจัดเต็ม</div></li>
-                                <li><i class="fa-solid fa-shirt"></i> <div><b>Collab Collection:</b> Muek Groob x Nokia T-Shirts Limited Edition 200 Pcs</div></li>
-                                <li><i class="fa-solid fa-plus"></i> <div>โลโก้จุดเล็ก-ใหญ่ (L,M,S), ป้ายพิท <span class="badge-sm gold">GLD</span> <span class="badge-sm silver">SLV</span></div></li>
+                                <li><i class="fa-solid fa-check"></i> <div><b>Apparel:</b> โลโก้บนชุดแข่ง, ร่ม และชุด Race Queen</div></li>
+                                <li><i class="fa-solid fa-shirt"></i> <div><b>Collab Collection:</b> Muek Groob x RACEGO T-Shirts Limited Edition 200 Pcs</div></li>
+                                <li><i class="fa-solid fa-plus"></i> <div>ป้ายพิท, ธงญี่ปุ่น, เสื้อแฟนคลับ <span class="badge-sm gold">GLD</span> <span class="badge-sm silver">SLV</span> <span class="badge-sm bronze">BRZ</span></div></li>
                             </ul>
                         </div>
                         <!-- Box 2 -->
@@ -1011,7 +1489,7 @@
                                 <li><i class="fa-solid fa-check"></i> <div><b>Official PR:</b> รถแข่งหมึกกรุบ ปรากฏในคอนเทนต์ VOD ย้อนหลังและภาพ PR</div></li>
                             </ul>
                         </div>
-                        <!-- Box 4 (BRAND AM) -->
+                        <!-- Box 4 -->
                         <div class="tier-box" style="border-color: var(--mg-red);">
                             <h4 style="color: var(--mg-red);"><i class="fa-solid fa-user-shield"></i> 4. SUNSU BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
@@ -1029,7 +1507,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 16: CLOSING -->
+        <!-- SLIDE 23 (Old 19): CLOSING -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
@@ -1044,7 +1522,7 @@
                 <div class="content" style="text-align: center;">
                     <h2 style="font-size: 5rem; line-height: 1; margin-bottom: 15px;">LET'S MAKE JDM <br><span class="highlight-red">MAINSTREAM.</span></h2>
                     <p style="font-size: 1.2rem; color: var(--rg-white); font-weight: 300; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
-                        จุดไฟความเผ็ดชา ให้วงการความเร็ว <br>ร่วมทะยานสู่ความสำเร็จไปกับ Nokia Sutasinee
+                        จุดไฟความเผ็ดชา ให้วงการความเร็ว <br>ร่วมทะยานสู่ความสำเร็จไปกับ Nokia และ Pondtech
                     </p>
                     
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
@@ -1061,6 +1539,12 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="image-modal-close" onclick="closeModal()">&times;</span>
+        <img class="image-modal-content" id="modalImage">
     </div>
 
     <script>
@@ -1138,6 +1622,25 @@
                         hint.style.transition = 'opacity 0.5s ease';
                     }
                 }, { passive: true });
+            }
+        });
+
+        // Modal Functions
+        window.openModal = function(src) {
+            document.getElementById("imageModal").style.display = "block";
+            document.getElementById("modalImage").src = src;
+        }
+        window.closeModal = function() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+        document.getElementById("imageModal").addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
             }
         });
     </script>
