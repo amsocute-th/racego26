@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>OSUKA x NOKIA & PONDTECH: The Ultimate Sponsorship</title>
+    <title>OSUKA x NOKIA & PONDTECH: The Ultimate Power Tool Partnership</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -21,6 +23,7 @@
             --rg-gray-400: #9ca3af;
             --rg-white: #ffffff;
             --border-color: #262626;
+            --os-cyan: #06b6d4; /* Accent color for analytics/media */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -124,15 +127,24 @@
         body.mobile-mode .tier-focus-box { padding: 15px; }
         body.mobile-mode .tier-focus-box li { font-size: 0.85rem; flex-wrap: wrap;}
         
-        /* Product grid for mobile */
-        body.mobile-mode .product-grid { grid-template-columns: 1fr 1fr !important; }
+        /* Grid Adjustments for Mobile & Tablets */
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; margin-top: 20px; }
+        .product-grid-2col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; margin-top: 20px; }
         
-        /* Data Power & Packages grid for mobile */
-        body.mobile-mode .data-power-grid { grid-template-columns: 1fr !important; gap: 10px !important; margin-bottom: 15px !important;}
-        body.mobile-mode .std-output-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
-        body.mobile-mode .invest-pkg-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
-        body.mobile-mode .invest-card { padding: 15px !important; }
-        body.mobile-mode .data-power-val { font-size: 2.2rem !important; }
+        @media (max-width: 1100px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 900px), (max-height: 600px) {
+            body.mobile-mode .rate-card-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+            body.mobile-mode .product-grid { grid-template-columns: 1fr !important; }
+            body.mobile-mode .product-grid-2col { grid-template-columns: 1fr !important; gap: 15px !important;}
+            body.mobile-mode .data-power-grid { grid-template-columns: 1fr !important; gap: 10px !important; margin-bottom: 15px !important;}
+            body.mobile-mode .std-output-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+            body.mobile-mode .invest-pkg-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+            body.mobile-mode .invest-card { padding: 15px !important; }
+            body.mobile-mode .data-power-val { font-size: 2.2rem !important; }
+        }
 
         .slide {
             flex: 0 0 100vw; height: 100vh; scroll-snap-align: start;
@@ -157,6 +169,7 @@
 
         .highlight-red { color: var(--os-red); }
         .highlight-yellow { color: var(--os-yellow); }
+        .highlight-cyan { color: var(--os-cyan); }
 
         .img-placeholder-box {
             width: 100%; height: 100%; background-color: #0d0602; display: flex; flex-direction: column;
@@ -296,8 +309,7 @@
         .tier-box h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #333; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
         .tier-list { list-style: none; padding: 0; margin: 0; }
         .tier-list li { font-size: 0.95rem; color: var(--rg-gray-400); margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
-        .tier-list li i { margin-top: 4px; font-size: 0.9rem; }
-        .tier-list li i.fa-check { color: var(--os-red); }
+        .tier-list li i { margin-top: 4px; font-size: 0.9rem; color: var(--os-yellow); }
         .tier-list li i.fa-plus { color: var(--rg-white); }
         .tier-list li b { color: var(--rg-white); font-weight: 600; }
         .badge-sm { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; margin-left: 5px; font-weight: 800; border: 1px solid; display: inline-block; transform: translateY(-2px); }
@@ -305,27 +317,15 @@
         .badge-sm.silver { color: #cbd5e1; border-color: #cbd5e1; background: rgba(203,213,225,0.1); }
         .badge-sm.bronze { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.1); }
 
-        .tier-remark { background: rgba(255,255,255,0.05); border-left: 4px solid var(--os-red); padding: 12px 20px; border-radius: 4px; margin-top: 20px; font-size: 0.9rem; color: var(--rg-gray-400); display: flex; align-items: center; gap: 10px; }
+        .tier-remark { background: rgba(255,255,255,0.05); border-left: 4px solid var(--os-yellow); padding: 12px 20px; border-radius: 4px; margin-top: 20px; font-size: 0.9rem; color: var(--rg-gray-400); display: flex; align-items: center; gap: 10px; }
         
-        .content-list-item { background: rgba(255,255,255,0.05); border-left: 3px solid var(--os-red); padding: 15px; border-radius: 4px; margin-bottom: 10px; }
+        .content-list-item { background: rgba(255,255,255,0.05); border-left: 3px solid var(--os-yellow); padding: 15px; border-radius: 4px; margin-bottom: 10px; }
         .content-list-item.white-border { border-left-color: var(--rg-white); }
-        .content-list-item.yellow-border { border-left-color: var(--os-yellow); }
+        .content-list-item.red-border { border-left-color: var(--os-red); }
         
         .content-list-item h4 { color: var(--rg-white); font-size: 1.1rem; margin-bottom: 5px; }
         .content-list-item p { color: var(--rg-gray-400); font-size: 0.9rem; margin: 0; line-height: 1.4; }
 
-        /* Product Grid (Slide 5 & Analytics) */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            flex: 1;
-            margin-top: 20px;
-        }
-        @media (max-width: 900px), (max-height: 600px) {
-            .product-grid { grid-template-columns: 1fr 1fr !important; }
-        }
-        
         /* Specific elements for new slides */
         .data-power-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
         .data-power-box { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px 20px; text-align: center; border-top: 4px solid var(--os-yellow); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
@@ -350,7 +350,7 @@
         /* VIRAL ALBUM & MODAL */
         .viral-album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .viral-thumb-wrapper { width: 100%; height: 110px; border-radius: 8px; overflow: hidden; border: 1px solid #333; cursor: pointer; position: relative; transition: all 0.3s ease; }
-        .viral-thumb-wrapper:hover { border-color: var(--os-yellow); transform: scale(1.02); z-index: 2; box-shadow: 0 5px 15px rgba(255,184,0,0.2); }
+        .viral-thumb-wrapper:hover { border-color: var(--os-yellow); transform: scale(1.02); z-index: 2; box-shadow: 0 5px 15px rgba(255,193,7,0.2); }
         .viral-thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .viral-thumb-wrapper:hover img { transform: scale(1.1); }
         .viral-thumb-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
@@ -362,9 +362,12 @@
         .invest-card.compact .compact-price { font-size: 2rem; font-family: 'Teko', sans-serif; font-weight: 700; color: var(--rg-white); line-height: 1; margin-bottom: 10px; }
         .invest-card.compact ul li { font-size: 0.75rem; margin-bottom: 5px; line-height: 1.4; }
         
+        /* Rate Card Grid */
+        .rate-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; text-align: left; }
+
         /* The Modal (background) */
         .image-modal { display: none; position: fixed; z-index: 1000000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(5,5,5,0.95); backdrop-filter: blur(5px); }
-        .image-modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid var(--os-yellow); border-radius: 8px; box-shadow: 0 0 30px rgba(255,184,0,0.3); }
+        .image-modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid var(--os-yellow); border-radius: 8px; box-shadow: 0 0 30px rgba(255,193,7,0.3); }
         .image-modal-close { position: absolute; top: 20px; right: 35px; color: var(--rg-gray-400); font-size: 40px; font-weight: bold; transition: 0.3s; z-index: 1000001; }
         .image-modal-close:hover, .image-modal-close:focus { color: var(--os-yellow); text-decoration: none; cursor: pointer; }
     </style>
@@ -421,7 +424,7 @@
                         The Ultimate Power Tool Partnership. สร้างปรากฏการณ์เครื่องมือช่างไร้สายในวงการมอเตอร์สปอร์ต ผ่านอิทธิพลสื่อดิจิทัลและความน่าเชื่อถือระดับประเทศ
                     </p>
                     <div style="border-left: 3px solid var(--os-red); padding-left: 15px;">
-                        <p style="color: var(--rg-white); font-size: 1rem; margin: 0; font-weight: 500;">PRESENTED TO: OSUKA EXECUTIVE BOARD</p>
+                        <p style="color: var(--rg-white); font-size: 1rem; margin: 0; font-weight: 500;">PRESENTED TO: คุณแทน (OSUKA)</p>
                         <p style="color: var(--os-red); font-size: 0.9rem; margin: 0;">BY RACEGO MANAGEMENT</p>
                     </div>
                 </div>
@@ -466,7 +469,7 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder">
-                        <img src="racego_03_synergy.jpg" alt="Nokia Sutasinee" onerror="this.style.display='none'">
+                        <img src="spirits_03_nokia.jpg" alt="Nokia Sutasinee" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-star"></i>
                             <span>racego_03_synergy.jpg</span>
@@ -533,7 +536,7 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder" style="border-color: var(--os-yellow);">
-                        <img src="mg_04_pondtech.jpg" alt="Pondtech Racer" onerror="this.style.display='none'">
+                        <img src="racego_03_synergy.jpg" alt="Pondtech Racer" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-toolbox"></i>
                             <span>mg_04_pondtech.jpg</span>
@@ -615,10 +618,10 @@
             <div class="slide-inner layout-split">
                 <div class="split-image left-side">
                     <div class="img-placeholder" style="border-color: var(--os-yellow);">
-                        <img src="osuka_07_b2b_network.jpg" alt="B2B Network" onerror="this.style.display='none'">
+                        <img src="racego_05_pondtech_lab.jpg" alt="B2B Network" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-users-gear"></i>
-                            <span>osuka_07_b2b_network.jpg</span>
+                            <span>racego_05_pondtech_lab.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-link"></i> MECHANIC-TO-MECHANIC</div>
                     </div>
@@ -666,10 +669,10 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder" style="border-color: var(--os-red);">
-                        <img src="osuka_08_workshop.jpg" alt="Offline Workshop" onerror="this.style.display='none'">
+                        <img src="motys_02_philosophy.jpg" alt="Offline Workshop" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-chalkboard-user"></i>
-                            <span>osuka_08_workshop.jpg</span>
+                            <span>racego_05_pondtech_lab.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-fire"></i> OFFLINE MASTERCLASS</div>
                     </div>
@@ -717,6 +720,43 @@
         <div class="slide slide-element">
             <div class="slide-inner layout-split">
                 <div class="split-content">
+                    <div class="badge red-badge">Technical Content</div>
+                    <h2 style="font-size: 3rem; margin-bottom: 5px;">PONDTECH'S <br><span class="highlight-red">MEDIA</span></h2>
+                    <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">เจาะลึกเชิงวิศวกรรม สร้างความเชื่อมั่นกลุ่มช่าง (B2B)</h3>
+                    
+                    <div class="content-list-item red-border" style="width: 100%;">
+                        <h4><i class="fa-solid fa-toolbox highlight-red" style="margin-right: 8px;"></i> 1. TOOL PERFORMANCE REVIEW</h4>
+                        <p>ปอนด์เทครีวิวเจาะลึกสเปคเครื่องมือ OSUKA เช่น แรงบิด มอเตอร์ไร้แปรงถ่าน แบตเตอรี่ทนทาน เพื่อให้ช่างมั่นใจในประสิทธิภาพ</p>
+                    </div>
+                    <div class="content-list-item red-border" style="width: 100%;">
+                        <h4><i class="fa-solid fa-cogs highlight-red" style="margin-right: 8px;"></i> 2. ENGINE TEARDOWN</h4>
+                        <p>โชว์การรื้อและประกอบเครื่องยนต์รถแข่งด้วยบล็อกกระแทกและประแจไฟฟ้า OSUKA พิสูจน์ว่าเอาอยู่ทุกน็อตที่อัดแน่น</p>
+                    </div>
+                    <div class="content-list-item red-border" style="width: 100%;">
+                        <h4><i class="fa-solid fa-lightbulb highlight-red" style="margin-right: 8px;"></i> 3. PRO GARAGE HACKS</h4>
+                        <p>แชร์เทคนิคการซ่อมรถหรือปรับจูนรถฉบับอู่มืออาชีพ โดยมีเครื่องมือไร้สาย OSUKA เป็นผู้ช่วยหลักในการทำงาน</p>
+                    </div>
+                    <div class="content-list-item red-border" style="width: 100%;">
+                        <h4><i class="fa-solid fa-stopwatch highlight-red" style="margin-right: 8px;"></i> 4. PIT SETUP & WORKFLOW</h4>
+                        <p>พาทัวร์การเซ็ตอู่หน้าพิทสนามแข่ง โชว์ความคล่องตัวของเครื่องมือไร้สายที่ตอบโจทย์ช่างที่ต้องแข่งกับเวลา</p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="img-placeholder" style="border-color: var(--os-red);">
+                        <img src="osuka_pondtech_media.jpg" alt="Pondtech Media" onerror="this.style.display='none'">
+                        <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
+                            <i class="fa-solid fa-wrench"></i>
+                            <span>osuka_pondtech_media.jpg</span>
+                        </div>
+                        <div class="car-label"><i class="fa-solid fa-gears"></i> TECHNICAL CONTENT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-element">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
                     <div class="badge yellow-badge" style="color: var(--rg-black);">Content Strategy</div>
                     <h2 style="font-size: 3rem; margin-bottom: 5px;">RACEGO <br><span class="highlight-white">OFFICIAL MEDIA</span></h2>
                     <h3 style="font-size: 1.1rem; color: var(--rg-gray-400); margin-bottom: 20px;">การนำเสนอภาพรวมของทีม และบรรยากาศการแข่งขัน</h3>
@@ -740,10 +780,10 @@
                 </div>
                 <div class="split-image">
                     <div class="img-placeholder" style="border-color: var(--rg-white);">
-                        <img src="osuka_10_racego_media.jpg" alt="RaceGO Media" onerror="this.style.display='none'">
+                        <img src="racego_09_tgr_media.jpg" alt="RaceGO Media" onerror="this.style.display='none'">
                         <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                             <i class="fa-solid fa-film"></i>
-                            <span>osuka_10_racego_media.jpg</span>
+                            <span>racego_08_tgr_overview.jpg</span>
                         </div>
                         <div class="car-label"><i class="fa-solid fa-play"></i> RACEGO OFFICIAL CONTENT</div>
                     </div>
@@ -803,29 +843,30 @@
             </div>
         </div>
 
+        <!-- SLIDE 12: NOKIA INSIGHT ANALYTICS -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder" style="background-image: radial-gradient(circle at 50% 50%, #1a0b05 0%, var(--rg-black) 100%);"></div>
                 <div class="overlay"></div>
                 <div class="content" style="max-width: 1200px;">
                     <div class="badge red-badge" style="margin-bottom: 20px;">Insight Analytics Report Q1/2026</div>
-                    <h2 style="font-size: 3rem; margin-bottom: 30px;">NOKIA'S DIGITAL <span class="highlight-yellow">FOOTPRINT</span></h2>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 30px;">NOKIA'S DIGITAL <span class="highlight-yellow">FOOTPRINT</span></h2>
 
                     <div class="data-power-grid" style="margin-bottom: 30px;">
                         <div class="data-power-box red-top">
                             <div class="data-power-val" style="color: var(--os-red);">3.7M+</div>
                             <div class="data-power-label">TOTAL FOLLOWERS</div>
-                            [cite_start]<div class="data-power-desc">ฐานผู้ติดตามรวมทุกแพลตฟอร์ม [cite: 99]</div>
+                            <div class="data-power-desc">จำนวนผู้ติดตามรวมจากทุกแพลตฟอร์มหลัก</div>
                         </div>
                         <div class="data-power-box" style="border-top-color: var(--os-yellow);">
                             <div class="data-power-val" style="color: var(--os-yellow);">18M+</div>
                             <div class="data-power-label">VIEWS PER MONTH</div>
-                            [cite_start]<div class="data-power-desc">ยอดเข้าชมวิดีโอเฉลี่ยต่อเดือน [cite: 99]</div>
+                            <div class="data-power-desc">สถิติการเข้าชมวิดีโอโดยเฉลี่ยในแต่ละเดือน</div>
                         </div>
                         <div class="data-power-box cyan-top">
-                            <div class="data-power-val" style="color: #06b6d4;">91%</div>
+                            <div class="data-power-val" style="color: var(--os-cyan);">91%</div>
                             <div class="data-power-label">MALE (AGE 25-44)</div>
-                            [cite_start]<div class="data-power-desc">กลุ่มเป้าหมายหลัก Golden Target มีกำลังซื้อสูง [cite: 102]</div>
+                            <div class="data-power-desc">เข้าถึงทาร์เก็ตหลักวัยทำงาน (Golden Target) ที่มีศักยภาพในการใช้จ่ายสูง</div>
                         </div>
                     </div>
 
@@ -833,50 +874,52 @@
                         <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: left;">
                             <i class="fa-brands fa-tiktok" style="font-size: 2rem; color: var(--rg-white); margin-bottom: 10px;"></i>
                             <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">1.3M+ FOLLOWERS</h4>
-                            [cite_start]<div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">100K - 1M+ Views / Clip [cite: 104]</div>
-                            [cite_start]<p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">ชาย 92.4% [cite: 107] | [cite_start]ยอดแชร์ 2.1K+ ต่อคลิป [cite: 110] มีโอกาสเกิดไวรัลสูงมาก</p>
+                            <div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">100K - 1M+ Views / Clip</div>
+                            <p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">สัดส่วนผู้ชมชาย 92.4% | ค่าเฉลี่ยการแชร์ 2.1K+ ต่อคลิป เพิ่มโอกาสสร้างกระแสไวรัลได้เป็นอย่างดี</p>
                         </div>
                         <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: left;">
                             <i class="fa-brands fa-facebook" style="font-size: 2rem; color: #1877F2; margin-bottom: 10px;"></i>
                             <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">1.17M+ FOLLOWERS</h4>
-                            [cite_start]<div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">14M+ Views / Month [cite: 112]</div>
-                            [cite_start]<p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">80% ของยอดวิวมาจากหน้าแนะนำ [cite: 117] (เจาะกลุ่ม Non-followers ได้ดีเยี่ยม)</p>
+                            <div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">14M+ Views / Month</div>
+                            <p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">ยอดวิวมากกว่า 80% มาจากระบบการแนะนำ (Recommendation) ช่วยเปิดการมองเห็นไปยังกลุ่มคนนอกเพจได้อย่างยอดเยี่ยม</p>
                         </div>
                         <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: left;">
                             <i class="fa-brands fa-instagram" style="font-size: 2rem; color: #E4405F; margin-bottom: 10px;"></i>
                             <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">1.0M+ FOLLOWERS</h4>
-                            [cite_start]<div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">289K+ Engagements / Month [cite: 134]</div>
-                            [cite_start]<p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">ชาย 93% [cite: 137] | [cite_start]โพสต์ Reels สร้าง Conversion ให้แบรนด์ยอดเยี่ยม [cite: 140]</p>
+                            <div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">289K+ Engagements / Month</div>
+                            <p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">สัดส่วนผู้ชมชาย 93% | การทำคอนเทนต์ผ่าน Reels สามารถสร้างยอดขาย (Conversion) ให้กับสินค้าได้อย่างมีประสิทธิภาพ</p>
                         </div>
                         <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: left;">
                             <i class="fa-brands fa-youtube" style="font-size: 2rem; color: #FF0000; margin-bottom: 10px;"></i>
                             <h4 style="color: var(--rg-white); font-size: 1.2rem; margin-bottom: 5px;">260K+ SUBSCRIBERS</h4>
-                            [cite_start]<div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">132% Retention Rate [cite: 147]</div>
-                            [cite_start]<p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">ผู้ชมดูคลิปจบสูงมาก (Evergreen Content) [cite: 147] [cite_start]แฟนคลับเหนียวแน่น [cite: 147]</p>
+                            <div style="color: var(--os-yellow); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">132% Retention Rate</div>
+                            <p style="font-size: 0.85rem; color: var(--rg-gray-400); margin:0;">อัตราการรับชมคลิปจนจบสูง (Retention) คอนเทนต์มีอายุยาวนาน และมีฐานแฟนคลับที่พร้อมสนับสนุนเหนียวแน่น</p>
                         </div>
                     </div>
 
                     <div style="margin-top: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 4px solid var(--os-red); text-align: left;">
                         <p style="font-size: 0.9rem; color: var(--rg-white); margin: 0;">
-                            [cite_start]<strong style="color: var(--os-red);">Key Takeaway:</strong> ทรงพลังอย่างมากสำหรับแบรนด์เครื่องมือช่างและยานยนต์ เพราะฐานแฟนคลับเป็น <b>"ผู้ชายวัยทำงาน (Male 25-44)"</b> มากถึง 90%+ [cite: 102, 132] [cite_start]พร้อมพลังทะลวงอัลกอริทึมดึงดูดลูกค้าใหม่ได้ทะลุ 75% ต่อโพสต์ [cite: 101, 123]
+                            <strong style="color: var(--os-red);">Key Takeaway:</strong> ทรงพลังอย่างมากสำหรับแบรนด์เครื่องมือช่างและยานยนต์ เพราะฐานแฟนคลับเป็น <b>"ผู้ชายวัยทำงาน (Male 25-44)"</b> มากถึง 90%+ พร้อมพลังทะลวงอัลกอริทึมดึงดูดลูกค้าใหม่ได้ทะลุ 75% ต่อโพสต์
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-
+<!-- SLIDE 13: CREATOR RATE CARD -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder" style="background-image: radial-gradient(circle at 50% 50%, #1a0b05 0%, var(--rg-black) 100%);"></div>
                 <div class="overlay"></div>
                 <div class="content" style="max-width: 1200px;">
-                    <div class="badge blue-badge" style="margin-bottom: 20px; background-color: #06b6d4;">Media & Appearance Rates</div>
-                    <h2 style="font-size: 3rem; margin-bottom: 30px;">NOKIA SUTASINEE <span class="highlight-yellow">RATE CARD 2026</span></h2>
+                    <div class="badge blue-badge" style="margin-bottom: 20px;">Media & Appearance Rates</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 30px;">NOKIA SUTASINEE <span class="highlight-yellow">RATE CARD 2026</span></h2>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left;">
+                    <div class="rate-card-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; text-align: left;">
                         
-                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 20px; border-top: 4px solid var(--os-red);">
-                            <h4 style="color: var(--os-red); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">A LA CARTE MEDIA</h4>
+                        <!-- Col 1: A La Carte -->
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; border-top: 4px solid var(--os-red);">
+                            <h4 style="color: var(--os-red); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-camera"></i> A LA CARTE MEDIA</h4>
+                            
                             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px;">
                                 <span style="color: var(--rg-white); font-size: 0.95rem;">Short Video (4 Channels)</span>
                                 <strong style="color: var(--os-yellow);">30,000 ฿</strong>
@@ -894,7 +937,7 @@
                                 <strong style="color: var(--os-yellow);">5,000 ฿</strong>
                             </div>
 
-                            <h4 style="color: #06b6d4; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px; margin-top: 20px;">ADD-ON (ASSET RIGHTS)</h4>
+                            <h4 style="color: var(--os-cyan); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px; margin-top: 20px;"><i class="fa-solid fa-copyright"></i> ADD-ON (ASSET RIGHTS)</h4>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px;">
                                 <span style="color: var(--rg-white); font-size: 0.95rem;">Media Asset (3 Months)</span>
                                 <strong style="color: var(--os-yellow);">10,000 ฿</strong>
@@ -905,8 +948,9 @@
                             </div>
                         </div>
 
-                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 20px; border-top: 4px solid #06b6d4;">
-                            <h4 style="color: #06b6d4; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">SOCIAL & REVIEW</h4>
+                        <!-- Col 2: Appearances -->
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; border-top: 4px solid var(--os-cyan);">
+                            <h4 style="color: var(--os-cyan); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-bullhorn"></i> SOCIAL & REVIEW</h4>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px;">
                                 <span style="color: var(--rg-white); font-size: 0.95rem;">Product Review (5-10 Min)</span>
                                 <strong style="color: var(--os-yellow);">45,000 ฿</strong>
@@ -920,7 +964,7 @@
                                 <strong style="color: var(--os-yellow);">10,000 ฿</strong>
                             </div>
 
-                            <h4 style="color: var(--os-yellow); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">EVENT APPEARANCE</h4>
+                            <h4 style="color: var(--os-yellow); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-microphone"></i> EVENT APPEARANCE</h4>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px;">
                                 <span style="color: var(--rg-white); font-size: 0.95rem;">Cosplayer Event</span>
                                 <strong style="color: var(--os-yellow);">30,000 ฿</strong>
@@ -939,44 +983,95 @@
                             </div>
                         </div>
 
-                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 20px; border-top: 4px solid var(--os-yellow);">
-                            <h4 style="color: var(--os-yellow); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">MEDIA PACKAGES</h4>
+                        <!-- Col 3: Brand Ambassador & Terms -->
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; border-top: 4px solid var(--wp-blue-light);">
+                            <h4 style="color: var(--wp-blue-light); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">BRAND AMBASSADOR (1 YEAR)</h4>
                             
                             <div style="margin-bottom: 15px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid #444;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                    <h5 style="color: var(--rg-white); font-size: 1rem; margin:0;">ON THE GO</h5>
-                                    <strong style="color: var(--os-yellow); font-size: 1.1rem;">35,000 ฿</strong>
+                                    <h5 style="color: var(--rg-white); font-size: 1rem; margin:0;">Yearly Retainer Fee</h5>
+                                    <strong style="color: var(--os-yellow); font-size: 1.1rem;">150,000 ฿</strong>
                                 </div>
-                                <p style="font-size: 0.8rem; color: var(--rg-gray-400); margin: 0 0 5px 0;">1x Short Vid | 1x Story | 1-Mo Ads</p>
+                                <p style="font-size: 0.8rem; color: var(--rg-gray-400); margin: 0;">สัญญาผูกขาด (12-Month Config Brand) ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อม 12-Month Usage Right OnGround</p>
                             </div>
 
-                            <div style="margin-bottom: 15px; padding: 15px; background: rgba(230, 30, 30, 0.1); border-radius: 8px; border: 1px solid var(--os-red); position: relative;">
-                                <div style="position: absolute; top: -10px; right: -10px; background: var(--os-red); color: #fff; font-size: 0.65rem; padding: 3px 8px; border-radius: 12px; font-weight: bold;">BEST SELLER</div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                    <h5 style="color: var(--rg-white); font-size: 1rem; margin:0;">STREET CHIC</h5>
-                                    <strong style="color: var(--os-yellow); font-size: 1.1rem;">55,000 ฿</strong>
-                                </div>
-                                <p style="font-size: 0.8rem; color: var(--rg-gray-400); margin: 0 0 5px 0;">2x Short Vid | 1x Album | 3x Stories | 1-Mo Ads</p>
+                            <h4 style="color: var(--os-yellow); font-size: 1.1rem; margin-bottom: 10px; border-bottom: 1px dashed #333; padding-bottom: 10px;">AMBASSADOR PRIVILEGES</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px;">
+                                <span style="color: var(--rg-white); font-size: 0.85rem;">A La Carte Media Discount</span>
+                                <strong style="color: var(--os-yellow); font-size: 0.95rem;">50% OFF</strong>
                             </div>
-
-                            <div style="padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border: 1px solid var(--os-yellow);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                    <h5 style="color: var(--rg-white); font-size: 1rem; margin:0;">THE V.I.P.</h5>
-                                    <strong style="color: var(--os-yellow); font-size: 1.1rem;">100,000 ฿</strong>
-                                </div>
-                                <p style="font-size: 0.8rem; color: var(--rg-gray-400); margin: 0 0 5px 0;">4x Short Vid | 1x Premium Album | 5x Stories | 1x Event Shoot | 3-Mo Media+Ads</p>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px;">
+                                <span style="color: var(--rg-white); font-size: 0.85rem;">PhotoSet Production (Min 6 Sets)</span>
+                                <strong style="color: var(--os-yellow); font-size: 0.95rem;">15,000 ฿ / Set</strong>
                             </div>
+                            <p style="font-size: 0.75rem; color: #4ade80; margin: 0; line-height: 1.4;">* ฟรี! 12-Month Usage Right Online และ 3-Month Ads Asset สำหรับรายการที่ได้รับส่วนลด</p>
                         </div>
                     </div>
 
-                    <div style="margin-top: 20px; text-align: left; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 4px solid var(--os-yellow);">
+                    <div style="margin-top: 20px; text-align: left; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 4px solid var(--os-red);">
                         <p style="font-size: 0.9rem; color: var(--rg-gray-400); margin: 0;">
-                            <strong style="color: var(--os-yellow);">Special Offer:</strong> ลูกค้าที่ทำสัญญา <strong>Brand Ambassador (Strategic Partner)</strong> จะได้รับ <u>ส่วนลดพิเศษ 50%</u> สำหรับรายการ A La Carte Media ทุกรายการด้านบน รวมถึงเรทพิเศษในการถ่ายทำ PhotoSet เพียง 15,000 ฿/เซ็ต (บังคับขั้นต่ำ 6 เซ็ต)
+                            <strong style="color: var(--os-red);">Terms & Conditions:</strong> นิติบุคคล เครดิตเทอม 30 วัน | บุคคลธรรมดา มัดจำ 50% ก่อนเริ่มงาน | <strong style="color: #4ade80;">PROMOTION: ชำระเป็นเงินสด (Cash) รับส่วนลดทันที 10% ทุกรายการ</strong>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- SLIDE 14: PONDTECH INSIGHT ANALYTICS -->
+        <div class="slide slide-element">
+            <div class="slide-inner layout-full">
+                <div class="bg-placeholder" style="background-image: radial-gradient(circle at 50% 50%, #1a0505 0%, var(--rg-black) 100%);"></div>
+                <div class="overlay"></div>
+                <div class="content" style="max-width: 1200px;">
+                    <div class="badge red-badge" style="margin-bottom: 20px;">Insight Analytics Report Q1/2026</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 30px;">PONDTECH'S DIGITAL <span class="highlight-red">FOOTPRINT</span></h2>
+
+                    <div class="data-power-grid" style="margin-bottom: 30px;">
+                        <div class="data-power-box red-top">
+                            <div class="data-power-val" style="color: var(--os-red);">386K+</div>
+                            <div class="data-power-label">TOTAL FOLLOWERS</div>
+                            <div class="data-power-desc">ยอดผู้ติดตามรวมจากทุกช่องทางโซเชียลมีเดีย (สายยานยนต์ล้วน)</div>
+                        </div>
+                        <div class="data-power-box" style="border-top-color: var(--os-yellow);">
+                            <div class="data-power-val" style="color: var(--os-yellow);">4.9M+</div>
+                            <div class="data-power-label">VIEWS (90 DAYS)</div>
+                            <div class="data-power-desc">สถิติยอดเข้าชมวิดีโอในช่วง 3 เดือนล่าสุด มีแนวโน้มเติบโตอย่างต่อเนื่อง</div>
+                        </div>
+                        <div class="data-power-box cyan-top">
+                            <div class="data-power-val" style="color: var(--os-cyan);">81.4%</div>
+                            <div class="data-power-label">REELS ENGAGEMENT</div>
+                            <div class="data-power-desc">อัตราการมีส่วนร่วม (Engagement) สูงลิ่วในคอนเทนต์รูปแบบคลิปวิดีโอสั้น</div>
+                        </div>
+                    </div>
+
+                    <div class="product-grid-2col">
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 30px; text-align: left;">
+                            <i class="fa-brands fa-facebook" style="font-size: 2.5rem; color: #1877F2; margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.5rem; margin-bottom: 5px;">285K+ FOLLOWERS</h4>
+                            <div style="color: var(--os-yellow); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">556K+ Engagements (90 Days)</div>
+                            <p style="font-size: 0.95rem; color: var(--rg-gray-400); margin:0;">ศูนย์รวมคอมมูนิตี้คนรักการแต่งรถและเจ้าของอู่ทั่วไทย มีการพูดคุยแลกเปลี่ยนเทคนิคเชิงลึกอย่างหนาแน่น</p>
+                        </div>
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 30px; text-align: left;">
+                            <i class="fa-brands fa-youtube" style="font-size: 2.5rem; color: #FF0000; margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--rg-white); font-size: 1.5rem; margin-bottom: 5px;">101K+ SUBSCRIBERS</h4>
+                            <div style="color: var(--os-yellow); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">Deep-Dive Technical Content</div>
+                            <p style="font-size: 0.95rem; color: var(--rg-gray-400); margin:0;">คอนเทนต์เจาะลึกการรื้อประกอบและการจูนเครื่องยนต์ สามารถดึงดูดฐานผู้ชมกลุ่มเฉพาะ (Niche Market/B2B) ได้อย่างเหนียวแน่น</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-left: 4px solid var(--os-red); text-align: left;">
+                        <p style="font-size: 1rem; color: var(--rg-white); margin: 0;">
+                            <strong style="color: var(--os-red);">Key Takeaway:</strong> กลุ่มผู้ชมของปอนด์เทคส่วนใหญ่คือ <b style="color:var(--os-yellow)">"ผู้ที่มีอำนาจในการตัดสินใจซื้อของอู่ซ่อมรถ (B2B)"</b> รวมไปถึงผู้คลั่งไคล้การแต่งรถระดับ Hardcore ดังนั้นการสื่อสารผ่านช่องทางนี้จะช่วยตอกย้ำภาพลักษณ์ความน่าเชื่อถือ (Professional Trust) ให้กับเครื่องมือช่าง OSUKA ได้อย่างหนักแน่น
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <!-- ========================================== -->
+        <!-- SPONSORSHIP TIERS (BRONZE -> PLATINUM)     -->
+        <!-- ========================================== -->
 
         <div class="slide slide-element">
             <div class="slide-inner tier-slide-wrap">
@@ -992,14 +1087,14 @@
                         <div class="tier-price-wrap">
                             <div class="price-breakdown">
                                 <div class="row" style="align-items: flex-start;">
-                                    <span>Sponsorship Fee:</span>
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
                                     <div style="text-align: right; display: flex; flex-direction: column; gap: 2px;">
                                         <span style="font-size: 1.1rem; color: var(--rg-white);">1 คัน: 90,000 ฿</span>
                                         <span style="font-size: 1.1rem; color: var(--os-yellow);">2 คัน: 150,000 ฿</span>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span>Brand AM (Nokia):</span>
                                     <span style="color: #cd7f32;">150,000 ฿</span>
                                 </div>
                             </div>
@@ -1034,9 +1129,9 @@
                             </ul>
                         </div>
                         <div class="tier-box" style="border-color: var(--os-red);">
-                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. OSUKA BRAND AMBASSADOR</h4>
+                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. NOKIA BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>12-Month Exclusive:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
+                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>1-Year Retainer:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
                                 <li><i class="fa-solid fa-camera" style="color: var(--os-red);"></i> <div><b>Special Production:</b> เรทถ่ายทำพิเศษ 15,000 ฿/เซ็ต (ส่งมอบ 20 รูป) พร้อมสิทธิ์ยิงแอด 3 เดือน</div></li>
                                 <li><i class="fa-solid fa-percent" style="color: var(--os-red);"></i> <div><b>Media Discount:</b> รับส่วนลดพิเศษ 50% สำหรับการจ้างงาน A La Carte Media ทุกรายการ</div></li>
                                 <li><i class="fa-solid fa-copyright" style="color: var(--os-red);"></i> <div><b>Online Usage:</b> สิทธิ์การใช้งานรูปภาพบนออนไลน์แบบต่อเนื่อง 1 ปีเต็มฟรี!</div></li>
@@ -1065,14 +1160,14 @@
                         <div class="tier-price-wrap">
                             <div class="price-breakdown">
                                 <div class="row" style="align-items: flex-start;">
-                                    <span>Sponsorship Fee:</span>
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
                                     <div style="text-align: right; display: flex; flex-direction: column; gap: 2px;">
                                         <span style="font-size: 1.1rem; color: var(--rg-white);">1 คัน: 240,000 ฿</span>
                                         <span style="font-size: 1.1rem; color: var(--os-yellow);">2 คัน: 400,000 ฿</span>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span>Brand AM (Nokia):</span>
                                     <span style="color: #cbd5e1;">150,000 ฿</span>
                                 </div>
                             </div>
@@ -1110,9 +1205,9 @@
                             </ul>
                         </div>
                         <div class="tier-box" style="border-color: var(--os-red);">
-                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. OSUKA BRAND AMBASSADOR</h4>
+                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. NOKIA BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>12-Month Exclusive:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
+                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>1-Year Retainer:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
                                 <li><i class="fa-solid fa-camera" style="color: var(--os-red);"></i> <div><b>Special Production:</b> เรทถ่ายทำพิเศษ 15,000 ฿/เซ็ต (ส่งมอบ 20 รูป) พร้อมสิทธิ์ยิงแอด 3 เดือน</div></li>
                                 <li><i class="fa-solid fa-percent" style="color: var(--os-red);"></i> <div><b>Media Discount:</b> รับส่วนลดพิเศษ 50% สำหรับการจ้างงาน A La Carte Media ทุกรายการ</div></li>
                                 <li><i class="fa-solid fa-copyright" style="color: var(--os-red);"></i> <div><b>Online Usage:</b> สิทธิ์การใช้งานรูปภาพบนออนไลน์แบบต่อเนื่อง 1 ปีเต็มฟรี!</div></li>
@@ -1141,11 +1236,11 @@
                         <div class="tier-price-wrap">
                             <div class="price-breakdown">
                                 <div class="row">
-                                    <span>Sponsorship Fee:</span>
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
                                     <span class="text-price" style="font-size: 1.2rem;">ติดต่อทีมงาน</span>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span>Brand AM (Nokia):</span>
                                     <span style="color: var(--os-yellow);">150,000 ฿</span>
                                 </div>
                             </div>
@@ -1186,9 +1281,9 @@
                             </ul>
                         </div>
                         <div class="tier-box" style="border-color: var(--os-red);">
-                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. OSUKA BRAND AMBASSADOR</h4>
+                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. NOKIA BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>12-Month Exclusive:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
+                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>1-Year Retainer:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
                                 <li><i class="fa-solid fa-camera" style="color: var(--os-red);"></i> <div><b>Special Production:</b> เรทถ่ายทำพิเศษ 15,000 ฿/เซ็ต (ส่งมอบ 20 รูป) พร้อมสิทธิ์ยิงแอด 3 เดือน</div></li>
                                 <li><i class="fa-solid fa-percent" style="color: var(--os-red);"></i> <div><b>Media Discount:</b> รับส่วนลดพิเศษ 50% สำหรับการจ้างงาน A La Carte Media ทุกรายการ</div></li>
                                 <li><i class="fa-solid fa-copyright" style="color: var(--os-red);"></i> <div><b>Online Usage:</b> สิทธิ์การใช้งานรูปภาพบนออนไลน์แบบต่อเนื่อง 1 ปีเต็มฟรี!</div></li>
@@ -1217,11 +1312,11 @@
                         <div class="tier-price-wrap">
                             <div class="price-breakdown">
                                 <div class="row">
-                                    <span>Sponsorship Fee:</span>
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
                                     <span class="text-price" style="font-size: 1.2rem;">ติดต่อทีมงาน</span>
                                 </div>
                                 <div class="row" style="margin-bottom: 2px;">
-                                    <span>Brand AM (เฉพาะ Nokia):</span>
+                                    <span>Brand AM (Nokia):</span>
                                     <span style="color: var(--os-red);">150,000 ฿</span>
                                 </div>
                             </div>
@@ -1262,9 +1357,9 @@
                             </ul>
                         </div>
                         <div class="tier-box" style="border-color: var(--os-red);">
-                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. OSUKA BRAND AMBASSADOR</h4>
+                            <h4 style="color: var(--os-red);"><i class="fa-solid fa-user-shield"></i> 4. NOKIA BRAND AMBASSADOR</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>12-Month Exclusive:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
+                                <li><i class="fa-solid fa-lock" style="color: var(--os-red);"></i> <div><b>1-Year Retainer:</b> สัญญาผูกขาด ห้ามรับงานแบรนด์คู่แข่ง 1 ปีเต็ม พร้อมสิทธิ์ใช้สื่อ On-Ground</div></li>
                                 <li><i class="fa-solid fa-camera" style="color: var(--os-red);"></i> <div><b>Special Production:</b> เรทถ่ายทำพิเศษ 15,000 ฿/เซ็ต (ส่งมอบ 20 รูป) พร้อมสิทธิ์ยิงแอด 3 เดือน</div></li>
                                 <li><i class="fa-solid fa-percent" style="color: var(--os-red);"></i> <div><b>Media Discount:</b> รับส่วนลดพิเศษ 50% สำหรับการจ้างงาน A La Carte Media ทุกรายการ</div></li>
                                 <li><i class="fa-solid fa-copyright" style="color: var(--os-red);"></i> <div><b>Online Usage:</b> สิทธิ์การใช้งานรูปภาพบนออนไลน์แบบต่อเนื่อง 1 ปีเต็มฟรี!</div></li>
@@ -1279,10 +1374,11 @@
             </div>
         </div>
 
+        <!-- SLIDE 20: CLOSING -->
         <div class="slide slide-element">
             <div class="slide-inner layout-full">
                 <div class="bg-placeholder">
-                    <img src="osuka_closing.jpg" alt="Closing" onerror="this.style.display='none'">
+                    <img src="racego_20_closing.jpg" alt="Closing" onerror="this.style.display='none'">
                     <div class="img-placeholder-box manga-placeholder" style="z-index: -1;">
                         <i class="fa-solid fa-flag-checkered"></i>
                         <span>osuka_closing.jpg</span>
@@ -1293,7 +1389,7 @@
                 <div class="content" style="text-align: center;">
                     <h2 style="font-size: 5rem; line-height: 1; margin-bottom: 15px;">POWER YOUR <br><span class="highlight-red">PERFORMANCE.</span></h2>
                     <p style="font-size: 1.2rem; color: var(--rg-white); font-weight: 300; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
-                        สถาปนาแบรนด์เครื่องมือช่างไร้สาย OSUKA ในฐานะผู้นำแห่งโลกมอเตอร์สปอร์ต <br>ร่วมทะยานสู่ความสำเร็จไปกับ Nokia Sutasinee และ Pondtech
+                        คุณแทนครับ... มาร่วมสร้างปรากฏการณ์เครื่องมือช่างไร้สาย OSUKA ในโลกมอเตอร์สปอร์ต <br>และทะยานสู่ความสำเร็จไปกับทีม RACEGO (Nokia Sutasinee & Pondtech) ด้วยกันนะครับ
                     </p>
                     
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
@@ -1312,6 +1408,7 @@
 
     </div>
 
+    <!-- Image Modal -->
     <div id="imageModal" class="image-modal">
         <span class="image-modal-close" onclick="closeModal()">&times;</span>
         <img class="image-modal-content" id="modalImage">
@@ -1394,7 +1491,7 @@
                 }, { passive: true });
             }
         });
-
+silde2
         // Modal Functions
         window.openModal = function(src) {
             document.getElementById("imageModal").style.display = "block";
