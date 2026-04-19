@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MASTERPIECE x RACEGO: Confidence at Top Speed</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* โทนสี Masterpiece: ดำ - ทองพรีเมียม */
+            --mp-gold: #D4AF37;
+            --mp-gold-light: #F3E5AB;
+            --mp-gold-dark: #997A00;
+            --mp-black: #050505;
+            --mp-gray-900: #111111;
+            --mp-gray-800: #1a1a1a;
+            --mp-gray-400: #9ca3af;
+            --mp-white: #ffffff;
+            --mp-accent: #b48600; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+        body, html {
+            height: 100%; width: 100%; background-color: var(--mp-black);
+            font-family: 'Prompt', sans-serif; overflow: hidden; color: var(--mp-white);
+        }
+
+        /* --- PRE-LOADER SCREEN --- */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
+            background-color: var(--mp-black); z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        #loading-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
+        .loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .loader-icon { font-size: 3.5rem; color: var(--mp-gold); margin-bottom: 10px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+        
+        .loader-text {
+            font-family: 'Teko', sans-serif; font-size: 5rem; font-weight: 700; line-height: 1; letter-spacing: 2px;
+            background: linear-gradient(to right, #555 50%, var(--mp-gold) 50%);
+            background-size: 200% 100%; background-position: right bottom;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: fillText 2.5s forwards; text-transform: uppercase;
+        }
+        .loader-subtext { font-family: 'Teko', sans-serif; font-size: 2rem; color: var(--mp-white); font-weight: 400; line-height: 1; margin-top: 5px; letter-spacing: 5px;}
+        @keyframes fillText { 0% { background-position: right bottom; } 100% { background-position: left bottom; } }
+        
+        .loader-bar-container { width: 280px; height: 4px; background: #222; margin: 20px auto; border-radius: 2px; overflow: hidden; }
+        .loader-bar { height: 100%; width: 0%; background: var(--mp-gold); animation: loadProgress 2.8s forwards; }
+        @keyframes loadProgress { 0% { width: 0%; } 50% { width: 65%; } 100% { width: 100%; } }
+
+        /* --- SELECTION SCREEN --- */
+        #selection-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
+            background-color: rgba(5,5,5,0.95); z-index: 99998; backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.5s ease;
+        }
+        .view-btn {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%); border: 1px solid #333;
+            border-radius: 12px; padding: 30px 40px; cursor: pointer; transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 15px; width: 250px; color: white;
+        }
+        .view-btn:hover { border-color: var(--mp-gold); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(212,175,55,0.15); }
+        .view-btn:hover i { color: var(--mp-gold); }
+
+        /* --- SLIDER CONTAINER --- */
+        .slider-container { display: flex; flex-direction: row; width: 100vw; height: 100vh; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slide { flex: 0 0 100vw; height: 100vh; scroll-snap-align: start; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: var(--mp-gray-900); }
+        .slide-inner { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; }
+
+        /* --- MOBILE MODE --- */
+        body.mobile-mode .slider-container { flex-direction: column; overflow-x: hidden; overflow-y: auto; scroll-snap-type: y mandatory; }
+        body.mobile-mode .slide { flex: 0 0 100vh; height: 100vh; scroll-snap-align: start; }
+        body.mobile-mode .portrait-warning { display: none !important; }
+        body.mobile-mode .layout-split { flex-direction: column; }
+        body.mobile-mode .split-image { flex: 0.35; min-height: 35vh; }
+        body.mobile-mode .split-content { flex: 0.65; padding: 25px 20px; overflow-y: auto; }
+        body.mobile-mode .layout-full .content { padding: 15px; overflow-y: auto; }
+        body.mobile-mode h1 { font-size: 3rem !important; }
+        body.mobile-mode h2 { font-size: 2.5rem !important; }
+        
+        body.mobile-mode .tier-header { flex-direction: column; align-items: flex-start; gap: 10px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        body.mobile-mode .tier-price-wrap { text-align: left; width: 100%;}
+        body.mobile-mode .tier-price-val { font-size: 2.2rem !important; justify-content: flex-start !important; gap: 10px;}
+        body.mobile-mode .tier-grid { grid-template-columns: 1fr; gap: 10px; }
+        body.mobile-mode .tier-box { padding: 15px; }
+        body.mobile-mode .tier-list li { font-size: 0.85rem; flex-wrap: wrap;}
+        body.mobile-mode .tier-name { font-size: 2.5rem; }
+
+        body.mobile-mode .data-power-grid, body.mobile-mode .product-grid, body.mobile-mode .product-grid-2col, body.mobile-mode .rate-card-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+
+        /* --- TYPOGRAPHY & UTILS --- */
+        h1, h2, h3, h4 { font-family: 'Teko', 'Prompt', sans-serif; text-transform: uppercase; line-height: 1.1; }
+        .highlight-gold { color: var(--mp-gold); }
+        .highlight-white { color: var(--mp-white); }
+        .badge { background: var(--mp-gold); color: var(--mp-black); padding: 5px 15px; font-weight: 700; font-size: 0.9rem; border-radius: 4px; display: inline-block; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; }
+        .badge-dark { background: transparent; border: 1px solid var(--mp-gold); color: var(--mp-gold); }
+
+        /* --- LAYOUTS --- */
+        .layout-split { display: flex; width: 100%; height: 100%; }
+        .split-content { flex: 1.1; padding: 40px 60px; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(90deg, var(--mp-black) 0%, rgba(10,10,10,0.95) 100%); z-index: 3; }
+        .split-image { flex: 0.9; position: relative; background-color: #0d0d0d; border-left: 3px solid var(--mp-gold); }
+        .split-image.left-side { border-left: none; border-right: 3px solid var(--mp-gold); }
+        .split-image .overlay-grad { position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, transparent 30%); z-index: 2; }
+        .split-image.left-side .overlay-grad { background: linear-gradient(-90deg, rgba(10,10,10,0.95) 0%, transparent 30%); }
+        
+        .layout-full { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; position: relative; }
+        .layout-full .bg-wrapper { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--mp-gray-900); z-index: -1; }
+        .layout-full .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 1; }
+        .layout-full .content { z-index: 2; max-width: 1100px; width: 100%; max-height: 95vh; overflow-y: auto; padding-right: 15px;}
+
+        /* Custom Scrollbar for Content */
+        .split-content::-webkit-scrollbar, .layout-full .content::-webkit-scrollbar { width: 4px; }
+        .split-content::-webkit-scrollbar-thumb, .layout-full .content::-webkit-scrollbar-thumb { background: var(--mp-gold); border-radius: 4px; }
+
+        /* --- PLACEHOLDERS --- */
+        .placeholder-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); color: var(--mp-gold); z-index: 0; border: 1px solid #333; }
+        .placeholder-box i { font-size: 3.5rem; margin-bottom: 15px; opacity: 0.5; }
+        .real-image { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
+
+        /* --- CUSTOM COMPONENTS --- */
+        .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 20px; border-left: 4px solid var(--mp-gold); text-align: left;}
+        .stat-val { font-family: 'Teko'; font-size: 3.5rem; font-weight: 700; color: var(--mp-gold); line-height: 1; margin-bottom: 5px; }
+        .stat-label { font-size: 1rem; color: var(--mp-white); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* DATA & RATE CARD STYLES */
+        .data-power-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+        .data-power-box { background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px 20px; text-align: center; border-top: 4px solid var(--mp-gold); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .data-power-box.red-top { border-top-color: #E61E1E; }
+        .data-power-box.cyan-top { border-top-color: #06b6d4; }
+        .data-power-val { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; margin-bottom: 10px; }
+        .data-power-label { font-size: 0.9rem; color: var(--mp-white); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;}
+        .data-power-desc { font-size: 0.85rem; color: var(--mp-gray-400); line-height: 1.4;}
+        
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; margin-top: 20px; }
+        .product-grid-2col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; margin-top: 20px; }
+        
+        .rate-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: left; }
+
+        /* --- TIER SLIDES (NEW INDIVIDUAL DESIGN) --- */
+        .tier-slide-wrap { padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background-color: var(--mp-black); }
+        .tier-container { max-width: 1200px; width: 100%; display: flex; flex-direction: column; height: 100%; }
+        .tier-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        .tier-header-left { display: flex; flex-direction: column; align-items: flex-start; }
+        .tier-badge { color: var(--mp-black); background: var(--mp-gold); padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 800; display: inline-block; margin-bottom: 10px; text-transform: uppercase; }
+        .tier-title-wrap { display: flex; align-items: center; gap: 15px; }
+        .tier-icon { font-size: 3rem; color: var(--mp-gold); }
+        .tier-name { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; text-transform: uppercase; color: white; display: flex; align-items: flex-end; gap: 15px; }
+        .tier-sub { font-size: 1.2rem; color: var(--mp-gray-400); font-family: 'Prompt', sans-serif; font-weight: 600; margin-bottom: 5px; }
+        .tier-price-wrap { text-align: right; min-width: 350px; }
+        
+        .price-breakdown { font-family: 'Prompt', sans-serif; font-size: 0.95rem; color: var(--mp-gray-400); margin-bottom: 5px; width: 100%; }
+        .price-breakdown .row { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;}
+        .price-breakdown .row span:last-child { color: var(--mp-white); font-weight: 600; font-family: 'Teko', sans-serif; font-size: 1.4rem; letter-spacing: 1px; }
+        
+        .tier-price-val { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; margin-bottom: 5px; color: white; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px dashed #333; padding-top: 8px;}
+        .tier-price-val span { font-size: 1.5rem; color: var(--mp-gray-400); }
+        .tier-price-val.text-price { font-size: 1.8rem; font-family: 'Prompt', sans-serif; padding-bottom: 8px;}
+        
+        .tier-value-box { background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); padding: 8px 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;}
+        .tier-value-box span { font-size: 0.9rem; color: var(--mp-gray-400); }
+        .tier-value-box strong { font-size: 1.3rem; font-family: 'Teko', sans-serif; margin-left: 10px; color: var(--mp-gold); }
+
+        .tier-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; flex: 1; }
+        .tier-box { background: #0A0A0A; border: 1px solid #222; border-radius: 12px; padding: 20px 25px; display: flex; flex-direction: column; }
+        .tier-box h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #333; display: flex; align-items: center; gap: 10px; text-transform: uppercase; color: var(--mp-gold); }
+        .tier-list { list-style: none; padding: 0; margin: 0; }
+        .tier-list li { font-size: 0.95rem; color: var(--mp-gray-400); margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+        .tier-list li i { margin-top: 4px; font-size: 0.9rem; color: var(--mp-gold); }
+        .tier-list li b { color: var(--mp-white); font-weight: 600; }
+        .tier-list li span { flex: 1; }
+        .badge-sm { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; margin-left: 5px; font-weight: 800; border: 1px solid; display: inline-block; transform: translateY(-2px); }
+        .badge-sm.gold { color: #facc15; border-color: #facc15; background: rgba(250,204,21,0.1); }
+        .badge-sm.silver { color: #cbd5e1; border-color: #cbd5e1; background: rgba(203,213,225,0.1); }
+
+        .tier-remark { background: rgba(255,255,255,0.05); border-left: 4px solid var(--mp-gold); padding: 15px 20px; border-radius: 4px; margin-top: 20px; font-size: 0.95rem; color: var(--mp-gray-400); display: flex; align-items: center; gap: 10px; line-height: 1.5;}
+
+        .portrait-warning { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--mp-black); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
+        @media (hover: none) and (pointer: coarse) and (orientation: portrait) { body:not(.mobile-mode) .portrait-warning { display: flex; } body:not(.mobile-mode) .slider-container { display: none !important; } }
+        
+        .swipe-hint { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.5); font-size: 0.8rem; z-index: 100; animation: pulse 2s infinite; background: rgba(0,0,0,0.8); padding: 5px 15px; border-radius: 20px; pointer-events: none;}
+        
+        /* Print Mode */
+        @media print {
+            @page { size: 1920px 1080px; margin: 0; }
+            body, html { width: 1920px !important; height: auto !important; background-color: var(--mp-black) !important; }
+            #loading-screen, #selection-screen, .swipe-hint, .portrait-warning, #btn-pdf-float { display: none !important; }
+            .slider-container { display: block !important; width: 1920px !important; overflow: visible !important; }
+            .slide { width: 1920px !important; height: 1080px !important; page-break-after: always !important; position: relative !important; display: flex !important; }
+            .split-content, .layout-full .content { overflow: hidden !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating PDF Button -->
+    <button id="btn-pdf-float" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: var(--mp-gold); color: #000; border: none; padding: 10px 20px; border-radius: 50px; font-family: 'Prompt', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(212,175,55,0.4); display: flex; align-items: center; gap: 10px;" onclick="window.print()">
+        <i class="fa-solid fa-file-pdf"></i> SAVE AS PDF
+    </button>
+
+    <div id="loading-screen">
+        <div class="loader-content">
+            <i class="fa-solid fa-hospital loader-icon"></i>
+            <div class="loader-text">MASTERPIECE</div>
+            <div class="loader-subtext">x RACEGO</div>
+            <div class="loader-bar-container"><div class="loader-bar"></div></div>
+        </div>
+    </div>
+
+    <div id="selection-screen">
+        <div class="selection-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <h2 style="font-size: 3rem; color: white;">CHOOSE VIEWING MODE</h2>
+            <p style="color: #999; margin-bottom: 30px;">กรุณาเลือกรูปแบบอุปกรณ์ เพื่อประสบการณ์รับชมที่ดีที่สุด</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button id="btn-mobile" class="view-btn">
+                    <i class="fa-solid fa-mobile-screen"></i> <span>MOBILE</span> <small>ดูบนมือถือ (เลื่อนขึ้น-ลง)</small>
+                </button>
+                <button id="btn-pc" class="view-btn">
+                    <i class="fa-solid fa-desktop"></i> <span>PC / TABLET</span> <small>จอใหญ่ (ปัดซ้าย-ขวา)</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="portrait-warning">
+        <i class="fa-solid fa-rotate" style="font-size: 3rem; color: var(--mp-gold); margin-bottom: 20px;"></i>
+        <h2 style="color: white;">กรุณาหมุนหน้าจอเป็นแนวนอน</h2>
+    </div>
+
+    <div class="swipe-hint" id="swipeHint"><i class="fa-solid fa-arrows-left-right"></i> ปัดหน้าจอเพื่อรับชม</div>
+
+    <div class="slider-container" id="slider">
+
+        <!-- SLIDE 1: COVER -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge">Strategic Partnership Proposal 2026</div>
+                    <h1 style="font-size: 4rem; margin-bottom: 10px; line-height: 1;">CONFIDENCE AT <br><span class="highlight-gold">TOP SPEED</span></h1>
+                    <p style="font-size: 1.1rem; color: var(--mp-gray-400); margin-bottom: 20px; max-width: 90%; line-height: 1.6;">
+                        ปลดล็อกขีดจำกัดความมั่นใจของผู้ชาย ผ่านโลกของความเร็วและมอเตอร์สปอร์ต<br>
+                        <strong>Masterpiece Men's Health & 3M Hair x RaceGO</strong><br>
+                        <span style="font-size: 0.95rem; color: #888; font-weight: 300;">Bridging High-Speed Performance with Ultimate Self-Care.</span>
+                    </p>
+                    <div style="border-left: 3px solid var(--mp-gold); padding-left: 15px;">
+                        <p style="color: var(--mp-white); font-size: 0.95rem; margin: 0; font-weight: 500;">PRESENTED TO: ผู้บริหาร Masterpiece Hospital</p>
+                        <p style="color: var(--mp-gold); font-size: 0.85rem; margin: 0;">BY RACEGO (Nokia & Pondtech)</p>
+                    </div>
+                </div>
+                <div class="split-image">
+                    <div class="overlay-grad"></div>
+                    <div class="placeholder-box">
+                        <i class="fa-solid fa-hospital-user"></i><span>[รอไฟล์: spirits_03_nokia.jpg]</span>
+                        <small style="margin-top:10px; font-family: Prompt;">ภาพรถแข่งโทนสีดำ-ทอง จอดคู่กับคลินิกพรีเมียม</small>
+                    </div>
+                    <img src="spirits_03_nokia.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: THE AUDIENCE MATCH -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-wrapper">
+                    <div class="placeholder-box"><i class="fa-solid fa-users-viewfinder"></i><span>[รอไฟล์: racego_05_nokia.jpg]</span></div>
+                    <img src="racego_05_nokia.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content">
+                    <div class="badge badge-dark">The Perfect Demographic</div>
+                    <h2 style="font-size: 4rem; margin-bottom: 15px;">WHY <span class="highlight-gold">MOTORSPORT?</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--mp-gray-400); margin-bottom: 40px; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                        เพราะ "ฐานแฟนคลับแข่งรถ" คือกลุ่มเป้าหมายหลักที่ตรงกับ <strong>Men's Health และ Hair Transplant</strong> มากที่สุด นี่คือกลุ่มคนที่ยอมจ่ายเพื่อ "ความสมบูรณ์แบบ" ทั้งเรื่องรถและตัวเอง
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                        <div class="stat-box">
+                            <div class="stat-val">91%</div>
+                            <div class="stat-label">MALE AUDIENCE</div>
+                            <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin-top: 15px; line-height: 1.5;">ฐานผู้ติดตามของทีม RaceGO คือผู้ชายวัย 25-45 ปี <b>ซึ่งไม่ใช่แค่ผู้ชายทั่วไป แต่เป็นกลุ่มที่ใส่ใจภาพลักษณ์ (Image-conscious) รักความสมบูรณ์แบบ</b> และเป็นวัยที่เริ่มกังวลเรื่องปัญหาผมร่วงและสุขภาพทางเพศ</p>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-val">4M+</div>
+                            <div class="stat-label">TOTAL FOLLOWERS</div>
+                            <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin-top: 15px; line-height: 1.5;">ช่องทางการสื่อสารที่ทรงพลัง สร้าง Brand Awareness ครอบคลุมทั้งสาย <b>B2B (เจ้าของธุรกิจ/อู่ซ่อมรถที่ต้องพบปะผู้คน)</b> และ <b>B2C (กลุ่มไลฟ์สไตล์วัยรุ่น)</b> ผ่านเครือข่ายคอนเทนต์ที่แข็งแกร่ง</p>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-val">HIGH</div>
+                            <div class="stat-label">PURCHASING POWER</div>
+                            <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin-top: 15px; line-height: 1.5;">กลุ่มคนเล่นรถแต่งมีกำลังซื้อสูงปรี๊ด (High-end Consumer) <b>พวกเขาพร้อมลงทุนหลักแสนกับนวัตกรรมทางการแพทย์ที่ดีที่สุด</b> เพื่อรักษาความหนุ่มแน่นและความมั่นใจให้อยู่ยาวนานทัดเทียมรถสปอร์ตคู่ใจ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: 3M HAIR TRANSPLANT x PONDTECH -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="overlay-grad"></div>
+                    <div class="placeholder-box">
+                        <i class="fa-solid fa-helmet-safety"></i><span>[รอไฟล์: racego_03_synergy.jpg]</span>
+                        <small style="margin-top:10px; font-family: Prompt;">ภาพปอนด์เทคถอดหมวกกันน็อก มีเหงื่อ สะท้อนความเรียล</small>
+                    </div>
+                    <img src="racego_03_synergy.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right;">
+                    <div class="badge">Masterpiece 3M Hair</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">THE "HELMET" <br><span class="highlight-gold">PAIN POINT</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--mp-white); margin-bottom: 20px;">ศัตรูตัวร้ายของเส้นผม สู่บททดสอบการปลูกผมขั้นสุด</h3>
+                    <p style="font-size: 1rem; color: var(--mp-gray-400); margin-bottom: 15px; line-height: 1.6;">
+                        วงการมอเตอร์สปอร์ตคือศัตรูตัวฉกาจของเส้นผมผู้ชาย! <b style="color:white;">ความร้อนระดับ 50 องศาในห้องโดยสาร, เหงื่อที่สะสมจากการใส่ชุดหนา, และการเสียดสีอย่างรุนแรงจากหมวกกันน็อก</b> ที่รัดแน่นตลอดหลายชั่วโมง ล้วนเป็นตัวเร่งกระบวนการหลุดร่วงของเส้นผม (Traction Alopecia) ที่ทำให้นักแข่งและไบค์เกอร์เสียความมั่นใจ
+                    </p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-right: 4px solid var(--mp-gold); border-radius: 8px; display: inline-block; margin-top: 10px;">
+                        <p style="color: var(--mp-gold); font-weight: 700; font-size: 1.1rem; margin-bottom: 8px;"><i class="fa-solid fa-user-doctor"></i> The Solution: Pondtech's Journey</p>
+                        <p style="font-size: 0.95rem; color: var(--mp-white); margin: 0; max-width: 480px; line-height: 1.5;">
+                            สร้าง <b>Documentary Series</b> เจาะลึกการใช้ "ปอนด์เทค" เป็นเคสรีวิวการปลูกผม 3M Hair (Real User Case Study) ติดตามผลตั้งแต่ก่อนทำ ระหว่างพักฟื้น และหลังลงแข่ง โชว์ให้ผู้ชมทั้งประเทศเห็นว่า <b>"เทคโนโลยีรากผมของ Masterpiece ทนทานต่อสภาวะสุดขั้วขนาดไหน ถอดหมวกก็ยังหล่อเป๊ะ!"</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: MEN'S HEALTH x MOTORSPORT -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-content">
+                    <div class="badge badge-dark">Masterpiece Men's Health</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">TUNE THE CAR, <br><span class="highlight-gold">TUNE THE MAN.</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--mp-white); margin-bottom: 20px;">ความเร็วระดับแชมป์ ต้องใช้ร่างกายที่สมบูรณ์แบบ</h3>
+                    <p style="font-size: 1rem; color: var(--mp-gray-400); margin-bottom: 15px; line-height: 1.6;">
+                        นักแข่งรถและทีมช่างต้องเผชิญกับ <b style="color:white;">ความเครียดสะสมขั้นรุนแรง (Adrenal Fatigue)</b>, การพักผ่อนไม่เพียงพอ, และความกดดันที่ทำให้ระดับฮอร์โมนเพศชาย (Testosterone) ลดลงอย่างรวดเร็ว ซึ่งส่งผลกระทบต่อทั้งปฏิกิริยาตอบสนอง (Reflexes) สมรรถภาพร่างกาย และจิตใจ
+                    </p>
+                    <ul class="pkg-list" style="margin-top: 15px;">
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-bolt" style="color: var(--mp-gold); font-size: 1.2rem; margin-top: 2px;"></i> <div><b>Energy Boost & Recovery:</b> <br><span style="font-size: 0.9rem; color: #999; line-height: 1.4; display: block; margin-top: 4px;">โปรโมทโปรแกรมฟื้นฟูระดับเซลล์ (NAD+ IV Therapy) หรือวิตามินฟื้นฟูร่างกายด่วน สำหรับผู้ชายทำงานหนักและอดนอน ผ่านภาพลักษณ์การเซอร์วิสร่างกายของนักแข่งหน้าพิท</span></div></li>
+                        <li><i class="fa-solid fa-mars" style="color: var(--mp-gold); font-size: 1.2rem; margin-top: 2px;"></i> <div><b>Alpha Confidence & TRT:</b> <br><span style="font-size: 0.9rem; color: #999; line-height: 1.4; display: block; margin-top: 4px;">สื่อสารเรื่องสมรรถภาพชาย และการปรับสมดุลฮอร์โมน (Hormone Replacement) อย่างเปิดเผยในคอมมูนิตี้ผู้ชายด้วยกัน (Talk in the Garage) สร้างการตระหนักรู้ให้ผู้ชายไทยกล้าเดินเข้าคลินิก</span></div></li>
+                    </ul>
+                </div>
+                <div class="split-image">
+                    <div class="overlay-grad"></div>
+                    <div class="placeholder-box">
+                        <i class="fa-solid fa-gauge-high"></i><span>[รอไฟล์: motys_02_philosophy.jpg]</span>
+                        <small style="margin-top:10px; font-family: Prompt;">ภาพช่าง/นักแข่งทำงานดึกดื่น สะท้อนความเหนื่อยล้า</small>
+                    </div>
+                    <img src="motys_02_philosophy.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: NOKIA'S ROLE -->
+        <div class="slide">
+            <div class="slide-inner layout-split">
+                <div class="split-image left-side">
+                    <div class="overlay-grad"></div>
+                    <div class="placeholder-box">
+                        <i class="fa-solid fa-camera-retro"></i><span>[รอไฟล์: racego_07_content.jpg]</span>
+                        <small style="margin-top:10px; font-family: Prompt;">ภาพโนเกียร์พาปอนด์เทคไปปรึกษาหมอที่คลินิก</small>
+                    </div>
+                    <img src="racego_07_content.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+                <div class="split-content" style="align-items: flex-end; text-align: right;">
+                    <div class="badge">The Influencer Catalyst</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 5px;">THE "GIRLFRIEND" <br><span class="highlight-gold">APPROACH</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--mp-white); margin-bottom: 20px;">ทลายอีโก้ผู้ชาย ด้วยเสน่ห์ของ Nokia Sutasinee</h3>
+                    <p style="font-size: 1rem; color: var(--mp-gray-400); margin-bottom: 20px; line-height: 1.6;">
+                        ผู้ชายส่วนใหญ่มักมีกำแพง (Ego) หรือความเขินอายในการเดินเข้าคลินิกเสริมความงามด้วยตนเอง <b style="color:white;">"โนเกียร์" จะทำหน้าที่เป็น Ice Breaker ทลายกำแพงนั้น</b> โดยใช้จิตวิทยาคอนเทนต์มุมมองของ <em>"ผู้หญิงที่อยากให้คนรักหรือเพื่อนผู้ชายดูดีขึ้นและมีสุขภาพดี"</em>
+                    </p>
+                    <ul class="pkg-list" style="margin-top: 10px; text-align: right; width: 100%;">
+                        <li style="justify-content: flex-end; flex-direction: row-reverse; margin-bottom: 15px;">
+                            <i class="fa-solid fa-video" style="color: var(--mp-gold); font-size: 1.2rem; margin-top: 2px;"></i> 
+                            <div>
+                                <b>Clinic Vlogs (พาผู้ชายไปเข้าคลินิก):</b> 
+                                <br><span style="font-size: 0.9rem; color: #999; line-height: 1.4; display: block; margin-top: 4px;">โนเกียร์อาสาพาปอนด์เทคหรือทีมช่างไปปรึกษาคุณหมอที่ Masterpiece รีวิวความพรีเมียมและความเป็นส่วนตัวของสถานที่ เพื่อลดความประหม่าของกลุ่มลูกค้าเป้าหมาย</span>
+                            </div>
+                        </li>
+                        <li style="justify-content: flex-end; flex-direction: row-reverse;">
+                            <i class="fa-brands fa-tiktok" style="color: var(--mp-gold); font-size: 1.2rem; margin-top: 2px;"></i> 
+                            <div>
+                                <b>Viral TikToks (สัมภาษณ์ทะลวงใจ):</b> 
+                                <br><span style="font-size: 0.9rem; color: #999; line-height: 1.4; display: block; margin-top: 4px;">ทำคอนเทนต์สนุกๆ "บุกสัมภาษณ์หนุ่มๆ หน้าพิทเรื่องความกังวลเรื่องเส้นผม/สุขภาพ" และทำ Q&A ปัญหาผู้ชายแบบน่ารักๆ เจาะตลาด Mass อย่างเป็นธรรมชาติ</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: TGR EXPOSURE -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-wrapper">
+                    <div class="placeholder-box" style="z-index: 0;"><i class="fa-solid fa-flag-checkered"></i><span>[รอไฟล์: motys_02_philosophy.jpg]</span></div>
+                    <img src="motys_02_philosophy.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content">
+                    <div class="badge badge-dark">National On-Ground Exposure</div>
+                    <h2 style="font-size: 4.5rem; margin-bottom: 15px;">TOYOTA GAZOO RACING <br><span class="highlight-gold">THAILAND 2026</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--mp-gray-400); margin-bottom: 30px; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                        รายการแข่งรถทางเรียบที่ยิ่งใหญ่และมีผู้ชมมากที่สุดในอาเซียน จัดต่อเนื่องมายาวนานกว่า 38 ปี <br>
+                        แบรนด์ <b>Masterpiece</b> จะทะยานสู่สายตาผู้ชมกว่า <b>250,000 คน</b> ทั่วประเทศ ผ่านการเดินสาย 5 สนามแข่งใน 4 ภูมิภาคหลัก (ชลบุรี-บางแสน, ภูเก็ต, บุรีรัมย์, เชียงใหม่)
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: left; margin-top: 20px;">
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 25px; border-radius: 8px;">
+                            <i class="fa-solid fa-car-side" style="color: var(--mp-gold); font-size: 2.5rem; margin-bottom: 15px;"></i>
+                            <h4 style="color: white; font-size: 1.3rem;">RACE CAR BRANDING</h4>
+                            <p style="font-size: 0.95rem; color: #aaa; margin-top: 10px; line-height: 1.5;">โลโก้คลินิกโดดเด่นบนรถแข่ง Toyota Altis และ Yaris Ativ ที่วิ่งผ่านหน้าผู้ชมด้วยความเร็วสูง พร้อมการถ่ายทอดสดทั่วประเทศ</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 25px; border-radius: 8px;">
+                            <i class="fa-solid fa-shirt" style="color: var(--mp-gold); font-size: 2.5rem; margin-bottom: 15px;"></i>
+                            <h4 style="color: white; font-size: 1.3rem;">TEAM APPAREL</h4>
+                            <p style="font-size: 0.95rem; color: #aaa; margin-top: 10px; line-height: 1.5;">โลโก้บนชุดแข่งของปอนด์เทค, ชุด Race Queen ของโนเกียร์ และเสื้อทีมช่าง ที่สื่อมวลชนจะคอยซูมจับภาพตลอดการแข่งขัน</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 25px; border-radius: 8px;">
+                            <i class="fa-solid fa-store" style="color: var(--mp-gold); font-size: 2.5rem; margin-bottom: 15px;"></i>
+                            <h4 style="color: white; font-size: 1.3rem;">PIT ACTIVATION</h4>
+                            <p style="font-size: 0.95rem; color: #aaa; margin-top: 10px; line-height: 1.5;">สิทธิ์ในการตกแต่งพื้นที่พิท (Pit Garage) และตั้ง Standee หรือจัดบูธให้คำปรึกษาขนาดย่อมของ Masterpiece บริเวณหน้าพิทระดับ VIP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: NOKIA INSIGHT ANALYTICS -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-wrapper" style="background-image: radial-gradient(circle at 50% 50%, #1a1505 0%, var(--mp-black) 100%);"></div>
+                <div class="overlay"></div>
+                <div class="content" style="max-width: 1200px;">
+                    <div class="badge" style="background: var(--mp-gold); color: var(--mp-black); margin-bottom: 20px;">Insight Analytics Report Q1/2026</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 30px;">NOKIA'S DIGITAL <span class="highlight-gold">FOOTPRINT</span></h2>
+
+                    <div class="data-power-grid">
+                        <div class="data-power-box red-top">
+                            <div class="data-power-val" style="color: #E61E1E;">3.7M+</div>
+                            <div class="data-power-label">TOTAL FOLLOWERS</div>
+                            <div class="data-power-desc">ยอดผู้ติดตามรวมมหาศาล สื่อกลางกระจายข่าวสารคลินิก</div>
+                        </div>
+                        <div class="data-power-box" style="border-top-color: var(--mp-gold);">
+                            <div class="data-power-val" style="color: var(--mp-gold);">18M+</div>
+                            <div class="data-power-label">VIEWS PER MONTH</div>
+                            <div class="data-power-desc">การันตี Eyeballs ต่อเนื่อง ให้แบรนด์เกิดการจดจำ (Recall)</div>
+                        </div>
+                        <div class="data-power-box cyan-top">
+                            <div class="data-power-val" style="color: #06b6d4;">91%</div>
+                            <div class="data-power-label">MALE (AGE 25-44)</div>
+                            <div class="data-power-desc">เข้าถึงทาร์เก็ตผู้ชายวัยทำงาน ที่มีกำลังจ่ายค่าศัลยกรรมสูง</div>
+                        </div>
+                    </div>
+
+                    <div class="product-grid">
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; text-align: left;">
+                            <i class="fa-brands fa-tiktok" style="font-size: 2.5rem; color: var(--mp-white); margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">1.3M+ FOLLOWERS</h4>
+                            <div style="color: var(--mp-gold); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">Viral Shoppertainment</div>
+                            <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">คลิปสร้างกระแสไวรัล ปิดการขายโปรโมชันเด็ดของคลินิกได้รวดเร็วผ่านลิงก์หน้าโปรไฟล์</p>
+                        </div>
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; text-align: left;">
+                            <i class="fa-brands fa-facebook" style="font-size: 2.5rem; color: #1877F2; margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">1.17M+ FOLLOWERS</h4>
+                            <div style="color: var(--mp-gold); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">73.2% New User Acquisition</div>
+                            <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">อัลกอริทึมดันคอนเทนต์เจาะกลุ่มผู้ชายหน้าใหม่ที่ไม่เคยตามเพจ ขยายฐานลูกค้าใหม่ให้คลินิกแบบก้าวกระโดด</p>
+                        </div>
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; text-align: left;">
+                            <i class="fa-brands fa-instagram" style="font-size: 2.5rem; color: #E4405F; margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">1.0M+ FOLLOWERS</h4>
+                            <div style="color: var(--mp-gold); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">Premium Lifestyle Showcase</div>
+                            <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">พื้นที่โชว์ภาพลักษณ์ความหรูหราของ Masterpiece Hospital ผ่าน IG Story และรูปภาพคุณภาพสูง</p>
+                        </div>
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; text-align: left;">
+                            <i class="fa-brands fa-youtube" style="font-size: 2.5rem; color: #FF0000; margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">260K+ SUBSCRIBERS</h4>
+                            <div style="color: var(--mp-gold); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">In-depth VLOG Series</div>
+                            <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">เหมาะสำหรับการทำคลิปรีวิวศัลยกรรมหรือปลูกผมแบบละเอียด ติดตามผลระยะยาว (Evergreen Content)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: PONDTECH INSIGHT ANALYTICS -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-wrapper" style="background-image: radial-gradient(circle at 50% 50%, #1a0505 0%, var(--mp-black) 100%);"></div>
+                <div class="overlay"></div>
+                <div class="content" style="max-width: 1200px;">
+                    <div class="badge" style="background: var(--mp-gold); color: var(--mp-black); margin-bottom: 20px;">Insight Analytics Report Q1/2026</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 30px;">PONDTECH'S DIGITAL <span class="highlight-gold">FOOTPRINT</span></h2>
+
+                    <div class="data-power-grid">
+                        <div class="data-power-box red-top">
+                            <div class="data-power-val" style="color: #E61E1E;">386K+</div>
+                            <div class="data-power-label">TOTAL FOLLOWERS</div>
+                            <div class="data-power-desc">ยอดผู้ติดตามสายยานยนต์ ล้วนเป็นผู้ชายวัยทำงาน (Niche Market)</div>
+                        </div>
+                        <div class="data-power-box" style="border-top-color: var(--mp-gold);">
+                            <div class="data-power-val" style="color: var(--mp-gold);">4.9M+</div>
+                            <div class="data-power-label">VIEWS (90 DAYS)</div>
+                            <div class="data-power-desc">ฐานแฟนคลับสาย Hardcore ที่เชื่อมั่นในตัวปอนด์เทคขั้นสุด (Cult-like Following)</div>
+                        </div>
+                        <div class="data-power-box cyan-top">
+                            <div class="data-power-val" style="color: #06b6d4;">81.4%</div>
+                            <div class="data-power-label">REELS ENGAGEMENT</div>
+                            <div class="data-power-desc">อัตราการมีส่วนร่วมสูงลิ่ว แลกเปลี่ยนความคิดเห็นอย่างหนาแน่น</div>
+                        </div>
+                    </div>
+
+                    <div class="product-grid-2col">
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 35px; text-align: left;">
+                            <i class="fa-brands fa-facebook" style="font-size: 3rem; color: #1877F2; margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--mp-white); font-size: 1.8rem; margin-bottom: 5px;">285K+ FOLLOWERS</h4>
+                            <div style="color: var(--mp-gold); font-size: 1.1rem; font-weight: 700; margin-bottom: 15px;">Trust & Decision Maker</div>
+                            <p style="font-size: 1rem; color: var(--mp-gray-400); margin:0; line-height: 1.6;">Facebook คือศูนย์รวมคอมมูนิตี้คนรักการแต่งรถ หาก <b>"ปอนด์เทค"</b> การันตีผลลัพธ์การปลูกผม 3M Hair และความโปรเฟสชันนอลของคลินิก แฟนคลับและช่างอู่เครือข่ายก็พร้อมที่จะเชื่อและทำตามอย่างแน่นอน</p>
+                        </div>
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 35px; text-align: left;">
+                            <i class="fa-brands fa-youtube" style="font-size: 3rem; color: #FF0000; margin-bottom: 15px;"></i>
+                            <h4 style="color: var(--mp-white); font-size: 1.8rem; margin-bottom: 5px;">101K+ SUBSCRIBERS</h4>
+                            <div style="color: var(--mp-gold); font-size: 1.1rem; font-weight: 700; margin-bottom: 15px;">Documentary Style Storytelling</div>
+                            <p style="font-size: 1rem; color: var(--mp-gray-400); margin:0; line-height: 1.6;">แพลตฟอร์มที่เหมาะที่สุดในการเล่าเรื่องแบบสารคดี (Documentary) ติดตาม Transformation ของตัวปอนด์เทคเอง ผูกเรื่องราวของการทำรถสุดโหดเข้ากับการดูแลตัวเองให้เป๊ะตลอดเวลา</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: NOKIA RATE CARD -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-wrapper" style="background-image: radial-gradient(circle at 50% 50%, #1a1505 0%, var(--mp-black) 100%);"></div>
+                <div class="overlay"></div>
+                <div class="content" style="max-width: 1200px;">
+                    <div class="badge badge-dark" style="margin-bottom: 20px;">Media & Appearance Rates</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 30px;">NOKIA SUTASINEE <span class="highlight-gold">RATE CARD 2026</span></h2>
+                    
+                    <div class="rate-card-grid">
+                        <!-- Col 1: A La Carte -->
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; border-top: 4px solid #E61E1E;">
+                            <h4 style="color: #E61E1E; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-camera"></i> A LA CARTE MEDIA</h4>
+                            
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Short Video (4 Channels)<br><small style="color: #888; font-size: 0.8rem;">คลิปสั้นโปรโมทคลินิก/แคมเปญ</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">30,000 ฿</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Photo Album (FB & IG)<br><small style="color: #888; font-size: 0.8rem;">อัลบั้มภาพเข้าใช้บริการ</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">15,000 ฿</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Single Photopost<br><small style="color: #888; font-size: 0.8rem;">รูปเดี่ยว Tie-in แบรนด์</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">10,000 ฿</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">IG/FB Story (+Link)<br><small style="color: #888; font-size: 0.8rem;">สตอรี่แจกโปร/ลิงก์จองคิว</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">5,000 ฿</strong>
+                            </div>
+                        </div>
+
+                        <!-- Col 2: Appearances -->
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; border-top: 4px solid var(--mp-gold);">
+                            <h4 style="color: var(--mp-gold); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-bullhorn"></i> SOCIAL & REVIEW</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Product Review (5-10 Min)<br><small style="color: #888; font-size: 0.8rem;">รีวิวโปรแกรมสุขภาพเจาะลึก (Vlog)</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">45,000 ฿</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Live on Social<br><small style="color: #888; font-size: 0.8rem;">ไลฟ์สดพูดคุย/ขายโปรโมชัน</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">20,000 ฿</strong>
+                            </div>
+
+                            <h4 style="color: var(--mp-gold); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px; margin-top: 25px;"><i class="fa-solid fa-microphone"></i> EVENT APPEARANCE</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Event Shooting (8 Hrs)<br><small style="color: #888; font-size: 0.8rem;">ถ่ายงานนอกสถานที่/คลินิก</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">20,000 ฿</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">MC Host Event (+1 Post)<br><small style="color: #888; font-size: 0.8rem;">พิธีกรงานเปิดตัวแคมเปญ</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">15,000 ฿</strong>
+                            </div>
+                        </div>
+
+                        <!-- Col 3: Add-ons & Terms -->
+                        <div style="background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 25px; border-top: 4px solid #06b6d4;">
+                            <h4 style="color: #06b6d4; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;"><i class="fa-solid fa-copyright"></i> ASSETS & TERMS</h4>
+                            
+                            <p style="color: var(--mp-gray-400); font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Add-On (ลิขสิทธิ์สื่อเพิ่มเติม)</p>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Media Asset (Owned 3 Mo)<br><small style="color: #888; font-size: 0.8rem;">สิทธิ์นำภาพไปโพสต์ลงเพจคลินิก</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">10,000 ฿</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 25px;">
+                                <span style="color: var(--mp-white); font-size: 1rem;">Ads Asset (ยิงแอด 1 Mo)<br><small style="color: #888; font-size: 0.8rem;">สิทธิ์นำสื่อไปรันโฆษณา (Boost Ads)</small></span>
+                                <strong style="color: var(--mp-gold); font-size: 1.1rem;">5,000 ฿</strong>
+                            </div>
+
+                            <h4 style="color: var(--mp-white); border-bottom: 1px dashed #333; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem;">TERMS & CONDITIONS</h4>
+                            <ul style="padding-left: 15px; font-size: 0.9rem; color: var(--mp-gray-400); line-height: 1.5;">
+                                <li style="margin-bottom: 8px;">นิติบุคคล: เครดิตเทอม 30 วัน</li>
+                                <li style="margin-bottom: 15px;">บุคคลธรรมดา: มัดจำ 50% ก่อนเริ่มงาน</li>
+                                <li style="background: rgba(212, 175, 55, 0.1); padding: 10px; border-radius: 6px; border-left: 3px solid var(--mp-gold); margin-left: -15px; list-style: none;">
+                                    <strong style="color: var(--mp-gold);">PROMOTION:</strong> ชำระเป็นเงินสด (Cash) รับส่วนลดทันที 10% ทุกรายการ
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SPONSORSHIP TIERS (INDIVIDUAL SLIDES)      -->
+        <!-- ========================================== -->
+
+        <!-- SLIDE 10: BRONZE TIER -->
+        <div class="slide">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: #b45309; color: #fff;">PRODUCT & SUPPORT PARTNER</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-medal tier-icon" style="color: #b45309;"></i>
+                                <div class="tier-name" style="color: #b45309;">BRONZE <span class="tier-sub" style="color: #b45309;">(SUPPORT SPONSOR)</span></div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="price-breakdown">
+                                <div class="row">
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
+                                    <div style="text-align: right; display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 1.2rem; color: var(--mp-white);">1 คัน: 90,000 ฿</span>
+                                        <span style="font-size: 1.2rem; color: #b45309;">2 คัน: 150,000 ฿</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tier-price-val" style="color: #b45309;">
+                                90K - 150K&nbsp;<span style="font-size: 1.5rem; color: var(--mp-gray-400);">THB</span>
+                            </div>
+                            <div class="tier-value-box" style="border-color: #b45309; background: rgba(180, 83, 9, 0.05);">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: #b45309;">~800,000 THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <div class="tier-box" style="border-top-color: #b45309;">
+                            <h4 style="color: #b45309;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #b45309;"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) ตำแหน่งเสริม (เช่น มุมกระจกบานหน้า, บังโคลน) บนรถแข่ง <b>1 หรือ 2 คัน</b> (เลือกรุ่น Altis หรือ Yaris Ativ ได้ตามกลุ่มเป้าหมาย) สร้างการมองเห็นขั้นต้นในสนาม</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #b45309;">
+                            <h4 style="color: #b45309;"><i class="fa-solid fa-video"></i> 2. MEDIA CONTENT</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-users" style="color: #b45309;"></i> <div><b>RaceGO Media:</b> สิทธิ์นำโลโก้คลินิกปรากฏในคลิป VLOG ภาพรวมของทีม RaceGO จำนวน <b>4 คลิป</b>ตลอดฤดูกาล</div></li>
+                                <li><i class="fa-solid fa-camera" style="color: #b45309;"></i> <div><b>Nokia's Media:</b> การ Tie-in แฝง (Soft-sell) ป้ายยาบริการของคลินิกในคลิปไลฟ์สไตล์ของคุณโนเกียร์ <b>1 คลิป</b> เพื่อทดสอบกระแสตอบรับจากฐานแฟนคลับ</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #b45309;">
+                            <h4 style="color: #b45309;"><i class="fa-solid fa-ticket"></i> 3. EVENT EXPERIENCE</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #b45309;"></i> <div><b>VIP Access:</b> บัตรเข้าชมการแข่งขัน VIP พร้อมการต้อนรับที่พิท เปิดโอกาสให้ทีมงานของคลินิกเข้ามาร่วมทำคอนเทนต์หน้างาน (Shoot & Share) ได้ตามอัธยาศัย</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #b45309;">
+                            <h4 style="color: #b45309;"><i class="fa-solid fa-bullhorn"></i> 4. PR VISIBILITY</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #b45309;"></i> <div><b>Social PR:</b> โลโก้จะถูกนำไปจัดวางในแบนเนอร์รวมผู้สนับสนุนหลัก (Sponsor Banner) บนหน้าแฟนเพจหลักของทีมตลอดฤดูกาลการแข่งขัน</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: SILVER TIER -->
+        <div class="slide">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: #cbd5e1; color: #000;">CO-SPONSOR</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-medal tier-icon" style="color: #cbd5e1;"></i>
+                                <div class="tier-name" style="color: #cbd5e1;">SILVER <span class="tier-sub" style="color: #cbd5e1;">(CO-SPONSOR)</span></div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="price-breakdown">
+                                <div class="row">
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
+                                    <div style="text-align: right; display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 1.2rem; color: var(--mp-white);">1 คัน: 240,000 ฿</span>
+                                        <span style="font-size: 1.2rem; color: #cbd5e1;">2 คัน: 400,000 ฿</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tier-price-val" style="color: #cbd5e1;">
+                                240K - 400K&nbsp;<span style="font-size: 1.5rem; color: var(--mp-gray-400);">THB</span>
+                            </div>
+                            <div class="tier-value-box" style="border-color: #cbd5e1; background: rgba(203, 213, 225, 0.05);">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: #cbd5e1;">~1,500,000 THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <div class="tier-box" style="border-top-color: #cbd5e1;">
+                            <h4 style="color: #cbd5e1;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Car Branding:</b> โลโก้ขนาดกลาง (M) ในจุดสายตา บนรถแข่ง <b>1 หรือ 2 คัน</b></div></li>
+                                <li><i class="fa-solid fa-shirt" style="color: #cbd5e1;"></i> <div><b>Apparel:</b> โลโก้ประดับบนชุดแข่งนักแข่ง (Racing Suit) ที่สื่อมวลชนจะถ่ายภาพตลอดงาน</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #cbd5e1;">
+                            <h4 style="color: #cbd5e1;"><i class="fa-solid fa-video"></i> 2. UPGRADED MEDIA CONTENT</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-users" style="color: #cbd5e1;"></i> <div><b>RaceGO Media:</b> โปรโมทแบรนด์แบบเจาะลึก <b>8 คลิป</b> (มีโลโก้ช่วงเปิด/ปิดคลิปชัดเจน)</div></li>
+                                <li><i class="fa-solid fa-camera" style="color: #cbd5e1;"></i> <div><b>Nokia's Media:</b> อัปเกรดเป็น <b>คลิปรีวิวโปรแกรมคลินิกโดยตรง 2 คลิป</b> (เช่น Vlog พาเพื่อนผู้ชายไปปรึกษาคุณหมอ) เพื่อสร้างความมั่นใจให้ผู้ติดตาม</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #cbd5e1;">
+                            <h4 style="color: #cbd5e1;"><i class="fa-solid fa-user-tie"></i> 3. PIT EXPERIENCE (CRM)</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>VIP Pitwalk:</b> สิทธิ์เชิญ <b>ลูกค้า VIP ของทางคลินิก</b> ลงพื้นที่สัมผัสบรรยากาศการทำงานจริงของทีม RaceGO สร้าง Customer Relationship Management (CRM) ระดับเอ็กซ์คลูซีฟ ที่หาซื้อไม่ได้ทั่วไป</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #cbd5e1;">
+                            <h4 style="color: #cbd5e1;"><i class="fa-solid fa-share-nodes"></i> 4. EARNED MEDIA & AFFILIATE</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #cbd5e1;"></i> <div><b>Graphic Elements:</b> โลโก้โชว์ในกราฟิกสรุปผลแข่งทุกโพสต์ของทีม</div></li>
+                                <li><i class="fa-solid fa-link" style="color: #cbd5e1;"></i> <div><b>Affiliate / Promotion:</b> สามารถผูกลิงก์ หรือแจกโค้ดส่วนลดของ Masterpiece ในช่องทางของทีมแข่ง เพื่อกระตุ้นยอดจองโปรแกรม (Direct Sales)</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: GOLD TIER -->
+        <div class="slide">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: var(--mp-gold); color: #000;">RECOMMENDED</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-medal tier-icon" style="color: var(--mp-gold);"></i>
+                                <div class="tier-name" style="color: var(--mp-gold);">GOLD <span class="tier-sub" style="color: var(--mp-gold);">(MAIN SPONSOR)</span></div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="price-breakdown">
+                                <div class="row">
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
+                                    <div style="text-align: right; display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 1.5rem; color: var(--mp-gold); font-family: 'Prompt', sans-serif;">ติดต่อทีมงานเพื่อเสนอราคา</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tier-value-box" style="border-color: var(--mp-gold); background: rgba(212, 175, 55, 0.05); margin-top: 15px;">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: var(--mp-gold);">~3,000,000 THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <div class="tier-box" style="border-top-color: var(--mp-gold); background: linear-gradient(180deg, #1a1a1a 0%, #050505 100%);">
+                            <h4 style="color: var(--mp-gold);"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: var(--mp-gold);"></i> <div><b>Car Branding:</b> โลโก้ขนาดใหญ่ (L) ในตำแหน่ง <b>Prime Area</b> (เช่น กระโปรงหน้า หรือ ประตูข้างเต็มบาน) บนรถแข่งทั้ง 2 คัน</div></li>
+                                <li><i class="fa-solid fa-umbrella" style="color: var(--mp-gold);"></i> <div><b>Grid Walk Apparels:</b> โลโก้บนร่มและชุด Race Queen ที่ยืนกางร่มให้นักแข่ง ณ จุดสตาร์ท ซึ่งเป็นช่วงที่ทีวีจับภาพนานที่สุดก่อนปล่อยตัว</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: var(--mp-gold); background: linear-gradient(180deg, #1a1a1a 0%, #050505 100%);">
+                            <h4 style="color: var(--mp-gold);"><i class="fa-solid fa-video"></i> 2. MASSIVE CONTENT INTEGRATION</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-users" style="color: var(--mp-gold);"></i> <div><b>RaceGO Media (16 คลิป):</b> โปรโมทแบรนด์แบบ Tie-in ต่อเนื่องตลอดทั้งปี สร้างความคุ้นเคยให้กับผู้ชม</div></li>
+                                <li><i class="fa-solid fa-camera" style="color: var(--mp-gold);"></i> <div><b>Nokia's Media (4 คลิป):</b> ผลิตเป็น <b>ซีรีส์ Vlog พาชมคลินิกและติดตามผลสุขภาพ</b> โชว์ภาพลักษณ์ความหรูหราของ Masterpiece ให้แฟนคลับกว่า 3.7 ล้านคนได้สัมผัส</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: var(--mp-gold); background: linear-gradient(180deg, #1a1a1a 0%, #050505 100%);">
+                            <h4 style="color: var(--mp-gold);"><i class="fa-solid fa-stethoscope"></i> 3. THE EXCLUSIVE CASE STUDY</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-user-doctor" style="color: var(--mp-gold);"></i> <div><b>สิทธิ์พิเศษขั้นสุด!</b> อนุญาตให้ใช้ "คุณปอนด์เทค" เป็นพรีเซนเตอร์เคสรีวิวปลูกผม (3M Hair) หรือโปรแกรม Men's Health ได้ฟรี <b>เพื่อบันทึกผล Before/After การันตีความทนทานของรากผมในสนามแข่ง</b> (มูลค่าการตลาดประเมินไม่ได้)</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: var(--mp-gold); background: linear-gradient(180deg, #1a1a1a 0%, #050505 100%);">
+                            <h4 style="color: var(--mp-gold);"><i class="fa-solid fa-store"></i> 4. PIT ACTIVATION</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: var(--mp-gold);"></i> <div><b>On-Ground Presence:</b> ป้าย Sponsor หลักหน้าพิทแบบโดดเด่น</div></li>
+                                <li><i class="fa-solid fa-check" style="color: var(--mp-gold);"></i> <div><b>Health Station:</b> สามารถตั้ง Standee หรือบูธแจกโบรชัวร์แนะนำโปรแกรมของคลินิกได้บริเวณหน้าพิททีม RaceGO ตลอด 5 สนามแข่งทั่วประเทศ (Footfall หลักแสนคน)</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: PLATINUM TIER -->
+        <div class="slide">
+            <div class="slide-inner tier-slide-wrap">
+                <div class="tier-container">
+                    <div class="tier-header">
+                        <div class="tier-header-left">
+                            <div class="tier-badge" style="background: #e5e7eb; color: var(--mp-black);">จำกัด 1 สิทธิ์ (TITLE SPONSOR)</div>
+                            <div class="tier-title-wrap">
+                                <i class="fa-solid fa-gem tier-icon" style="color: #e5e7eb;"></i>
+                                <div class="tier-name" style="color: #e5e7eb;">PLATINUM</div>
+                            </div>
+                        </div>
+                        <div class="tier-price-wrap">
+                            <div class="price-breakdown">
+                                <div class="row">
+                                    <span>Sponsorship Fee (ค่ารถ/ทีม):</span>
+                                    <div style="text-align: right; display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 1.5rem; color: #e5e7eb; font-family: 'Prompt', sans-serif;">ติดต่อทีมงานเพื่อเสนอราคา</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tier-value-box" style="border-color: #e5e7eb; background: rgba(229, 231, 235, 0.05); margin-top: 15px;">
+                                <span>Total Est. Media Value:</span>
+                                <strong style="color: #e5e7eb;">~5,000,000+ THB</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tier-grid">
+                        <div class="tier-box" style="border-top-color: #e5e7eb;">
+                            <h4 style="color: #e5e7eb;"><i class="fa-solid fa-flag-checkered"></i> 1. CAR NAMING & LIVERY TAKEOVER</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #e5e7eb;"></i> <div><b>สิทธิ์ระดับสูงสุด:</b> ในการ <b>เปลี่ยนสีและลวดลายรถแข่งทั้ง 2 คัน</b> ให้เป็นธีมสีดำ-ทอง ของ "Masterpiece" กลายเป็นรถที่โดดเด่นและพรีเมียมที่สุดในสนามแข่งขัน แบรนดิ้งประจักษ์แก่สายตาคนทั้งประเทศ (Title Sponsor)</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #e5e7eb;">
+                            <h4 style="color: #e5e7eb;"><i class="fa-solid fa-bullhorn"></i> 2. FULL COMMERCIAL RIGHTS</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #e5e7eb;"></i> <div><b>อภิสิทธิ์สูงสุดด้านภาพลักษณ์:</b> คลินิกสามารถนำภาพ/วิดีโอของนักแข่ง และรถแข่งที่ตกแต่งด้วยโลโก้แบรนด์ <b>ไปใช้ทำสื่อโฆษณา (ยิง Ads, บิลบอร์ด, ขึ้นจอ LED หน้าคลินิก) ได้อย่างไร้ข้อจำกัดตลอดสัญญา 1 ปี</b> ความคุ้มค่าทางสื่อระดับมหาศาล</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #e5e7eb;">
+                            <h4 style="color: #e5e7eb;"><i class="fa-solid fa-video"></i> 3. YEAR-ROUND CONTENT SERIES</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-camera" style="color: #e5e7eb;"></i> <div><b>Nokia's Media (12 คลิป):</b> จัดเต็มรีวิวเจาะลึกทุกโปรแกรมของคลินิก ทำเป็นซีรีส์สุขภาพและความงามตลอดทั้งปี</div></li>
+                                <li><i class="fa-solid fa-users" style="color: #e5e7eb;"></i> <div><b>RaceGO Media (24 คลิป):</b> จัดเต็มการรับรู้แบรนด์ทุกสัปดาห์ โลโก้ปรากฏแบบทะลุจอในทุกคอนเทนต์ของทีม</div></li>
+                            </ul>
+                        </div>
+                        <div class="tier-box" style="border-top-color: #e5e7eb;">
+                            <h4 style="color: #e5e7eb;"><i class="fa-solid fa-crown"></i> 4. PIT TAKEOVER & BRANDING</h4>
+                            <ul class="tier-list">
+                                <li><i class="fa-solid fa-check" style="color: #e5e7eb;"></i> <div><b>Mini Clinic Hub:</b> ตกแต่งพิทของทีม RaceGO ให้เป็นมินิคลินิก หรือ Health Station ขนาดย่อม</div></li>
+                                <li><i class="fa-solid fa-star" style="color: #e5e7eb;"></i> <div><b>Brand Ambassador:</b> มี Race Queen ประจำแบรนด์ Masterpiece คอยต้อนรับแขกและสื่อมวลชนหน้าพิทตลอดงาน</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: CLOSING -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-wrapper">
+                    <div class="placeholder-box" style="z-index: 0;"><i class="fa-solid fa-handshake"></i><span>[รอไฟล์: racego_11_calendar.jpg]</span></div>
+                    <img src="racego_11_calendar.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+                <div class="overlay" style="background: rgba(0,0,0,0.85);"></div>
+                <div class="content" style="text-align: center;">
+                    <h2 style="font-size: 4.5rem; line-height: 1; margin-bottom: 15px;">THE FASTEST WAY <br><span class="highlight-gold">TO CONFIDENCE.</span></h2>
+                    <p style="font-size: 1.2rem; color: var(--mp-white); font-weight: 300; margin-bottom: 40px; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                        ขอบพระคุณคณะผู้บริหาร <b>Masterpiece Hospital</b> ที่ให้โอกาสพิจารณาข้อเสนอครับ <br>
+                        เราเชื่อมั่นว่า "ความสมบูรณ์แบบ" ของนวัตกรรมทางการแพทย์ เมื่อผสานกับ "ความมุ่งมั่นและความเร็วระดับแชมป์" จะสร้าง <b>Brand Synergy</b> ที่ส่งมอบความมั่นใจสูงสุดให้กับผู้ชายทั้งประเทศ <br><br>
+                        <i>"มาร่วมสร้างปรากฏการณ์ความมั่นใจ ไปกับทีม RACEGO ด้วยกันนะครับ"</i>
+                    </p>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                        <a href="https://www.facebook.com/profile.php?id=61587947141692" target="_blank" style="display: inline-flex; align-items: center; gap: 15px; background: rgba(212,175,55,0.1); padding: 12px 30px; border-radius: 50px; border: 1px solid var(--mp-gold); text-decoration: none; color: var(--mp-white); transition: background 0.3s;">
+                            <i class="fa-brands fa-facebook" style="font-size: 1.5rem; color: var(--mp-gold);"></i>
+                            <span style="font-size: 1rem; font-weight: 600; letter-spacing: 1px;">RACEGO MANAGEMENT</span>
+                        </a>
+                        <a href="https://lin.ee/wkGnRJOp" target="_blank" style="display: inline-flex; align-items: center; gap: 15px; background: rgba(0,195,0,0.1); padding: 12px 30px; border-radius: 50px; border: 1px solid #00C300; text-decoration: none; color: var(--mp-white); transition: background 0.3s; box-shadow: 0 4px 15px rgba(0,195,0,0.15);">
+                            <i class="fa-brands fa-line" style="font-size: 1.5rem; color: #00C300;"></i>
+                            <span style="font-size: 1rem; font-weight: 600; letter-spacing: 1px;">CONTACT TEAM</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const selectionScreen = document.getElementById('selection-screen');
+            const slider = document.getElementById('slider');
+            const hint = document.getElementById('swipeHint');
+            
+            setTimeout(() => {
+                if(loadingScreen) loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    if(loadingScreen) loadingScreen.style.display = 'none';
+                    if(selectionScreen) {
+                        selectionScreen.style.visibility = 'visible';
+                        selectionScreen.style.opacity = '1';
+                    }
+                }, 600);
+            }, 3000);
+
+            const btnMobile = document.getElementById('btn-mobile');
+            const btnPc = document.getElementById('btn-pc');
+
+            function startPresentation(mode) {
+                document.body.classList.add(mode);
+                if(selectionScreen) {
+                    selectionScreen.style.opacity = '0';
+                    setTimeout(() => { selectionScreen.style.display = 'none'; }, 500);
+                }
+                if (mode === 'mobile-mode' && hint) {
+                    hint.innerHTML = '<i class="fa-solid fa-arrows-up-down"></i> เลื่อนหน้าจอขึ้น-ลงเพื่อรับชม';
+                }
+            }
+
+            if(btnMobile) btnMobile.addEventListener('click', () => startPresentation('mobile-mode'));
+            if(btnPc) btnPc.addEventListener('click', () => startPresentation('pc-mode'));
+
+            if(slider && hint) {
+                slider.addEventListener('scroll', () => {
+                    if(slider.scrollLeft > 50 || slider.scrollTop > 50) {
+                        hint.style.opacity = '0';
+                        hint.style.transition = 'opacity 0.5s ease';
+                    }
+                }, { passive: true });
+            }
+        });
+    </script>
+</body>
+</html>
