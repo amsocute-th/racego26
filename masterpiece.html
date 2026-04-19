@@ -39,7 +39,7 @@
             display: flex; align-items: center; justify-content: center;
             background-image: radial-gradient(rgba(44, 180, 173, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
         #loading-screen.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
         .loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
@@ -51,13 +51,13 @@
             background: linear-gradient(to right, #64748b 50%, var(--mp-teal) 50%);
             background-size: 200% 100%; background-position: right bottom;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: fillText 2.5s forwards; text-transform: uppercase;
+            animation: fillText 1s forwards; text-transform: uppercase;
         }
         .loader-subtext { font-family: 'Teko', sans-serif; font-size: 2rem; color: var(--mp-white); font-weight: 400; line-height: 1; margin-top: 5px; letter-spacing: 5px;}
         @keyframes fillText { 0% { background-position: right bottom; } 100% { background-position: left bottom; } }
         
         .loader-bar-container { width: 280px; height: 4px; background: #1e293b; margin: 20px auto; border-radius: 2px; overflow: hidden; }
-        .loader-bar { height: 100%; width: 0%; background: var(--mp-teal); animation: loadProgress 2.8s forwards; }
+        .loader-bar { height: 100%; width: 0%; background: var(--mp-teal); animation: loadProgress 1s forwards; }
         @keyframes loadProgress { 0% { width: 0%; } 50% { width: 65%; } 100% { width: 100%; } }
 
         /* --- SELECTION SCREEN --- */
@@ -145,6 +145,10 @@
         .data-power-label { font-size: 0.9rem; color: var(--mp-white); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;}
         .data-power-desc { font-size: 0.85rem; color: var(--mp-gray-400); line-height: 1.4;}
         
+        /* Social Link Buttons */
+        .social-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; color: var(--mp-white); text-decoration: none; transition: all 0.3s; margin-top: 10px; }
+        .social-btn:hover { background: var(--mp-teal); border-color: var(--mp-teal); transform: translateY(-2px); color: var(--mp-black); }
+
         .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; margin-top: 20px; }
         .product-grid-2col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; margin-top: 20px; }
         
@@ -155,7 +159,7 @@
         .tier-container { max-width: 1200px; width: 100%; display: flex; flex-direction: column; height: 100%; }
         .tier-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
         .tier-header-left { display: flex; flex-direction: column; align-items: flex-start; }
-        .tier-badge { color: var(--mp-white); background: var(--mp-teal); padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 800; display: inline-block; margin-bottom: 10px; text-transform: uppercase; }
+        .tier-badge { color: var(--mp-black); background: var(--mp-teal); padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 800; display: inline-block; margin-bottom: 10px; text-transform: uppercase; }
         .tier-title-wrap { display: flex; align-items: center; gap: 15px; }
         .tier-icon { font-size: 3rem; color: var(--mp-teal); }
         .tier-name { font-size: 3.5rem; font-family: 'Teko', sans-serif; font-weight: 700; line-height: 1; text-transform: uppercase; color: white; display: flex; align-items: flex-end; gap: 15px; }
@@ -226,10 +230,10 @@
             <h2 style="font-size: 3rem; color: white;">CHOOSE VIEWING MODE</h2>
             <p style="color: #94a3b8; margin-bottom: 30px;">กรุณาเลือกรูปแบบอุปกรณ์ เพื่อประสบการณ์รับชมที่ดีที่สุด</p>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                <button id="btn-mobile" class="view-btn">
+                <button class="view-btn" onclick="startPresentation('mobile-mode')">
                     <i class="fa-solid fa-mobile-screen"></i> <span>MOBILE</span> <small>ดูบนมือถือ (เลื่อนขึ้น-ลง)</small>
                 </button>
-                <button id="btn-pc" class="view-btn">
+                <button class="view-btn" onclick="startPresentation('pc-mode')">
                     <i class="fa-solid fa-desktop"></i> <span>PC / TABLET</span> <small>จอใหญ่ (ปัดซ้าย-ขวา)</small>
                 </button>
             </div>
@@ -470,24 +474,28 @@
                             <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">1.3M+ FOLLOWERS</h4>
                             <div style="color: var(--mp-teal); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">Viral Shoppertainment</div>
                             <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">คลิปสร้างกระแสไวรัล ปิดการขายโปรโมชันเด็ดของคลินิกได้รวดเร็วผ่านลิงก์หน้าโปรไฟล์</p>
+                            <a href="https://www.tiktok.com/@nokia.ss" target="_blank" class="social-btn"><i class="fa-solid fa-link"></i> TikTok Profile</a>
                         </div>
                         <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #475569; border-radius: 12px; padding: 25px; text-align: left;">
                             <i class="fa-brands fa-facebook" style="font-size: 2.5rem; color: #1877F2; margin-bottom: 15px;"></i>
                             <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">1.17M+ FOLLOWERS</h4>
                             <div style="color: var(--mp-teal); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">73.2% New User Acquisition</div>
                             <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">อัลกอริทึมดันคอนเทนต์เจาะกลุ่มผู้ชายหน้าใหม่ที่ไม่เคยตามเพจ ขยายฐานลูกค้าใหม่ให้คลินิกแบบก้าวกระโดด</p>
+                            <a href="https://www.facebook.com/nokia.sutasinee" target="_blank" class="social-btn"><i class="fa-solid fa-link"></i> Facebook Page</a>
                         </div>
                         <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #475569; border-radius: 12px; padding: 25px; text-align: left;">
                             <i class="fa-brands fa-instagram" style="font-size: 2.5rem; color: #E4405F; margin-bottom: 15px;"></i>
                             <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">1.0M+ FOLLOWERS</h4>
                             <div style="color: var(--mp-teal); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">Premium Lifestyle Showcase</div>
                             <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">พื้นที่โชว์ภาพลักษณ์ความหรูหราของ Masterpiece Hospital ผ่าน IG Story และรูปภาพคุณภาพสูง</p>
+                            <a href="https://www.instagram.com/nokia_sutasinee" target="_blank" class="social-btn"><i class="fa-solid fa-link"></i> Instagram</a>
                         </div>
                         <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #475569; border-radius: 12px; padding: 25px; text-align: left;">
                             <i class="fa-brands fa-youtube" style="font-size: 2.5rem; color: #FF0000; margin-bottom: 15px;"></i>
                             <h4 style="color: var(--mp-white); font-size: 1.3rem; margin-bottom: 5px;">260K+ SUBSCRIBERS</h4>
                             <div style="color: var(--mp-teal); font-size: 1rem; font-weight: 700; margin-bottom: 10px;">In-depth VLOG Series</div>
                             <p style="font-size: 0.9rem; color: var(--mp-gray-400); margin:0; line-height: 1.5;">เหมาะสำหรับการทำคลิปรีวิวศัลยกรรมหรือปลูกผมแบบละเอียด ติดตามผลระยะยาว (Evergreen Content)</p>
+                            <a href="https://www.youtube.com/@NokiaSutasinee" target="_blank" class="social-btn"><i class="fa-solid fa-link"></i> YouTube Channel</a>
                         </div>
                     </div>
                 </div>
@@ -527,12 +535,14 @@
                             <h4 style="color: var(--mp-white); font-size: 1.8rem; margin-bottom: 5px;">285K+ FOLLOWERS</h4>
                             <div style="color: var(--mp-teal); font-size: 1.1rem; font-weight: 700; margin-bottom: 15px;">Trust & Decision Maker</div>
                             <p style="font-size: 1rem; color: var(--mp-gray-400); margin:0; line-height: 1.6;">Facebook คือศูนย์รวมคอมมูนิตี้คนรักการแต่งรถ หาก <b>"ปอนด์เทค"</b> การันตีผลลัพธ์การปลูกผม 3M Hair และความโปรเฟสชันนอลของคลินิก แฟนคลับและช่างอู่เครือข่ายก็พร้อมที่จะเชื่อและทำตามอย่างแน่นอน</p>
+                            <a href="https://www.facebook.com/profile.php?id=100064480248488" target="_blank" class="social-btn"><i class="fa-solid fa-link"></i> Pondtech Racing FB</a>
                         </div>
                         <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #475569; border-radius: 12px; padding: 35px; text-align: left;">
                             <i class="fa-brands fa-youtube" style="font-size: 3rem; color: #FF0000; margin-bottom: 15px;"></i>
                             <h4 style="color: var(--mp-white); font-size: 1.8rem; margin-bottom: 5px;">101K+ SUBSCRIBERS</h4>
                             <div style="color: var(--mp-teal); font-size: 1.1rem; font-weight: 700; margin-bottom: 15px;">Documentary Style Storytelling</div>
                             <p style="font-size: 1rem; color: var(--mp-gray-400); margin:0; line-height: 1.6;">แพลตฟอร์มที่เหมาะที่สุดในการเล่าเรื่องแบบสารคดี (Documentary) ติดตาม Transformation ของตัวปอนด์เทคเอง ผูกเรื่องราวของการทำรถสุดโหดเข้ากับการดูแลตัวเองให้เป๊ะตลอดเวลา</p>
+                            <a href="https://www.youtube.com/@pondtechracing1001" target="_blank" class="social-btn"><i class="fa-solid fa-link"></i> YouTube Channel</a>
                         </div>
                     </div>
                 </div>
@@ -662,14 +672,14 @@
                         <div class="tier-box" style="border-top-color: #b45309;">
                             <h4 style="color: #b45309;"><i class="fa-solid fa-flag-checkered"></i> 1. ON-GROUND & BRANDING</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-check" style="color: #b45309;"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) ตำแหน่งเสริม (เช่น มุมกระจกบานหน้า, บังโคลน) บนรถแข่ง <b>1 หรือ 2 คัน</b> (เลือกรุ่น Altis หรือ Yaris Ativ ได้ตามกลุ่มเป้าหมาย) สร้างการมองเห็นขั้นต้นในสนาม</div></li>
+                                <li><i class="fa-solid fa-check" style="color: #b45309;"></i> <div><b>Car Branding:</b> โลโก้ขนาดมาตรฐาน (S) ตำแหน่งเสริม (เช่น มุมกระจกบานหน้า, บังโคลน) บนรถแข่ง <b>1 หรือ 2 คัน</b> (เลือกรุ่น Altis หรือ Yaris Ativ ได้ตามกลุ่มเป้าหมายลูกค้า) สร้างการมองเห็นขั้นต้นในสนาม</div></li>
                             </ul>
                         </div>
                         <div class="tier-box" style="border-top-color: #b45309;">
                             <h4 style="color: #b45309;"><i class="fa-solid fa-video"></i> 2. MEDIA CONTENT</h4>
                             <ul class="tier-list">
                                 <li><i class="fa-solid fa-users" style="color: #b45309;"></i> <div><b>RaceGO Media:</b> สิทธิ์นำโลโก้คลินิกปรากฏในคลิป VLOG ภาพรวมของทีม RaceGO จำนวน <b>4 คลิป</b>ตลอดฤดูกาล</div></li>
-                                <li><i class="fa-solid fa-camera" style="color: #b45309;"></i> <div><b>Nokia's Media:</b> การ Tie-in แฝง (Soft-sell) ป้ายยาบริการของคลินิกในคลิปไลฟ์สไตล์ของคุณโนเกียร์ <b>1 คลิป</b> เพื่อทดสอบกระแสตอบรับจากฐานแฟนคลับ</div></li>
+                                <li><i class="fa-solid fa-camera" style="color: #b45309;"></i> <div><b>KOL's Media:</b> <b>กรณี 1 คัน</b> เลือกผลิตสื่อผ่าน Nokia หรือ Pondtech (1 คลิป) <br><b>กรณี 2 คัน</b> ได้รับสื่อจัดเต็มทั้ง Nokia และ Pondtech</div></li>
                             </ul>
                         </div>
                         <div class="tier-box" style="border-top-color: #b45309;">
@@ -733,7 +743,7 @@
                             <h4 style="color: #cbd5e1;"><i class="fa-solid fa-video"></i> 2. UPGRADED MEDIA CONTENT</h4>
                             <ul class="tier-list">
                                 <li><i class="fa-solid fa-users" style="color: #cbd5e1;"></i> <div><b>RaceGO Media:</b> โปรโมทแบรนด์แบบเจาะลึก <b>8 คลิป</b> (มีโลโก้ช่วงเปิด/ปิดคลิปชัดเจน)</div></li>
-                                <li><i class="fa-solid fa-camera" style="color: #cbd5e1;"></i> <div><b>Nokia's Media:</b> อัปเกรดเป็น <b>คลิปรีวิวโปรแกรมคลินิกโดยตรง 2 คลิป</b> (เช่น Vlog พาเพื่อนผู้ชายไปปรึกษาคุณหมอ) เพื่อสร้างความมั่นใจให้ผู้ติดตาม</div></li>
+                                <li><i class="fa-solid fa-camera" style="color: #cbd5e1;"></i> <div><b>KOL's Media:</b> <b>กรณี 1 คัน</b> เลือกผลิตสื่อผ่าน Nokia หรือ Pondtech (2 คลิป) <br><b>กรณี 2 คัน</b> ได้รับสื่อจัดเต็มทั้ง Nokia และ Pondtech</div></li>
                             </ul>
                         </div>
                         <div class="tier-box" style="border-top-color: #cbd5e1;">
@@ -794,7 +804,7 @@
                             <h4 style="color: var(--mp-teal);"><i class="fa-solid fa-video"></i> 2. MASSIVE CONTENT INTEGRATION</h4>
                             <ul class="tier-list">
                                 <li><i class="fa-solid fa-users" style="color: var(--mp-teal);"></i> <div><b>RaceGO Media (16 คลิป):</b> โปรโมทแบรนด์แบบ Tie-in ต่อเนื่องตลอดทั้งปี สร้างความคุ้นเคยให้กับผู้ชม</div></li>
-                                <li><i class="fa-solid fa-camera" style="color: var(--mp-teal);"></i> <div><b>Nokia's Media (4 คลิป):</b> ผลิตเป็น <b>ซีรีส์ Vlog พาชมคลินิกและติดตามผลสุขภาพ</b> โชว์ภาพลักษณ์ความหรูหราของ Masterpiece ให้แฟนคลับกว่า 3.7 ล้านคนได้สัมผัส</div></li>
+                                <li><i class="fa-solid fa-camera" style="color: var(--mp-teal);"></i> <div><b>KOL's Media:</b> <b>กรณี 1 คัน</b> เลือกผลิตสื่อผ่าน Nokia หรือ Pondtech (4 คลิป) <br><b>กรณี 2 คัน</b> ได้รับสื่อจัดเต็มทั้ง Nokia และ Pondtech</div></li>
                             </ul>
                         </div>
                         <div class="tier-box" style="border-top-color: var(--mp-teal); background: linear-gradient(180deg, #1e293b 0%, #080f1e 100%);">
@@ -859,8 +869,8 @@
                         <div class="tier-box" style="border-top-color: #e5e7eb;">
                             <h4 style="color: #e5e7eb;"><i class="fa-solid fa-video"></i> 3. YEAR-ROUND CONTENT SERIES</h4>
                             <ul class="tier-list">
-                                <li><i class="fa-solid fa-camera" style="color: #e5e7eb;"></i> <div><b>Nokia's Media (12 คลิป):</b> จัดเต็มรีวิวเจาะลึกทุกโปรแกรมของคลินิก ทำเป็นซีรีส์สุขภาพและความงามตลอดทั้งปี</div></li>
                                 <li><i class="fa-solid fa-users" style="color: #e5e7eb;"></i> <div><b>RaceGO Media (24 คลิป):</b> จัดเต็มการรับรู้แบรนด์ทุกสัปดาห์ โลโก้ปรากฏแบบทะลุจอในทุกคอนเทนต์ของทีม</div></li>
+                                <li><i class="fa-solid fa-camera" style="color: #e5e7eb;"></i> <div><b>KOL's Media:</b> <b>กรณี 1 คัน</b> เลือกผลิตสื่อผ่าน Nokia หรือ Pondtech (12 คลิป) <br><b>กรณี 2 คัน</b> ได้รับสื่อจัดเต็มทั้ง Nokia และ Pondtech</div></li>
                             </ul>
                         </div>
                         <div class="tier-box" style="border-top-color: #e5e7eb;">
@@ -914,33 +924,19 @@
             const slider = document.getElementById('slider');
             const hint = document.getElementById('swipeHint');
             
+            // Failsafe & faster loading
             setTimeout(() => {
-                if(loadingScreen) loadingScreen.classList.add('hidden');
-                setTimeout(() => {
-                    if(loadingScreen) loadingScreen.style.display = 'none';
-                    if(selectionScreen) {
-                        selectionScreen.style.visibility = 'visible';
-                        selectionScreen.style.opacity = '1';
-                    }
-                }, 600);
-            }, 3000);
-
-            const btnMobile = document.getElementById('btn-mobile');
-            const btnPc = document.getElementById('btn-pc');
-
-            function startPresentation(mode) {
-                document.body.classList.add(mode);
-                if(selectionScreen) {
-                    selectionScreen.style.opacity = '0';
-                    setTimeout(() => { selectionScreen.style.display = 'none'; }, 500);
+                if(loadingScreen) {
+                    loadingScreen.classList.add('hidden');
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        if(selectionScreen) {
+                            selectionScreen.style.visibility = 'visible';
+                            selectionScreen.style.opacity = '1';
+                        }
+                    }, 600);
                 }
-                if (mode === 'mobile-mode' && hint) {
-                    hint.innerHTML = '<i class="fa-solid fa-arrows-up-down"></i> เลื่อนหน้าจอขึ้น-ลงเพื่อรับชม';
-                }
-            }
-
-            if(btnMobile) btnMobile.addEventListener('click', () => startPresentation('mobile-mode'));
-            if(btnPc) btnPc.addEventListener('click', () => startPresentation('pc-mode'));
+            }, 1000); // ลดเวลาจาก 3 วิ เหลือ 1 วิ
 
             if(slider && hint) {
                 slider.addEventListener('scroll', () => {
@@ -951,6 +947,20 @@
                 }, { passive: true });
             }
         });
+
+        // ทำให้ฟังก์ชันเป็น Global เพื่อให้ปุ่ม HTML เรียกใช้ได้
+        window.startPresentation = function(mode) {
+            document.body.classList.add(mode);
+            const selectionScreen = document.getElementById('selection-screen');
+            if(selectionScreen) {
+                selectionScreen.style.opacity = '0';
+                setTimeout(() => { selectionScreen.style.display = 'none'; }, 500);
+            }
+            const hint = document.getElementById('swipeHint');
+            if (mode === 'mobile-mode' && hint) {
+                hint.innerHTML = '<i class="fa-solid fa-arrows-up-down"></i> เลื่อนหน้าจอขึ้น-ลงเพื่อรับชม';
+            }
+        };
     </script>
 </body>
 </html>
