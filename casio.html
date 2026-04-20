@@ -39,7 +39,7 @@
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
             background-color: var(--df-black); z-index: 99999;
             display: flex; align-items: center; justify-content: center;
-            background-image: radial-gradient(rgba(10, 36, 99, 0.15) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
@@ -113,6 +113,7 @@
         .badge { background: var(--ed-blue); color: var(--df-white); padding: 5px 15px; font-weight: 700; font-size: 0.9rem; border-radius: 4px; display: inline-block; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; }
         .badge-dark { background: transparent; border: 1px solid var(--ed-cyan); color: var(--ed-cyan); }
         .badge-red { background: var(--ed-red); color: var(--df-white); }
+        .badge-outline { background: transparent; border: 1px solid var(--df-gray-400); color: var(--df-gray-100); }
 
         /* --- LAYOUTS --- */
         .layout-split { display: flex; width: 100%; height: 100%; }
@@ -142,7 +143,7 @@
         .stat-label { font-size: 1rem; color: var(--df-white); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
         /* Social Link Buttons */
-        .social-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; color: var(--df-white); text-decoration: none; transition: all 0.3s; margin-top: 10px; }
+        .social-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; color: var(--df-white); text-decoration: none; transition: all 0.3s; margin-right: 5px; margin-top: 10px; }
         .social-btn:hover { background: var(--ed-cyan); border-color: var(--ed-cyan); transform: translateY(-2px); color: var(--df-black); }
 
         /* DATA & RATE CARD STYLES */
@@ -206,22 +207,54 @@
         
         .swipe-hint { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.5); font-size: 0.8rem; z-index: 100; animation: pulse 2s infinite; background: rgba(0, 0, 0, 0.8); padding: 5px 15px; border-radius: 20px; pointer-events: none;}
         
+        /* Table Styles for Schedule & Video Deliverables */
+        .custom-table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: left;}
+        .custom-table th { background-color: rgba(6, 182, 212, 0.1); color: var(--ed-cyan); padding: 12px 15px; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--ed-cyan); font-weight: 700;}
+        .custom-table td { padding: 15px; border-bottom: 1px solid #1e293b; color: var(--ib-gray-100); font-size: 0.95rem; vertical-align: top;}
+        .custom-table tr:hover td { background-color: rgba(255,255,255,0.02); }
+        .custom-table .td-icon { color: var(--ed-cyan); font-size: 1.2rem; width: 30px; text-align: center;}
+        
         /* Print Mode */
         @media print {
             @page { size: 1920px 1080px; margin: 0; }
-            body, html { width: 1920px !important; height: auto !important; background-color: var(--df-black) !important; }
-            #loading-screen, #selection-screen, .swipe-hint, .portrait-warning, #btn-pdf-float { display: none !important; }
-            .slider-container { display: block !important; width: 1920px !important; overflow: visible !important; }
-            .slide { width: 1920px !important; height: 1080px !important; page-break-after: always !important; position: relative !important; display: flex !important; }
-            .split-content, .layout-full .content { overflow: hidden !important; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            body, html { 
+                width: 1920px !important; 
+                height: auto !important; 
+                overflow: visible !important; 
+                background-color: var(--df-black) !important; 
+            }
+            #loading-screen, #selection-screen, .swipe-hint, .portrait-warning, #btn-pdf-float { 
+                display: none !important; 
+            }
+            .slider-container { 
+                display: block !important; 
+                width: 1920px !important; 
+                height: auto !important; 
+                overflow: visible !important; 
+            }
+            .slide { 
+                width: 1920px !important; 
+                height: 1080px !important; 
+                page-break-after: always !important; 
+                break-after: page !important; 
+                page-break-inside: avoid !important; 
+                position: relative !important; 
+                display: flex !important; 
+            }
+            .split-content, .layout-full .content { 
+                overflow: hidden !important; 
+            }
+            * { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- Floating PDF Button -->
-    <button id="btn-pdf-float" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: var(--ed-cyan); color: var(--df-black); border: 1px solid var(--ed-cyan); padding: 10px 20px; border-radius: 50px; font-family: 'Prompt', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4); display: flex; align-items: center; gap: 10px;" onclick="window.print()">
+    <button id="btn-pdf-float" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: var(--df-white); color: var(--ed-blue-dark); border: 1px solid var(--ed-cyan); padding: 10px 20px; border-radius: 50px; font-family: 'Prompt', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4); display: flex; align-items: center; gap: 10px; transition: transform 0.2s ease, background-color 0.2s ease;" onclick="window.print()" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
         <i class="fa-solid fa-file-pdf"></i> SAVE AS PDF
     </button>
 
@@ -237,13 +270,16 @@
     <div id="selection-screen">
         <div class="selection-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
             <h2 style="font-size: 3rem; color: white;">CHOOSE VIEWING MODE</h2>
-            <p style="color: #94a3b8; margin-bottom: 30px;">กรุณาเลือกรูปแบบอุปกรณ์ เพื่อประสบการณ์รับชมที่ดีที่สุด</p>
+            <p style="color: #94a3b8; margin-bottom: 30px;">กรุณาเลือกรูปแบบอุปกรณ์ หรือพิมพ์เป็นเอกสาร PDF</p>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                 <button class="view-btn" onclick="startPresentation('mobile-mode')">
                     <i class="fa-solid fa-mobile-screen"></i> <span>MOBILE</span> <small>ดูบนมือถือ (เลื่อนขึ้น-ลง)</small>
                 </button>
                 <button class="view-btn" onclick="startPresentation('pc-mode')">
                     <i class="fa-solid fa-desktop"></i> <span>PC / TABLET</span> <small>จอใหญ่ (ปัดซ้าย-ขวา)</small>
+                </button>
+                <button class="view-btn" onclick="window.print()">
+                    <i class="fa-solid fa-file-pdf"></i> <span>EXPORT PDF</span> <small>เซฟเป็นไฟล์ PDF (แนวนอน)</small>
                 </button>
             </div>
         </div>
@@ -366,44 +402,64 @@
                     <div class="placeholder-box">
                         <i class="fa-solid fa-camera-retro"></i><span>[ใช้ไฟล์: motys_02_philosophy.jpg]</span>
                     </div>
-                    <img src="motys_02_philosophy.jpg" class="real-image" onerror="this.style.display='none'">
+                    <img src="657177429_18574270405044606_5876745142665508538_n.jpg" class="real-image" onerror="this.style.display='none'">
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 5: TGR EXPOSURE -->
+        <!-- SLIDE 5: TGR 2026 INSIGHT & SCHEDULE -->
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-wrapper">
                     <div class="placeholder-box" style="z-index: 0;"><i class="fa-solid fa-flag-checkered"></i><span>[ใช้ไฟล์: racego_11_calendar.jpg]</span></div>
                     <img src="racego_11_calendar.jpg" class="real-image" onerror="this.style.display='none'">
                 </div>
-                <div class="overlay" style="background: rgba(10, 36, 99, 0.85);"></div>
-                <div class="content">
-                    <div class="badge badge-red">National On-Ground Exposure</div>
-                    <h2 style="font-size: 4.5rem; margin-bottom: 10px;">TOYOTA GAZOO RACING <br><span class="highlight-cyan">THAILAND 2026</span></h2>
-                    <p style="font-size: 1.1rem; color: var(--df-gray-400); margin-bottom: 30px; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-                        รายการแข่งรถทางเรียบที่ยิ่งใหญ่และมีผู้ชมมากที่สุดในอาเซียน จัดต่อเนื่องมายาวนานกว่า 38 ปี <br>
-                        แบรนด์ <b>EDIFICE CASIO</b> จะทะยานสู่สายตาผู้ชมกว่า <b>250,000 คน</b> ทั่วประเทศ ผ่านการเดินสาย 5 สนามแข่งใน 4 ภูมิภาคหลัก
-                    </p>
+                <div class="overlay" style="background: rgba(10, 36, 99, 0.9);"></div>
+                <div class="content" style="max-width: 1000px;">
+                    <div class="badge">National Exposure</div>
+                    <h2 style="font-size: 4rem; margin-bottom: 5px;">TOYOTA GAZOO RACING 2026</h2>
+                    <h3 style="font-size: 1.5rem; color: var(--ed-cyan); margin-bottom: 25px; text-transform: uppercase;">Schedule & Audience Insight</h3>
                     
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: left;">
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #334155; padding: 25px; border-radius: 8px;">
-                            <i class="fa-solid fa-car-side" style="color: var(--ed-cyan); font-size: 2.5rem; margin-bottom: 15px;"></i>
-                            <h4 style="color: white; font-size: 1.3rem;">RACE CAR BRANDING</h4>
-                            <p style="font-size: 0.95rem; color: #94a3b8; margin-top: 10px; line-height: 1.5;">โลโก้แบรนด์โดดเด่นบนรถแข่ง Toyota Altis และ Yaris Ativ ที่วิ่งผ่านหน้าผู้ชมด้วยความเร็วสูง พร้อมการถ่ายทอดสดทั่วประเทศ</p>
-                        </div>
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #334155; padding: 25px; border-radius: 8px;">
-                            <i class="fa-solid fa-shirt" style="color: var(--ed-red); font-size: 2.5rem; margin-bottom: 15px;"></i>
-                            <h4 style="color: white; font-size: 1.3rem;">TEAM APPAREL</h4>
-                            <p style="font-size: 0.95rem; color: #94a3b8; margin-top: 10px; line-height: 1.5;">โลโก้บนแขนเสื้อหรือหน้าอกชุดนักแข่ง ที่สื่อมวลชนจะคอยซูมจับภาพตลอดการแข่งขัน หรือตอนยกแขนรับถ้วยรางวัล</p>
-                        </div>
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #334155; padding: 25px; border-radius: 8px; border-top: 3px solid var(--ed-cyan);">
-                            <i class="fa-solid fa-stopwatch" style="color: var(--ed-cyan); font-size: 2.5rem; margin-bottom: 15px;"></i>
-                            <h4 style="color: white; font-size: 1.3rem;">OFFICIAL TIMEKEEPER VIBE</h4>
-                            <p style="font-size: 0.95rem; color: #94a3b8; margin-top: 10px; line-height: 1.5;">นำเสนอภาพลักษณ์นาฬิกาคู่กายทีมแข่ง จับเวลาและจัดการตารางแข่งขันหน้าพิทอย่างแม่นยำ</p>
-                        </div>
-                    </div>
+                    <p style="font-size: 1rem; color: var(--df-gray-400); margin-bottom: 20px; line-height: 1.5;">
+                        การแข่งขัน One Make Race ที่ใหญ่ที่สุดในอาเซียน โลโก้ <b>EDIFICE CASIO</b> จะปรากฏสู่สายตาผู้ชมทั่วประเทศ <br>ทั้งผ่านสายตาผู้ชมหน้าสนาม (On-ground) และการถ่ายทอดสด (Live Broadcast)
+                    </p>
+
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;"></th>
+                                <th>RACE VENUE</th>
+                                <th>MONTH (EST.)</th>
+                                <th>EXPECTED AUDIENCE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="td-icon"><i class="fa-solid fa-location-dot"></i></td>
+                                <td><b>สนามที่ 1: ชลบุรี (บางแสน สตรีท เซอร์กิต)</b><br><span style="font-size: 0.85rem; color: var(--df-gray-400);">เทศกาลความเร็วระดับโลก ปิดเมืองแข่งรถริมหาด</span></td>
+                                <td>กรกฎาคม 2026</td>
+                                <td><b style="color: var(--ed-cyan); font-size: 1.1rem;">150,000+</b> คน</td>
+                            </tr>
+                            <tr>
+                                <td class="td-icon"><i class="fa-solid fa-location-dot"></i></td>
+                                <td><b>สนามที่ 2: ภูเก็ต (สะพานหิน)</b><br><span style="font-size: 0.85rem; color: var(--df-gray-400);">เจาะตลาดภาคใต้ แหล่งรวมรถแต่งและนักท่องเที่ยว</span></td>
+                                <td>สิงหาคม 2026</td>
+                                <td><b style="color: var(--ed-cyan); font-size: 1.1rem;">30,000+</b> คน</td>
+                            </tr>
+                            <tr>
+                                <td class="td-icon"><i class="fa-solid fa-location-dot"></i></td>
+                                <td><b>สนามที่ 3 & 4: บุรีรัมย์ (ช้าง อินเตอร์เนชั่นแนล เซอร์กิต)</b><br><span style="font-size: 0.85rem; color: var(--df-gray-400);">สนามระดับโลก มาตรฐาน FIA เจาะกลุ่มคนรักรถอีสาน</span></td>
+                                <td>กันยายน 2026</td>
+                                <td><b style="color: var(--ed-cyan); font-size: 1.1rem;">40,000+</b> คน</td>
+                            </tr>
+                            <tr>
+                                <td class="td-icon"><i class="fa-solid fa-location-dot"></i></td>
+                                <td><b>สนามที่ 5 (Final): เชียงใหม่ (ไนท์ซาฟารี / สนามกีฬาสมโภช)</b><br><span style="font-size: 0.85rem; color: var(--df-gray-400);">สนามตัดสินแชมป์ ปิดฤดูกาลอย่างยิ่งใหญ่ในภาคเหนือ</span></td>
+                                <td>พฤศจิกายน 2026</td>
+                                <td><b style="color: var(--ed-cyan); font-size: 1.1rem;">30,000+</b> คน</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -599,11 +655,59 @@
             </div>
         </div>
 
+        <!-- SLIDE 9: VIDEO CONTENT DELIVERABLES (OSUKA Style) -->
+        <div class="slide">
+            <div class="slide-inner layout-full">
+                <div class="bg-wrapper">
+                    <div class="placeholder-box" style="z-index: 0;"><i class="fa-solid fa-video"></i><span>[ใช้ไฟล์: racego_04_pondtech.jpg]</span></div>
+                    <img src="racego_04_pondtech.jpg" class="real-image" onerror="this.style.display='none'">
+                </div>
+                <div class="overlay" style="background: rgba(6, 21, 57, 0.9);"></div>
+                <div class="content" style="max-width: 1000px;">
+                    <div class="badge badge-dark">Content Strategy</div>
+                    <h2 style="font-size: 4rem; margin-bottom: 5px;">VIDEO CONTENT <span style="color: var(--ed-cyan);">DELIVERABLES</span></h2>
+                    <h3 style="font-size: 1.2rem; color: var(--df-gray-400); margin-bottom: 25px; font-weight: 300;">ตัวอย่างรูปแบบวิดีโอ ที่แบรนด์ EDIFICE จะได้รับจากการสนับสนุน (ขึ้นอยู่กับแพ็กเกจ)</h3>
+
+                    <table class="custom-table" style="background: rgba(2, 6, 23, 0.6); border-radius: 12px; overflow: hidden;">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">CONTENT TYPE</th>
+                                <th style="width: 20%;">PRESENTER</th>
+                                <th style="width: 55%;">DETAILS & KEY MESSAGE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b><i class="fa-solid fa-stopwatch" style="color: var(--ed-cyan); margin-right: 8px;"></i> Technical Review</b><br><small style="color: #94a3b8;">เจาะลึกฟังก์ชัน (Hard Sell)</small></td>
+                                <td style="color: var(--ed-cyan); font-weight: 600;">PONDTECH</td>
+                                <td>ปอนด์เทคทดสอบความทนทานต่อแรงสั่นสะเทือน (Extreme Vibration) และใช้ฟังก์ชัน Smartphone Link/Chronograph ในการจับเวลาหรือตั้งค่าเครื่องยนต์หน้าอู่ โชว์ความเป็น Professional Timekeeper</td>
+                            </tr>
+                            <tr>
+                                <td><b><i class="fa-solid fa-shirt" style="color: var(--ed-cyan); margin-right: 8px;"></i> Lifestyle VLOG</b><br><small style="color: #94a3b8;">รีวิวแฟชั่น/สตรีท (Soft Sell)</small></td>
+                                <td style="color: var(--ed-cyan); font-weight: 600;">NOKIA</td>
+                                <td>วิดีโอ OOTD (Outfit of the day) โนเกียร์แมตช์นาฬิกา EDIFICE กับชุดแข่งรถ หรือชุดสตรีทแวร์เท่ๆ ในวันธรรมดา เพื่อสะท้อนภาพลักษณ์ว่า Everyday Motorsport Fashion สามารถใส่ได้ทุกวัน</td>
+                            </tr>
+                            <tr>
+                                <td><b><i class="fa-solid fa-wrench" style="color: var(--ed-cyan); margin-right: 8px;"></i> Garage Testimonial</b><br><small style="color: #94a3b8;">เสียงจากมืออาชีพ</small></td>
+                                <td style="color: var(--ed-cyan); font-weight: 600;">PONDTECH</td>
+                                <td>ถ่ายทำบรรยากาศในพิทแข่งจริง ทีมช่างใช้ EDIFICE ในการควบคุมตารางเวลา (Workflow) ระหว่างการแข่งขันที่กดดัน ย้ำเตือนเรื่องความแม่นยำ (Precision)</td>
+                            </tr>
+                            <tr>
+                                <td><b><i class="fa-brands fa-tiktok" style="color: var(--ed-cyan); margin-right: 8px;"></i> Viral Short Clip</b><br><small style="color: #94a3b8;">คลิปสั้นลง Reels/TikTok</small></td>
+                                <td style="color: var(--ed-cyan); font-weight: 600;">NOKIA / PONDTECH</td>
+                                <td>คลิปสั้น Unboxing ซูมให้เห็นหน้าปัดคาร์บอนไฟเบอร์ หรือโชว์การเชื่อมต่อบลูทูธอย่างรวดเร็ว พร้อมปักตะกร้า หรือลิงก์ไปยัง E-Commerce ทันทีเพื่อปิดการขาย</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- ========================================== -->
         <!-- SPONSORSHIP TIERS                          -->
         <!-- ========================================== -->
 
-        <!-- SLIDE 9: BRONZE & SILVER TIER -->
+        <!-- SLIDE 10: BRONZE & SILVER TIER -->
         <div class="slide">
             <div class="slide-inner tier-slide-wrap">
                 <div class="tier-container" style="max-width: 1400px;">
@@ -639,28 +743,28 @@
                         </div>
 
                         <!-- SILVER TIER -->
-                        <div class="package-box" style="display: flex; flex-direction: column; border-color: #cbd5e1; background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);">
+                        <div class="package-box" style="display: flex; flex-direction: column; border-color: var(--ed-cyan); background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);">
                             <div class="pkg-header" style="border-bottom-color: #334155;">
                                 <div>
-                                    <h3 style="font-size: 2rem; color: #cbd5e1; margin-bottom: 0;">🥈 SILVER</h3>
+                                    <h3 style="font-size: 2rem; color: var(--ed-cyan); margin-bottom: 0;">🥈 SILVER</h3>
                                     <p style="color: var(--df-gray-400); margin: 0; font-size: 1rem;">CO-SPONSOR</p>
                                 </div>
                                 <div style="text-align: right;">
-                                    <div class="pkg-price" style="color: #cbd5e1;">240K - 400K</div>
+                                    <div class="pkg-price" style="color: var(--ed-cyan);">240K - 400K</div>
                                     <span style="font-size: 1rem; color: var(--df-gray-400);">THB / ฤดูกาล</span>
                                 </div>
                             </div>
-                            <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 20px; font-weight: 600;">(ราคา 1 คัน: 240,000 ฿ | ราคา 2 คัน: 400,000 ฿)</p>
+                            <p style="color: var(--ed-cyan); font-size: 0.95rem; margin-bottom: 20px; font-weight: 600;">(ราคา 1 คัน: 240,000 ฿ | ราคา 2 คัน: 400,000 ฿)</p>
                             
                             <ul class="pkg-list" style="flex: 1;">
-                                <li><i class="fa-solid fa-flag-checkered" style="color: #cbd5e1;"></i> <div><b>Car Branding:</b> โลโก้แบรนด์ EDIFICE ขนาดกลาง (M) ในจุดสายตา บนรถแข่ง <b>1 หรือ 2 คัน</b></div></li>
-                                <li><i class="fa-solid fa-shirt" style="color: #cbd5e1;"></i> <div><b>Apparel:</b> โลโก้ประดับบนชุดแข่งนักแข่ง (Racing Suit) ที่สื่อมวลชนจะถ่ายภาพตลอดงาน</div></li>
-                                <li><i class="fa-solid fa-video" style="color: #cbd5e1;"></i> <div><b>Upgraded Media Content:</b> <br>
+                                <li><i class="fa-solid fa-flag-checkered" style="color: var(--ed-cyan);"></i> <div><b>Car Branding:</b> โลโก้แบรนด์ EDIFICE ขนาดกลาง (M) ในจุดสายตา บนรถแข่ง <b>1 หรือ 2 คัน</b></div></li>
+                                <li><i class="fa-solid fa-shirt" style="color: var(--ed-cyan);"></i> <div><b>Apparel:</b> โลโก้ประดับบนชุดแข่งนักแข่ง (Racing Suit) ที่สื่อมวลชนจะถ่ายภาพตลอดงาน</div></li>
+                                <li><i class="fa-solid fa-video" style="color: var(--ed-cyan);"></i> <div><b>Upgraded Media Content:</b> <br>
                                     - โปรโมทแบรนด์เจาะลึก <b>8 คลิป</b> โดยทีม RaceGO <br>
                                     - <b>กรณี 1 คัน:</b> เลือกผลิตสื่อผ่าน Nokia หรือ Pondtech (2 คลิป) <br>
                                     - <b>กรณี 2 คัน:</b> ได้รับสื่อจัดเต็มทั้ง Nokia และ Pondtech (Vlog รีวิวนาฬิกาบนสนามแข่ง/ชีวิตประจำวัน)</div>
                                 </li>
-                                <li><i class="fa-solid fa-user-tie" style="color: #cbd5e1;"></i> <div><b>Pit Experience:</b> สิทธิ์เชิญ <b>ลูกค้า VIP ของแบรนด์</b> ลงพื้นที่สัมผัสบรรยากาศการทำงานจริงของทีม RaceGO เพื่อกระชับความสัมพันธ์ (VIP Pitwalk)</div></li>
+                                <li><i class="fa-solid fa-user-tie" style="color: var(--ed-cyan);"></i> <div><b>Pit Experience:</b> สิทธิ์เชิญ <b>ลูกค้า VIP ของแบรนด์</b> ลงพื้นที่สัมผัสบรรยากาศการทำงานจริงของทีม RaceGO เพื่อกระชับความสัมพันธ์ (VIP Pitwalk)</div></li>
                             </ul>
                         </div>
 
@@ -669,11 +773,11 @@
             </div>
         </div>
 
-        <!-- SLIDE 10: CLOSING -->
+        <!-- SLIDE 11: CLOSING -->
         <div class="slide">
             <div class="slide-inner layout-full">
                 <div class="bg-wrapper">
-                    <div class="placeholder-box" style="z-index: 0;"><i class="fa-solid fa-handshake"></i><span>[ใช้ไฟล์: mp_08_closing.jpg]</span></div>
+                    <div class="placeholder-box" style="z-index: 0;"><i class="fa-solid fa-handshake"></i><span>[ใช้ไฟล์: racego_20_closing.jpg]</span></div>
                     <img src="racego_20_closing.jpg" class="real-image" onerror="this.style.display='none'">
                 </div>
                 <div class="overlay" style="background: rgba(10, 36, 99, 0.85);"></div>
